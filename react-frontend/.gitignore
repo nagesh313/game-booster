@@ -11,12 +11,7 @@
 # production
 /build
 .idea/
-.mvn/
-target/
-/react-frontend/.idea/**/*
-/react-frontend/build/**/*
-/react-frontend/node_modules/**/*
-/react-frontend/package-lock.json
+
 # misc
 .DS_Store
 .env.local
@@ -27,6 +22,3 @@ target/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-/react-frontend/.idea/vcs.xml
-/react-frontend/.idea/workspace.xml
-backend-service.iml
