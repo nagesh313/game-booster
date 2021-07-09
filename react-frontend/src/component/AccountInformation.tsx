@@ -84,10 +84,9 @@ export function AccountInformationComponent(props: any) {
       {({ errors, touched, values, handleChange }) => (
         <Form>
           <Grid container spacing={3}>
-            <Grid xs={12} item>
+            <Grid xs={6} item>
               <TextField
                 variant="outlined"
-                autoFocus
                 name="lolAccount"
                 margin="dense"
                 label="LOL Account"
@@ -95,7 +94,7 @@ export function AccountInformationComponent(props: any) {
                 value={values.lolAccount}
               />
             </Grid>
-            <Grid xs={12} item>
+            <Grid xs={6} item>
               <TextField
                 variant="outlined"
                 name="lolPassword"
@@ -130,7 +129,12 @@ export function AccountInformationComponent(props: any) {
             )}
           </Grid>
           <br></br>
-          <Grid container spacing={3} justify="center">
+          <Grid
+            container
+            spacing={3}
+            justify="center"
+            style={{ marginBottom: "1px" }}
+          >
             <Button
               type="submit"
               variant="contained"

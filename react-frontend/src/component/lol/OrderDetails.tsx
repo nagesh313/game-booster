@@ -12,7 +12,7 @@ import {
   PeopleAlt,
   PersonAdd,
   PersonAddDisabled,
-  Videocam
+  Videocam,
 } from "@material-ui/icons";
 import GamepadIcon from "@material-ui/icons/Gamepad";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -85,7 +85,7 @@ function OrderDetailsComponent(props: any) {
           />
           <hr></hr>
           <CardContent>
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <Typography>
                 <b>{"LOL SUMMONNER NAME : "}</b>
                 {order?.accountInformation?.summonerName}

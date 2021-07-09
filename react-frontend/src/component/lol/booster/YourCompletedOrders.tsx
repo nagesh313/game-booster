@@ -35,7 +35,7 @@ function YourCompletedOrdersComponent(props: any) {
             <TableCell>ID</TableCell>
             <TableCell>Type</TableCell>
             <TableCell>Order Details</TableCell>
-            <TableCell>Extras</TableCell>
+            {/* <TableCell>Extras</TableCell> */}
             <TableCell>Server</TableCell>
             <TableCell>Status</TableCell>
             <TableCell>Date</TableCell>
@@ -80,13 +80,13 @@ function YourCompletedOrdersComponent(props: any) {
                 </TableCell>
               )}
 
-              <TableCell>
+              {/* <TableCell>
                 {row.appearOffline && <div>APPEAR OFFLINE ON CHAT</div>}
                 {row.specificAgent && <div>SPECIFIC AGENTS</div>}
                 {row.playWithBooster && <div>PLAY WITH BOOSTER</div>}
                 {row.priorityOrder && <div>PRIORITY ORDER</div>}
                 {row.withStreaming && <div>WITH STREAMING</div>}
-              </TableCell>
+              </TableCell> */}
               <TableCell>{row.server}</TableCell>
               <TableCell>{row.status}</TableCell>
               <TableCell>{row.createdDate}</TableCell>

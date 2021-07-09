@@ -469,7 +469,6 @@ function RankBoostingComponent(props: any) {
             <TextField
               fullWidth
               variant="outlined"
-              autoFocus
               autoComplete="unset"
               margin="dense"
               label="LOL Account"

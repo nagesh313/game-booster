@@ -7,11 +7,12 @@ import TableRow from "@material-ui/core/TableRow";
 import axios from "axios";
 import { withSnackbar } from "notistack";
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { failureToast, successToast } from "../../../util/util";
 import Title from "../../Title";
 export function FinishedOrdersComponent(props: any) {
   const [orderList, setOrderList] = React.useState<any>([]);
-
+  const history = useHistory();
   const fetchOrderList = () => {
     axios
       .get("/api/v1/order/finished")
@@ -50,6 +51,9 @@ export function FinishedOrdersComponent(props: any) {
           props.enqueueSnackbar(reponse.error, failureToast);
         });
     }
+  };
+  const viewOrder = (row: any) => {
+    history.push("/dashboard/order-details/" + row.id);
   };
   useEffect(() => {
     fetchOrderList();
@@ -93,6 +97,14 @@ export function FinishedOrdersComponent(props: any) {
                   color="primary"
                   aria-label="contained primary button group"
                 >
+                  <Button
+                    color="primary"
+                    onClick={() => {
+                      viewOrder(row);
+                    }}
+                  >
+                    View
+                  </Button>
                   {!row.paid && (
                     <Button
                       color="primary"
