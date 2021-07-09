@@ -7,9 +7,9 @@ import TableRow from "@material-ui/core/TableRow";
 import axios from "axios";
 import { withSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { failureToast } from "../../../util/util";
 import Title from "../../Title";
-import { AddAnOrderDialog } from "./AddAnOrderDialog";
 const useRowStyles = makeStyles({
   root: {
     "& > *": {
@@ -36,16 +36,24 @@ const WaitingForBoostersOrdersComponent = (props: any) => {
   const [orderList, setOrderList] = useState<any>([]);
   // const user = JSON.parse(sessionStorage.getItem("user") || "{}");
   // const admin = user.roles.includes("ROLE_ADMIN");
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
+  const [ratesList, setRatesList] = React.useState<any>([]);
+  const [serversList, setServersList] = React.useState<any>([]);
+  const [desiredRanksList, setDesiredRanksList] = React.useState<any>([]);
+  const [currentRanksList, setCurrentRanksList] = React.useState<any>([]);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    fetchOrderList();
-  };
+  console.log(ratesList, serversList, desiredRanksList, currentRanksList);
+  const history = useHistory();
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+  function navigateToCreateOrder() {
+    history.push("/dashboard/admin-create-order");
+  }
+  // const handleClose = () => {
+  //   setOpen(false);
+  //   fetchOrderList();
+  // };
   const fetchOrderList = () => {
     const url = "/api/v1/order/new";
     axios
@@ -57,27 +65,68 @@ const WaitingForBoostersOrdersComponent = (props: any) => {
         props.enqueueSnackbar(reponse.error, failureToast);
       });
   };
+  const fetchServerList = () => {
+    axios
+      .get("/api/v1/config/servers")
+      .then((response: any) => {
+        setServersList(response.data);
+      })
+      .catch((reponse: any) => {
+        props.enqueueSnackbar(reponse.error, failureToast);
+      });
+  };
+  const fetchRanksList = () => {
+    axios
+      .get("/api/v1/config/ranks")
+      .then((response: any) => {
+        const currentRankList = [...response.data];
+        const desiredRankList = [...response.data];
+        currentRankList.splice(currentRankList.length - 1, 1);
+        desiredRankList.splice(0, 1);
+        setCurrentRanksList(currentRankList);
+        setDesiredRanksList(desiredRankList);
+      })
+      .catch((reponse: any) => {
+        props.enqueueSnackbar(reponse.error, failureToast);
+      });
+  };
+  const fetchRatesList = () => {
+    axios
+      .get("/api/v1/config/rates")
+      .then((response: any) => {
+        setRatesList(response.data);
+      })
+      .catch((reponse: any) => {
+        props.enqueueSnackbar(reponse.error, failureToast);
+      });
+  };
   useEffect(() => {
     fetchOrderList();
+    fetchServerList();
+    fetchRanksList();
+    fetchRatesList();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <React.Fragment>
-      <AddAnOrderDialog
+      {/* <AddAnOrderDialog
         open={open}
         handleClickOpen={handleClickOpen}
         handleClose={handleClose}
-      ></AddAnOrderDialog>
+        serversList={serversList}
+        desiredRanksList={desiredRanksList}
+        currentRanksList={currentRanksList}
+      ></AddAnOrderDialog> */}
       <Grid container>
         <Grid xs={9} item>
-          <Title>Waiting for Boosters Orders</Title>
+          <Title>Waiting for Boosters Orders ({orderList.length})</Title>
         </Grid>
         <Grid xs={3} item style={{ textAlign: "right" }}>
           <Button
             size="small"
             variant="contained"
             color="primary"
-            onClick={handleClickOpen}
+            onClick={navigateToCreateOrder}
           >
             <Icon>add</Icon>
           </Button>

@@ -19,6 +19,8 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import React from "react";
+import AddIcon from "@material-ui/icons/Add";
+import { SportsEsports } from "@material-ui/icons";
 export const AdminListItems = () => {
   const user = JSON.parse(sessionStorage.getItem("user") || "{roles:[]}");
   return user.roles.includes("ROLE_ADMIN") ? (
@@ -77,6 +79,13 @@ export const MainListItems = () => {
             </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItem>
+
+          <ListItem button component="a" href="/#/dashboard/admin-create-order">
+            <ListItemIcon>
+              <AddIcon />
+            </ListItemIcon>
+            <ListItemText primary="Create Order" />
+          </ListItem>
         </div>
       )}
       {user.roles.includes("ROLE_BOOSTER") && (
@@ -93,6 +102,16 @@ export const MainListItems = () => {
             </ListItemIcon>
             <ListItemText primary="New Orders" />
           </ListItem>
+          <ListItem
+            button
+            component="a"
+            href="/#/dashboard/account-information"
+          >
+            <ListItemIcon>
+              <SportsEsports />
+            </ListItemIcon>
+            <ListItemText primary="Account Info" />
+          </ListItem>
         </div>
       )}
       {user.roles.includes("ROLE_USER") && (
@@ -102,6 +121,22 @@ export const MainListItems = () => {
               <FormatListBulletedIcon />
             </ListItemIcon>
             <ListItemText primary="Home" />
+          </ListItem>
+          <ListItem button component="a" href="/#/dashboard/create-order">
+            <ListItemIcon>
+              <AddIcon />
+            </ListItemIcon>
+            <ListItemText primary="Create Order" />
+          </ListItem>
+          <ListItem
+            button
+            component="a"
+            href="/#/dashboard/account-information"
+          >
+            <ListItemIcon>
+              <SportsEsports />
+            </ListItemIcon>
+            <ListItemText primary="Account Info" />
           </ListItem>
         </div>
       )}

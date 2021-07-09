@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -18,6 +19,17 @@ public class OrderController {
     private OrderRepository orderRepository;
     @Autowired
     private UserRepository userRepository;
+
+    @GetMapping("/{orderId}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_BOOSTER')")
+    public Order getOrderById(@PathVariable Long orderId) throws Exception {
+        Optional<Order> order = orderRepository.findById(orderId);
+        if (order.isPresent()) {
+            return order.get();
+        } else {
+            throw new Exception("Order Not Found");
+        }
+    }
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -41,6 +53,7 @@ public class OrderController {
     public List<Order> newOrders() {
         return orderRepository.findAllByStatus(EStatus.ORDER_NEW);
     }
+
 
     @GetMapping("/user/{userId}")
     public List<Order> getAllOrderByUserId(@PathVariable Long userId) {
@@ -99,11 +112,47 @@ public class OrderController {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
             order.setStatus(EStatus.ORDER_NEW);
-            order.setCreatedDate(new Date().toString());
+            LocalDate currentDate = LocalDate.now();
+            String date = currentDate.getMonth().toString() + " " + currentDate.getDayOfMonth() + ", " + currentDate.getYear();
+            order.setCreatedDate(date);
             order.setUser(user.get());
             orderRepository.save(order);
         } else {
             throw new Exception("Invalid Request");
+        }
+    }
+
+    @PostMapping("/admin/create/{userId}/{boosterId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void createNewOrderByUserId(
+            @RequestBody Order order, @PathVariable Long userId, @PathVariable Long boosterId) throws Exception {
+        Optional<User> forBooster = userRepository.findById(boosterId);
+        Optional<User> forUser = userRepository.findById(userId);
+        if (!forUser.isPresent()) {
+            throw new Exception("Please select for which user this order is for!");
+        } else {
+            order.setStatus(EStatus.ORDER_RUNNING);
+            LocalDate currentDate = LocalDate.now();
+            String date = currentDate.getMonth().toString() + " " + currentDate.getDayOfMonth() + ", " + currentDate.getYear();
+            order.setCreatedDate(date);
+            order.setUser(forUser.get());
+            if (forBooster.isPresent()) {
+                order.setAssignedTo(forBooster.get());
+            }
+            orderRepository.save(order);
+        }
+    }
+
+    @GetMapping("/admin/paid/{orderId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void markAmountPaidToBoosterForOrder(@PathVariable Long orderId) throws Exception {
+        Optional<Order> orderToMarkComplete = orderRepository.findById(orderId);
+        if (orderToMarkComplete.isPresent()) {
+            Order order = orderToMarkComplete.get();
+            order.setPaid(true);
+            orderRepository.save(order);
+        } else {
+            throw new Exception("Order Not Present");
         }
     }
 
@@ -161,7 +210,9 @@ public class OrderController {
         if (order.isPresent()) {
             Order orderToComplete = order.get();
             orderToComplete.setStatus(EStatus.ORDER_FINISHED);
-            orderToComplete.setCompletionDate(new Date().toString());
+            LocalDate currentDate = LocalDate.now();
+            String date = currentDate.getMonth().toString().to + " " + currentDate.getDayOfMonth() + ", " + currentDate.getYear();
+            orderToComplete.setCompletionDate(date);
             orderRepository.save(orderToComplete);
         } else {
             throw new Exception("Invalid Order");

@@ -53,7 +53,7 @@ export function YourRunningOrdersComponent(props: any) {
 
   return (
     <React.Fragment>
-      <Title>Your Running Orders (Orders Taken/Assigned)</Title>
+      <Title>Your Running Orders (Orders Taken/Assigned) ({orderList.length})</Title>
       <Table size="small">
         <TableHead>
           <TableRow>

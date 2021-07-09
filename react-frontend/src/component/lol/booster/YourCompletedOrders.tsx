@@ -28,7 +28,7 @@ function YourCompletedOrdersComponent(props: any) {
 
   return (
     <React.Fragment>
-      <Title>Your Completed Orders</Title>
+      <Title>Your Completed Orders ({orderList.length})</Title>
       <Table size="small">
         <TableHead>
           <TableRow>

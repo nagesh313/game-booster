@@ -28,8 +28,8 @@ public class DataLoaderComponent {
 
     @PostConstruct
     public void addUsers() {
-        User admin = new User("admin", "admin", "admin", "admin@gmail.com ", encoder.encode("admin"), ERole.ROLE_ADMIN);
-        User booster = new User("booster", "booster", "booster", "booster@gmail.com ", encoder.encode("booster"), ERole.ROLE_BOOSTER);
+        User admin = new User("Admin", "Admin", "admin", "admin@gmail.com ", encoder.encode("admin"), ERole.ROLE_ADMIN);
+        User booster = new User("Booster", "Booster", "booster", "booster@gmail.com ", encoder.encode("booster"), ERole.ROLE_BOOSTER);
         AccountInformation boosterAccountInformation = new AccountInformation();
         boosterAccountInformation.setAccountName("booster");
         boosterAccountInformation.setAccountPassword("booster");
@@ -37,7 +37,7 @@ public class DataLoaderComponent {
         boosterAccountInformation.setLolPassword("boosterLOLPWD");
         boosterAccountInformation.setPaypalEmail("booster@Paypal");
         booster.setAccountInformations(boosterAccountInformation);
-        User user = new User("user", "user", "user", "user@gmail.com ", encoder.encode("user"), ERole.ROLE_USER);
+        User user = new User("User", "User", "user", "user@gmail.com ", encoder.encode("user"), ERole.ROLE_USER);
         try {
             userRepository.saveAll(Arrays.asList(admin, booster, user));
         } catch (Exception e) {

@@ -27,7 +27,7 @@ function Row(props: any) {
       <TableRow className={classes.root}>
         <TableCell>{row.username}</TableCell>
         <TableCell>{row.rank}</TableCell>
-        <TableCell>{row.paypalEmail}</TableCell>
+        <TableCell>{row?.accountInformations?.paypalEmail}</TableCell>
         <TableCell align="center">{row.percentage}</TableCell>
         <TableCell align="right">
           <IconButton
@@ -103,7 +103,7 @@ const BoostersComponent = (props: any) => {
       ></AddABoosterDialog>
       <Grid container>
         <Grid xs={9} item>
-          <Title>Boosters</Title>
+          <Title>Boosters ({boosterList.length})</Title>
         </Grid>
         <Grid xs={3} item style={{ textAlign: "right" }}>
           <Button

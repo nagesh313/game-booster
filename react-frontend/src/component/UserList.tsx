@@ -14,7 +14,7 @@ export function UserListComponent(props: any) {
 
   const fetchUserList = () => {
     axios
-      .get("/api/v1/admin/getAllUsers")
+      .get("/api/v1/admin/all")
       .then((response: any) => {
         setUserList(response.data);
       })
@@ -29,7 +29,7 @@ export function UserListComponent(props: any) {
 
   return (
     <React.Fragment>
-      <Title>List of registered Users</Title>
+      <Title>List of registered Users ({userList.length})</Title>
       <Table size="small">
         <TableHead>
           <TableRow>

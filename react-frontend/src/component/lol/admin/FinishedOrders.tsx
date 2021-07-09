@@ -6,10 +6,12 @@ import TableRow from "@material-ui/core/TableRow";
 import axios from "axios";
 import { withSnackbar } from "notistack";
 import React, { useEffect } from "react";
-import { failureToast } from "../../../util/util";
+import { failureToast, successToast } from "../../../util/util";
 import Title from "../../Title";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import { IconButton } from "@material-ui/core";
 export function FinishedOrdersComponent(props: any) {
-  const [userList, setOrderList] = React.useState<any>([]);
+  const [orderList, setOrderList] = React.useState<any>([]);
 
   const fetchOrderList = () => {
     axios
@@ -21,13 +23,26 @@ export function FinishedOrdersComponent(props: any) {
         props.enqueueSnackbar(reponse.error, failureToast);
       });
   };
-
+  const markAsPaidToBooster = (row: any) => {
+    axios
+      .get("/api/v1/order/admin/paid/" + row.id)
+      .then((response: any) => {
+        props.enqueueSnackbar(
+          "Payment for Order to Booster Has been Marked as Paid",
+          successToast
+        );
+        fetchOrderList();
+      })
+      .catch((reponse: any) => {
+        props.enqueueSnackbar(reponse.error, failureToast);
+      });
+  };
   useEffect(() => {
     fetchOrderList();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <React.Fragment>
-      <Title>Finished Orders</Title>
+      <Title>Finished Orders ({orderList.length})</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -45,7 +60,7 @@ export function FinishedOrdersComponent(props: any) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {userList.map((row: any) => (
+          {orderList.map((row: any) => (
             <TableRow key={row.id}>
               <TableCell>{row.id}</TableCell>
               <TableCell>{row.Queue}</TableCell>
@@ -57,7 +72,17 @@ export function FinishedOrdersComponent(props: any) {
               <TableCell>{row.assignedTo?.username}</TableCell>
               <TableCell>{row.BoosterPrice}</TableCell>
               <TableCell>{row?.assignedTo?.paypalEmail}</TableCell>
-              <TableCell></TableCell>
+              <TableCell>
+                {!row.paid && (
+                  <IconButton>
+                    <AttachMoneyIcon
+                      onClick={() => {
+                        markAsPaidToBooster(row);
+                      }}
+                    ></AttachMoneyIcon>
+                  </IconButton>
+                )}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

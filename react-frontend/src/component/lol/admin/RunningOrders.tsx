@@ -28,7 +28,7 @@ export function RunningOrdersComponent(props: any) {
 
   return (
     <React.Fragment>
-      <Title>Running Orders</Title>
+      <Title>Running Orders ({runningOrderList.length})</Title>
       <Table size="small">
         <TableHead>
           <TableRow>

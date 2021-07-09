@@ -10,7 +10,7 @@ function UserHomeComponent(props: any) {
 
   useEffect(() => {}, []); // eslint-disable-line react-hooks/exhaustive-deps
   function navigateToCreateOrder() {
-    history.push("/dashboard/createOrder");
+    history.push("/dashboard/create-order");
   }
   return (
     <React.Fragment>

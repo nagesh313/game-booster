@@ -1,7 +1,9 @@
 package com.controllers.admin;
 
+import com.model.AccountInformation;
 import com.model.ERole;
 import com.model.User;
+import com.payload.request.AccountInfo;
 import com.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +18,17 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("/getAllUsers")
+    @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<User> allAccess() {
+    public List<User> all() {
         return userRepository.findAll();
     }
 
+    @GetMapping("/users")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<User> getAllUsers() {
+        return userRepository.findAllByAccountType(ERole.ROLE_USER);
+    }
 
     @GetMapping("/boosters")
     @PreAuthorize("hasRole('ADMIN')")
@@ -96,6 +103,42 @@ public class UserController {
 
         }
         return ResponseEntity.ok("User Deleted");
+    }
+
+
+    @GetMapping("/account-information/{userId}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_BOOSTER')")
+    public AccountInformation getAccountInformation(@PathVariable Long userId) throws Exception {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            return user.get().getAccountInformations();
+        } else {
+            throw new Exception("User Doesn't Exist.");
+        }
+    }
+
+    @PostMapping("/account-information/{userId}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_BOOSTER')")
+    public ResponseEntity<String> saveAccountInformation(@RequestBody AccountInfo payload, @PathVariable Long userId) throws Exception {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            User userToUpdate = user.get();
+            AccountInformation accountInformation;
+            if (userToUpdate.getAccountInformations() == null) {
+                accountInformation = new AccountInformation();
+            } else {
+                accountInformation = userToUpdate.getAccountInformations();
+            }
+            accountInformation.setLolAccount(payload.getLolAccount());
+            accountInformation.setLolPassword(payload.getLolPassword());
+            accountInformation.setSummonerName(payload.getSummonerName());
+            accountInformation.setSummonerName(payload.getPaypalEmail());
+            userToUpdate.setAccountInformations(accountInformation);
+            userRepository.save(userToUpdate);
+        } else {
+            throw new Exception("User Doesn't Exist.");
+        }
+        return ResponseEntity.ok("User activated");
     }
 //
 //    @GetMapping("/mod")

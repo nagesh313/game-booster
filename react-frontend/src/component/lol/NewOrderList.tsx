@@ -9,7 +9,7 @@ import React, { useEffect } from "react";
 import { failureToast } from "../../util/util";
 import Title from "../Title";
 export function OrderListComponent(props: any) {
-  const [userList, setOrderList] = React.useState<any>([]);
+  const [orderList, setOrderList] = React.useState<any>([]);
 
   const fetchOrderList = () => {
     axios
@@ -28,7 +28,7 @@ export function OrderListComponent(props: any) {
 
   return (
     <React.Fragment>
-      <Title>List of new Orders</Title>
+      <Title>List of new Orders ({orderList.length})</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -39,7 +39,7 @@ export function OrderListComponent(props: any) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {userList.map((row: any) => (
+          {orderList.map((row: any) => (
             <TableRow key={row.id}>
               <TableCell>{row.firstname}</TableCell>
               <TableCell>{row.lastname}</TableCell>

@@ -32,6 +32,7 @@ public class Order {
     private String createdDate;
     private String completionDate;
     private String wins;
+    private boolean paid = false;
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private EStatus status;

@@ -11,8 +11,11 @@ import { withSnackbar } from "notistack";
 import React, { useEffect } from "react";
 import { failureToast, successToast } from "../../../util/util";
 import Title from "../../Title";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import { useHistory } from "react-router-dom";
 export function OrdersComponent(props: any) {
-  const [userList, setOrderList] = React.useState<any>([]);
+  const history = useHistory();
+  const [orderList, setOrderList] = React.useState<any>([]);
 
   const fetchOrderList = () => {
     const user = JSON.parse(sessionStorage.getItem("user") || "{}");
@@ -25,6 +28,10 @@ export function OrdersComponent(props: any) {
         props.enqueueSnackbar(reponse.error, failureToast);
       });
   };
+  const viewOrder = (row: any) => {
+    history.push("/dashboard/order-details/" + row.id);
+  };
+
   const pauseOrder = (row: any) => {
     const user = JSON.parse(sessionStorage.getItem("user") || "{}");
     axios
@@ -55,7 +62,7 @@ export function OrdersComponent(props: any) {
 
   return (
     <React.Fragment>
-      <Title>Your Orders</Title>
+      <Title>Your Orders ({orderList.length})</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -71,7 +78,7 @@ export function OrdersComponent(props: any) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {userList.map((row: any) => (
+          {orderList.map((row: any) => (
             <TableRow key={row.id}>
               <TableCell>{row.id}</TableCell>
               <TableCell>{row.type}</TableCell>
@@ -120,6 +127,13 @@ export function OrdersComponent(props: any) {
               <TableCell>{row.createdDate}</TableCell>
               <TableCell>${row.totalAmount}</TableCell>
               <TableCell align="right">
+                <IconButton
+                  onClick={() => {
+                    viewOrder(row);
+                  }}
+                >
+                  <VisibilityIcon></VisibilityIcon>
+                </IconButton>
                 <IconButton
                   onClick={() => {
                     pauseOrder(row);

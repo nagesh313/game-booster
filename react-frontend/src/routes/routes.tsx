@@ -15,7 +15,10 @@ import Pricing from "../component/pricing";
 import { SignIn } from "../component/SignIn";
 import { SignUp } from "../component/SignUp";
 import { UserList } from "../component/UserList";
-
+import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
+import { AccountInformation } from "../component/AccountInformation";
+import { AdminCreateAnOrder } from "../component/lol/admin/AdminCreateAnOrder";
+import { OrderDetails } from "../component/lol/OrderDetails";
 export const dashboardRoutes = [
   {
     path: "/signin",
@@ -105,13 +108,26 @@ export const secondaryRoutes = [
   },
 
   {
-    path: "/dashboard/createOrder",
-    name: "/dashboard/createOrder",
+    path: "/dashboard/create-order",
+    name: "/dashboard/create-order",
     icon: <AllOutIcon></AllOutIcon>,
     component: <CreateAnOrder></CreateAnOrder>,
-    layout: "/dashboard/createOrder",
+    layout: "/dashboard/create-order",
   },
-
+  {
+    path: "/dashboard/admin-create-order",
+    name: "/dashboard/admin-create-order",
+    icon: <AllOutIcon></AllOutIcon>,
+    component: <AdminCreateAnOrder></AdminCreateAnOrder>,
+    layout: "/dashboard/admin-create-order",
+  },
+  {
+    path: "/dashboard/order-details/:id",
+    name: "/dashboard/order-details/:id",
+    icon: <AllOutIcon></AllOutIcon>,
+    component: <OrderDetails></OrderDetails>,
+    layout: "/dashboard/order-details/:id",
+  },
   {
     path: "/dashboard/new-orders",
     name: "/dashboard/new-orders",
@@ -135,5 +151,12 @@ export const secondaryRoutes = [
       }
     },
     layout: "/dashboard/home",
+  },
+  {
+    path: "/dashboard/account-information",
+    name: "/dashboard/account-information",
+    icon: <SportsEsportsIcon></SportsEsportsIcon>,
+    component: <AccountInformation></AccountInformation>,
+    layout: "/dashboard/account-information",
   },
 ];

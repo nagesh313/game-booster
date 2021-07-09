@@ -43,7 +43,7 @@ export function NewOrdersComponent(props: any) {
 
   return (
     <React.Fragment>
-      <Title>New Orders</Title>
+      <Title>New Orders ({newOrderList.length})</Title>
       <Table size="small">
         <TableHead>
           <TableRow>

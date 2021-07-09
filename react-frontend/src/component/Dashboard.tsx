@@ -10,8 +10,10 @@ import List from "@material-ui/core/List";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import AccessibilityIcon from "@material-ui/icons/Accessibility";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import FlashOnIcon from "@material-ui/icons/FlashOn";
 import MenuIcon from "@material-ui/icons/Menu";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import clsx from "clsx";
@@ -118,8 +120,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const history = useHistory();
-  // const user = JSON.parse(sessionStorage.getItem("user") || "{roles:[]}");
+  if (sessionStorage.getItem("user") == null) {
+    alert("User session missing");
+  }
 
+  const user = JSON.parse(sessionStorage.getItem("user") || "{roles:[]}");
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
@@ -228,10 +233,16 @@ export default function Dashboard() {
             color="inherit"
             noWrap
             className={classes.title}
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              history.push("/dashboard/home");
+              //
+            }}
           >
             Booster App
           </Typography>
           <div className={classes.grow} />
+          <div>{user?.username}</div>
           <div className={classes.sectionDesktop}>
             <IconButton
               edge="end"
@@ -241,7 +252,15 @@ export default function Dashboard() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              {user?.roles?.includes("ROLE_ADMIN") && (
+                <AccessibilityIcon></AccessibilityIcon>
+              )}
+              {user?.roles?.includes("ROLE_USER") && (
+                <AccountCircle></AccountCircle>
+              )}
+              {user?.roles?.includes("ROLE_BOOSTER") && (
+                <FlashOnIcon></FlashOnIcon>
+              )}
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
