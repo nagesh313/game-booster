@@ -10,10 +10,9 @@ import List from "@material-ui/core/List";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import AccessibilityIcon from "@material-ui/icons/Accessibility";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import FlashOnIcon from "@material-ui/icons/FlashOn";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import MenuIcon from "@material-ui/icons/Menu";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import clsx from "clsx";
@@ -162,7 +161,9 @@ export default function Dashboard() {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
-
+  const logout = (event: any) => {
+    history.push("/signIn");
+  };
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
@@ -249,10 +250,11 @@ export default function Dashboard() {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              onClick={logout}
               color="inherit"
             >
-              {user?.roles?.includes("ROLE_ADMIN") && (
+              <ExitToAppIcon></ExitToAppIcon>
+              {/* {user?.roles?.includes("ROLE_ADMIN") && (
                 <AccessibilityIcon></AccessibilityIcon>
               )}
               {user?.roles?.includes("ROLE_USER") && (
@@ -260,7 +262,7 @@ export default function Dashboard() {
               )}
               {user?.roles?.includes("ROLE_BOOSTER") && (
                 <FlashOnIcon></FlashOnIcon>
-              )}
+              )} */}
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>

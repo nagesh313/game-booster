@@ -63,3 +63,10 @@ a {
 ::-webkit-scrollbar-thumb {
   background-color: #000000;
 }
+
+.MuiButtonGroup-groupedContainedHorizontal {
+  font-size: 0.6rem !important;
+}
+.MuiButton-contained {
+  font-size: 0.6rem !important;
+}

@@ -1,3 +1,4 @@
+import { Button, ButtonGroup } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -8,8 +9,6 @@ import { withSnackbar } from "notistack";
 import React, { useEffect } from "react";
 import { failureToast, successToast } from "../../../util/util";
 import Title from "../../Title";
-import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
-import { IconButton } from "@material-ui/core";
 export function FinishedOrdersComponent(props: any) {
   const [orderList, setOrderList] = React.useState<any>([]);
 
@@ -24,18 +23,33 @@ export function FinishedOrdersComponent(props: any) {
       });
   };
   const markAsPaidToBooster = (row: any) => {
-    axios
-      .get("/api/v1/order/admin/paid/" + row.id)
-      .then((response: any) => {
-        props.enqueueSnackbar(
-          "Payment for Order to Booster Has been Marked as Paid",
-          successToast
-        );
-        fetchOrderList();
-      })
-      .catch((reponse: any) => {
-        props.enqueueSnackbar(reponse.error, failureToast);
-      });
+    if (window.confirm("Are you sure you paid the Booster?")) {
+      axios
+        .get("/api/v1/order/admin/paid/" + row.id)
+        .then((response: any) => {
+          props.enqueueSnackbar(
+            "Payment for Order to Booster Has been Marked as Paid",
+            successToast
+          );
+          fetchOrderList();
+        })
+        .catch((reponse: any) => {
+          props.enqueueSnackbar(reponse.error, failureToast);
+        });
+    }
+  };
+  const deleteOrder = (row: any) => {
+    if (window.confirm("Are you sure you want to Delete the Order?")) {
+      axios
+        .delete("/api/v1/order/admin/delete/" + row.id)
+        .then((response: any) => {
+          props.enqueueSnackbar("Order Deleted Successfully", successToast);
+          fetchOrderList();
+        })
+        .catch((reponse: any) => {
+          props.enqueueSnackbar(reponse.error, failureToast);
+        });
+    }
   };
   useEffect(() => {
     fetchOrderList();
@@ -56,7 +70,7 @@ export function FinishedOrdersComponent(props: any) {
             <TableCell>Booster name</TableCell>
             <TableCell>Booster Price</TableCell>
             <TableCell>Booster Paypal</TableCell>
-            <TableCell>Action</TableCell>
+            <TableCell align="center">Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -72,16 +86,32 @@ export function FinishedOrdersComponent(props: any) {
               <TableCell>{row.assignedTo?.username}</TableCell>
               <TableCell>{row.BoosterPrice}</TableCell>
               <TableCell>{row?.assignedTo?.paypalEmail}</TableCell>
-              <TableCell>
-                {!row.paid && (
-                  <IconButton>
-                    <AttachMoneyIcon
+              <TableCell align="center">
+                <ButtonGroup
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  aria-label="contained primary button group"
+                >
+                  {!row.paid && (
+                    <Button
+                      color="primary"
                       onClick={() => {
                         markAsPaidToBooster(row);
                       }}
-                    ></AttachMoneyIcon>
-                  </IconButton>
-                )}
+                    >
+                      PAID
+                    </Button>
+                  )}
+                  <Button
+                    color="secondary"
+                    onClick={() => {
+                      deleteOrder(row);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </ButtonGroup>
               </TableCell>
             </TableRow>
           ))}

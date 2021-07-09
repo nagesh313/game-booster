@@ -102,16 +102,18 @@ export const MainListItems = () => {
             </ListItemIcon>
             <ListItemText primary="New Orders" />
           </ListItem>
-          <ListItem
-            button
-            component="a"
-            href="/#/dashboard/account-information"
-          >
-            <ListItemIcon>
-              <SportsEsports />
-            </ListItemIcon>
-            <ListItemText primary="Account Info" />
-          </ListItem>
+          {
+            <ListItem
+              button
+              component="a"
+              href="/#/dashboard/account-information"
+            >
+              <ListItemIcon>
+                <SportsEsports />
+              </ListItemIcon>
+              <ListItemText primary="Account Info" />
+            </ListItem>
+          }
         </div>
       )}
       {user.roles.includes("ROLE_USER") && (
@@ -128,7 +130,7 @@ export const MainListItems = () => {
             </ListItemIcon>
             <ListItemText primary="Create Order" />
           </ListItem>
-          <ListItem
+          {/* <ListItem
             button
             component="a"
             href="/#/dashboard/account-information"
@@ -137,7 +139,7 @@ export const MainListItems = () => {
               <SportsEsports />
             </ListItemIcon>
             <ListItemText primary="Account Info" />
-          </ListItem>
+          </ListItem> */}
         </div>
       )}
       {/* <ListItem button component="a" href="/#/dashboard/checkout">

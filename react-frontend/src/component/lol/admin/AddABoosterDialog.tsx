@@ -3,25 +3,24 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import { Form, Formik } from "formik";
 import { withSnackbar } from "notistack";
 import React from "react";
-import * as Yup from "yup";
 import { failureToast, successToast } from "../../../util/util";
+import Title from "../../Title";
 
-const OrderSchema = Yup.object().shape({
-  username: Yup.string().required("Required"),
-  email: Yup.string().email("Invalid email").required("Required"),
-  password: Yup.string().required("Required"),
-  paypalEmail: Yup.string()
-    .email("Invalid paypalEmail email")
-    .required("Required"),
-  rank: Yup.string().required("Required"),
-  percentage: Yup.string().required("Required"),
-});
+// const OrderSchema = Yup.object().shape({
+//   username: Yup.string().required("Required"),
+//   email: Yup.string().email("Invalid email").required("Required"),
+//   password: Yup.string().required("Required"),
+//   paypalEmail: Yup.string()
+//     .email("Invalid paypalEmail email")
+//     .required("Required"),
+//   rank: Yup.string().required("Required"),
+//   percentage: Yup.string().required("Required"),
+// });
 
 const AddABoosterDialogComponent = (props: any) => {
   const submitBooster = (data: any) => {
@@ -43,6 +42,7 @@ const AddABoosterDialogComponent = (props: any) => {
   let values: any;
   if (props.editBoosterData) {
     values = {
+      id: props.editBoosterData.username,
       username: props.editBoosterData.username,
       email: props.editBoosterData.email,
       password: props.editBoosterData.password,
@@ -52,12 +52,12 @@ const AddABoosterDialogComponent = (props: any) => {
     };
   } else {
     values = {
-      username: "booster",
-      email: "booster@email.com",
-      password: "password",
-      paypalEmail: "booster@email.com",
-      rank: "rank",
-      percentage: "23",
+      username: "",
+      email: "",
+      password: "",
+      paypalEmail: "",
+      rank: "",
+      percentage: "",
     };
   }
 
@@ -69,20 +69,21 @@ const AddABoosterDialogComponent = (props: any) => {
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle id="form-dialog-title">Add a Booster</DialogTitle>
         <Formik
           initialValues={values}
-          validationSchema={OrderSchema}
+          // validationSchema={OrderSchema}
           onSubmit={(values: any) => {
             submitBooster(values);
           }}
         >
           {({ errors, touched, values, handleChange }) => (
             <Form>
-              <DialogContent>
-                <Grid container spacing={3}>
+              <DialogContent style={{ padding: "24px" }}>
+                <Title>Add a Booster</Title>
+                <Grid container>
                   <Grid xs={6} item>
                     <TextField
+                      variant="outlined"
                       autoFocus
                       name="username"
                       margin="dense"
@@ -95,61 +96,65 @@ const AddABoosterDialogComponent = (props: any) => {
                   </Grid>
                   <Grid xs={6} item>
                     <TextField
+                      variant="outlined"
                       name="email"
                       margin="dense"
                       id="email"
                       label="Email"
-                      type="email"
                       onChange={handleChange}
                       value={values.email}
                       helperText={touched.email && errors.email}
                     />
                   </Grid>
                 </Grid>
+                {!values.id && (
+                  <Grid container>
+                    <Grid xs={6} item>
+                      <TextField
+                        variant="outlined"
+                        name="password"
+                        margin="dense"
+                        id="password"
+                        label="Password"
+                        type="password"
+                        onChange={handleChange}
+                        value={values.password}
+                        helperText={touched.password && errors.password}
+                      />
+                    </Grid>
+                    <Grid xs={6} item>
+                      <TextField
+                        variant="outlined"
+                        name="confirmPassword"
+                        margin="dense"
+                        id="confirmPassword"
+                        label="Confirm Password"
+                        type="password"
+                        onChange={handleChange}
+                        value={values.confirmPassword}
+                        helperText={
+                          touched.confirmPassword && errors.confirmPassword
+                        }
+                      />
+                    </Grid>
+                  </Grid>
+                )}
                 <Grid container spacing={3}>
                   <Grid xs={6} item>
                     <TextField
-                      autoFocus
-                      name="password"
-                      margin="dense"
-                      id="password"
-                      label="Password"
-                      type="password"
-                      onChange={handleChange}
-                      value={values.password}
-                      helperText={touched.password && errors.password}
-                    />
-                  </Grid>
-                  <Grid xs={6} item>
-                    <TextField
-                      name="confirmPassword"
-                      margin="dense"
-                      id="confirmPassword"
-                      label="Confirm Password"
-                      type="password"
-                      onChange={handleChange}
-                      value={values.confirmPassword}
-                      helperText={
-                        touched.confirmPassword && errors.confirmPassword
-                      }
-                    />
-                  </Grid>
-                </Grid>{" "}
-                <Grid container spacing={3}>
-                  <Grid xs={4} item>
-                    <TextField
+                      variant="outlined"
                       name="paypalEmail"
                       margin="dense"
                       id="paypalEmail"
-                      type="email"
                       label="Paypal Email"
                       onChange={handleChange}
                       value={values.paypalEmail}
                       helperText={touched.paypalEmail && errors.paypalEmail}
                     />
                   </Grid>
-                  <Grid xs={4} item>
+                  <Grid xs={3} item>
                     <TextField
+                      variant="outlined"
                       name="rank"
                       margin="dense"
                       id="rank"
@@ -159,8 +164,9 @@ const AddABoosterDialogComponent = (props: any) => {
                       helperText={touched.rank && errors.rank}
                     />
                   </Grid>
-                  <Grid xs={4} item>
+                  <Grid xs={3} item>
                     <TextField
+                      variant="outlined"
                       name="percentage"
                       margin="dense"
                       id="percentage"

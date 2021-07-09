@@ -1,10 +1,9 @@
-import { Button, Grid, Icon, IconButton, makeStyles } from "@material-ui/core";
+import { Button, ButtonGroup, Grid, makeStyles } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { Delete, Edit } from "@material-ui/icons";
 import axios from "axios";
 import { withSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
@@ -27,23 +26,22 @@ function Row(props: any) {
       <TableRow className={classes.root}>
         <TableCell>{row.username}</TableCell>
         <TableCell>{row.rank}</TableCell>
-        <TableCell>{row?.accountInformations?.paypalEmail}</TableCell>
+        <TableCell>{row?.paypalEmail}</TableCell>
         <TableCell align="center">{row.percentage}</TableCell>
-        <TableCell align="right">
-          <IconButton
-            aria-label="Edit"
+        <TableCell align="center">
+          <ButtonGroup
             size="small"
-            onClick={() => props.editBooster(row)}
+            variant="contained"
+            color="primary"
+            aria-label="contained primary button group"
           >
-            <Edit></Edit>
-          </IconButton>
-          <IconButton
-            aria-label="Delete"
-            size="small"
-            onClick={() => props.deleteBooster(row)}
-          >
-            <Delete></Delete>
-          </IconButton>
+            <Button color="primary" onClick={() => props.editBooster(row)}>
+              Edit
+            </Button>
+            <Button color="secondary" onClick={() => props.deleteBooster(row)}>
+              Delete
+            </Button>
+          </ButtonGroup>
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -112,7 +110,7 @@ const BoostersComponent = (props: any) => {
             color="primary"
             onClick={handleClickOpen}
           >
-            <Icon>add</Icon>
+            Add a Booster
           </Button>
         </Grid>
       </Grid>
@@ -123,7 +121,7 @@ const BoostersComponent = (props: any) => {
             <TableCell>Rank</TableCell>
             <TableCell>Paypal</TableCell>
             <TableCell align="center">Percentage</TableCell>
-            <TableCell align="right">Action</TableCell>
+            <TableCell align="center">Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

@@ -40,4 +40,6 @@ public class Order {
     private User user;
     @OneToOne(fetch = FetchType.LAZY)
     private User assignedTo;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private AccountInformation accountInformation;
 }

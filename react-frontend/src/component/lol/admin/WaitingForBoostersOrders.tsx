@@ -1,4 +1,4 @@
-import { Button, Grid, Icon, makeStyles } from "@material-ui/core";
+import { Button, ButtonGroup, Grid, makeStyles } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -18,16 +18,31 @@ const useRowStyles = makeStyles({
   },
 });
 function Row(props: any) {
+  const history = useHistory();
   const { row } = props;
   const classes = useRowStyles();
-
+  const viewOrder = (row: any) => {
+    history.push("/dashboard/order-details/" + row.id);
+  };
   return (
     <React.Fragment>
       <TableRow className={classes.root}>
         <TableCell>{row.id}</TableCell>
         <TableCell>{row.type}</TableCell>
         <TableCell>{row.totalAmount}</TableCell>
-        <TableCell align="right">{row.status}</TableCell>
+        <TableCell>{row.status}</TableCell>
+        <TableCell align="center">
+          <ButtonGroup
+            size="small"
+            variant="contained"
+            color="primary"
+            aria-label="contained primary button group"
+          >
+            <Button color="primary" onClick={() => viewOrder(row)}>
+              View
+            </Button>
+          </ButtonGroup>
+        </TableCell>
       </TableRow>
     </React.Fragment>
   );
@@ -128,7 +143,7 @@ const WaitingForBoostersOrdersComponent = (props: any) => {
             color="primary"
             onClick={navigateToCreateOrder}
           >
-            <Icon>add</Icon>
+            Add New Order
           </Button>
         </Grid>
       </Grid>
@@ -138,7 +153,8 @@ const WaitingForBoostersOrdersComponent = (props: any) => {
             <TableCell>ID</TableCell>
             <TableCell>Type</TableCell>
             <TableCell>Price</TableCell>
-            <TableCell align="right">Status</TableCell>
+            <TableCell>Status</TableCell>
+            <TableCell align="center"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

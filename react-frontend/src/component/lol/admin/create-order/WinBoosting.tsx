@@ -9,6 +9,7 @@ import {
   Select,
   Slider,
   Switch,
+  TextField,
   Typography,
 } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -36,8 +37,11 @@ function WinBoostingComponent(props: any) {
 
   const [currentRankAmount, setCurrentRankAmount] = React.useState<any>("0-20");
   const [server, setServer] = React.useState<any>("EU-WEST");
-  const [forBooster, setForBooster] = React.useState<any>("");
-  const [forUser, setForUser] = React.useState<any>("");
+  // const [forBooster, setForBooster] = React.useState<any>("");
+  // const [forUser, setForUser] = React.useState<any>("");
+  const [summonerName, setSummonerName] = React.useState<any>("");
+  const [lolAccount, setLolAccount] = React.useState<any>("");
+  const [lolPassword, setLolPassword] = React.useState<any>("");
 
   const [totalAmount, setTotalAmount] = React.useState<any>(100);
   const [appearOffline, setAppearOffline] = React.useState<boolean>(false);
@@ -70,9 +74,17 @@ function WinBoostingComponent(props: any) {
       wins: wins,
       totalAmount: totalAmount,
     };
-    const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+    // const user = JSON.parse(sessionStorage.getItem("user") || "{}");
     axios
-      .post("/api/v1/order/create/" + user.id, payload)
+      .post(
+        "/api/v1/order/admin/create/" +
+          summonerName +
+          "/" +
+          lolAccount +
+          "/" +
+          lolPassword,
+        payload
+      )
       .then((response: any) => {
         // setServersList(response.data);
         props.enqueueSnackbar("Order Created Successfully", successToast);
@@ -390,7 +402,46 @@ function WinBoostingComponent(props: any) {
               $ {totalAmount}
             </Typography>
           </Grid>
-          <Grid xs={12} item style={{ marginTop: "1rem", textAlign: "center" }}>
+          <Grid xs={12} item>
+            <TextField
+              fullWidth
+              variant="outlined"
+              autoFocus
+              autoComplete="unset"
+              margin="dense"
+              label="LOL Account"
+              onChange={(event: any) => {
+                setLolAccount(event.target.value);
+              }}
+              value={lolAccount}
+            />
+          </Grid>
+          <Grid xs={12} item>
+            <TextField
+              fullWidth
+              variant="outlined"
+              margin="dense"
+              label="LOL Password"
+              onChange={(event: any) => {
+                setLolPassword(event.target.value);
+              }}
+              value={lolPassword}
+            />
+          </Grid>
+          <Grid xs={12} item>
+            <TextField
+              fullWidth
+              variant="outlined"
+              margin="dense"
+              label="Summoner Name"
+              onChange={(event: any) => {
+                setSummonerName(event.target.value);
+              }}
+              value={summonerName}
+            />
+          </Grid>
+
+          {/* <Grid xs={12} item style={{ marginTop: "1rem", textAlign: "center" }}>
             <FormControl
               variant="outlined"
               fullWidth
@@ -417,7 +468,6 @@ function WinBoostingComponent(props: any) {
               </Select>
             </FormControl>
           </Grid>
-
           <Grid xs={12} item style={{ marginTop: "1rem", textAlign: "center" }}>
             <FormControl variant="outlined" fullWidth size="small">
               <InputLabel id="user-selection">For User</InputLabel>
@@ -439,12 +489,12 @@ function WinBoostingComponent(props: any) {
                 })}
               </Select>
             </FormControl>
-          </Grid>
+          </Grid> */}
 
           <Grid xs={12} item style={{ marginTop: ".5rem" }}>
             <Button
               fullWidth
-              variant="outlined"
+              variant="contained"
               color="primary"
               onClick={boostNow}
             >

@@ -30,6 +30,7 @@ public class DataLoaderComponent {
     public void addUsers() {
         User admin = new User("Admin", "Admin", "admin", "admin@gmail.com ", encoder.encode("admin"), ERole.ROLE_ADMIN);
         User booster = new User("Booster", "Booster", "booster", "booster@gmail.com ", encoder.encode("booster"), ERole.ROLE_BOOSTER);
+        booster.setPaypalEmail("test@paypal");
         AccountInformation boosterAccountInformation = new AccountInformation();
         boosterAccountInformation.setAccountName("booster");
         boosterAccountInformation.setAccountPassword("booster");

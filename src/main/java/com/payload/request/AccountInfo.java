@@ -9,5 +9,4 @@ public class AccountInfo {
     private String lolPassword;
     private String summonerName;
     private String paypalEmail;
-
 }

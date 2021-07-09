@@ -107,7 +107,7 @@ public class UserController {
 
 
     @GetMapping("/account-information/{userId}")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_BOOSTER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER') or hasRole('ROLE_BOOSTER')")
     public AccountInformation getAccountInformation(@PathVariable Long userId) throws Exception {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
@@ -118,7 +118,7 @@ public class UserController {
     }
 
     @PostMapping("/account-information/{userId}")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_BOOSTER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER') or hasRole('ROLE_BOOSTER')")
     public ResponseEntity<String> saveAccountInformation(@RequestBody AccountInfo payload, @PathVariable Long userId) throws Exception {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
@@ -132,7 +132,7 @@ public class UserController {
             accountInformation.setLolAccount(payload.getLolAccount());
             accountInformation.setLolPassword(payload.getLolPassword());
             accountInformation.setSummonerName(payload.getSummonerName());
-            accountInformation.setSummonerName(payload.getPaypalEmail());
+            accountInformation.setPaypalEmail(payload.getPaypalEmail());
             userToUpdate.setAccountInformations(accountInformation);
             userRepository.save(userToUpdate);
         } else {
