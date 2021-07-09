@@ -211,7 +211,7 @@ public class OrderController {
             Order orderToComplete = order.get();
             orderToComplete.setStatus(EStatus.ORDER_FINISHED);
             LocalDate currentDate = LocalDate.now();
-            String date = currentDate.getMonth().toString().to + " " + currentDate.getDayOfMonth() + ", " + currentDate.getYear();
+            String date = currentDate.getMonth().toString() + " " + currentDate.getDayOfMonth() + ", " + currentDate.getYear();
             orderToComplete.setCompletionDate(date);
             orderRepository.save(orderToComplete);
         } else {
