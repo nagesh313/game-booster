@@ -54,10 +54,9 @@ const WaitingForBoostersOrdersComponent = (props: any) => {
   // const [open, setOpen] = React.useState(false);
   const [ratesList, setRatesList] = React.useState<any>([]);
   const [serversList, setServersList] = React.useState<any>([]);
-  const [desiredRanksList, setDesiredRanksList] = React.useState<any>([]);
-  const [currentRanksList, setCurrentRanksList] = React.useState<any>([]);
+  const [ranksList, setDesiredRanksList] = React.useState<any>([]);
 
-  console.log(ratesList, serversList, desiredRanksList, currentRanksList);
+  console.log(ratesList, serversList, ranksList);
   const history = useHistory();
   // const handleClickOpen = () => {
   //   setOpen(true);
@@ -94,12 +93,7 @@ const WaitingForBoostersOrdersComponent = (props: any) => {
     axios
       .get("/api/v1/config/ranks")
       .then((response: any) => {
-        const currentRankList = [...response.data];
-        const desiredRankList = [...response.data];
-        currentRankList.splice(currentRankList.length - 1, 1);
-        desiredRankList.splice(0, 1);
-        setCurrentRanksList(currentRankList);
-        setDesiredRanksList(desiredRankList);
+        setDesiredRanksList(response.data);
       })
       .catch((reponse: any) => {
         props.enqueueSnackbar(reponse.error, failureToast);
@@ -129,8 +123,7 @@ const WaitingForBoostersOrdersComponent = (props: any) => {
         handleClickOpen={handleClickOpen}
         handleClose={handleClose}
         serversList={serversList}
-        desiredRanksList={desiredRanksList}
-        currentRanksList={currentRanksList}
+        ranksList={ranksList}
       ></AddAnOrderDialog> */}
       <Grid container>
         <Grid xs={9} item>

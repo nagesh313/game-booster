@@ -54,8 +54,7 @@ export default function CreateAnOrderComponent(props: any) {
   const [ratesList, setRatesList] = React.useState<any>([]);
 
   const [serversList, setServersList] = React.useState<any>([]);
-  const [desiredRanksList, setDesiredRanksList] = React.useState<any>([]);
-  const [currentRanksList, setCurrentRanksList] = React.useState<any>([]);
+  const [ranksList, setRanksList] = React.useState<any>([]);
 
   const fetchServerList = () => {
     axios
@@ -71,13 +70,7 @@ export default function CreateAnOrderComponent(props: any) {
     axios
       .get("/api/v1/config/ranks")
       .then((response: any) => {
-        const currentRankList = [...response.data];
-        const desiredRankList = [...response.data];
-
-        currentRankList.splice(currentRankList.length - 1, 1);
-        desiredRankList.splice(0, 1);
-        setCurrentRanksList(currentRankList);
-        setDesiredRanksList(desiredRankList);
+        setRanksList(response.data);
       })
       .catch((reponse: any) => {
         props.enqueueSnackbar(reponse.error, failureToast);
@@ -123,22 +116,19 @@ export default function CreateAnOrderComponent(props: any) {
         <Grid item xs={12}>
           <TabPanel value={value} index={0} dir={theme.direction}>
             <RankBoosting
-              desiredRanksList={desiredRanksList}
-              currentRanksList={currentRanksList}
+              ranksList={ranksList}
               serversList={serversList}
             ></RankBoosting>
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
             <Placements
-              desiredRanksList={desiredRanksList}
-              currentRanksList={currentRanksList}
+              ranksList={ranksList}
               serversList={serversList}
             ></Placements>
           </TabPanel>
           <TabPanel value={value} index={2} dir={theme.direction}>
             <WinBoosting
-              desiredRanksList={desiredRanksList}
-              currentRanksList={currentRanksList}
+              ranksList={ranksList}
               serversList={serversList}
             ></WinBoosting>
           </TabPanel>

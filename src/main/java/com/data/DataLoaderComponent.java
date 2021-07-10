@@ -48,8 +48,10 @@ public class DataLoaderComponent {
 
     @PostConstruct
     public void addServers() {
+        Server server0 = new Server("North America", "EU-WEST");
         Server server1 = new Server("EU-WEST", "EU-WEST");
         Server server2 = new Server("EU-Nordic & East", "EU-Nordic & East");
+        Server server22 = new Server("Oceanic", "Oceanic");
         Server server3 = new Server("Turkey", "Turkey");
         Server server4 = new Server("Russia", "Russia");
         Server server5 = new Server("Brazil", "Brazil");
@@ -60,7 +62,7 @@ public class DataLoaderComponent {
         Server server10 = new Server("South East Asia", "South East Asia");
         Server server11 = new Server("China", "China");
         try {
-            serverRepository.saveAll(Arrays.asList(server1, server2, server3, server4, server5, server6, server7, server8, server9, server10, server11));
+            serverRepository.saveAll(Arrays.asList(server0, server1, server2, server22, server3, server4, server5, server6, server7, server8, server9, server10, server11));
         } catch (Exception e) {
         } finally {
         }

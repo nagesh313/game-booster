@@ -9,6 +9,7 @@ import {
   Select,
   Slider,
   Switch,
+  TextField,
   Typography,
 } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -37,6 +38,12 @@ function WinBoostingComponent(props: any) {
 
   const [currentRankAmount, setCurrentRankAmount] = React.useState<any>("0-20");
   const [server, setServer] = React.useState<any>("EU-WEST");
+  // const [forBooster, setForBooster] = React.useState<any>("");
+  // const [forUser, setForUser] = React.useState<any>("");
+  // const [summonerName, setSummonerName] = React.useState<any>("");
+  // const [lolAccount, setLolAccount] = React.useState<any>("");
+  // const [lolPassword, setLolPassword] = React.useState<any>("");
+
   const [totalAmount, setTotalAmount] = React.useState<any>(100);
   const [appearOffline, setAppearOffline] = React.useState<boolean>(false);
   const [specificAgent, setSpecificAgent] = React.useState<boolean>(false);
@@ -109,7 +116,10 @@ function WinBoostingComponent(props: any) {
     //   props.enqueueSnackbar("Payment Failed", failureToast);
     // });
   };
-
+  console.log(paymentFailed, paymentSuccess);
+  const ranksList: any = props?.ranksList.filter(
+    (rank: any) => rank.name !== "Radiant"
+  );
   return (
     <Grid container style={{ marginTop: "1rem" }} spacing={2}>
       <Grid item xs={12} md={6}>
@@ -126,7 +136,7 @@ function WinBoostingComponent(props: any) {
               </Grid>
               <Grid xs={12} item style={{ marginTop: "1rem" }}>
                 <Grid container spacing={2} justify="center">
-                  {props?.currentRanksList?.map((rank: any) => {
+                  {ranksList?.map((rank: any) => {
                     return (
                       <Chip
                         key={rank.id}
@@ -168,37 +178,21 @@ function WinBoostingComponent(props: any) {
                       );
                     })}
 
-                  {(currentRank === "Immortal" ||
-                    currentRank === "Radiant") && (
+                  {currentRank === "Immortal" && (
                     <Grid xs={12} item style={{ textAlign: "center" }}>
-                      <FormControl
-                        variant="outlined"
-                        fullWidth
-                        size="small"
-                        style={{ marginTop: "1rem", textAlign: "center" }}
-                      >
-                        <InputLabel id="rank-amount-selection">
-                          Current Rank Amount
-                        </InputLabel>
-                        <Select
-                          labelId="rank-amount-selection"
-                          id="rank-amount"
-                          onChange={(event: any, value: any) => {
-                            console.log(value?.props?.value);
-                            setCurrentRankAmount(value?.props?.value);
-                          }}
+                      <Grid xs={12} item style={{ textAlign: "center" }}>
+                        <TextField
                           variant="outlined"
-                          fullWidth
+                          style={{ marginTop: "1rem", textAlign: "center" }}
+                          type="number"
+                          label="Current RR"
                           value={currentRankAmount}
-                          label="Current Rank Amount"
-                        >
-                          <MenuItem value={"0-20"}>0-20</MenuItem>
-                          <MenuItem value={"21-40"}>21-40</MenuItem>
-                          <MenuItem value={"41-60"}>41-60</MenuItem>
-                          <MenuItem value={"61-80"}>61-80</MenuItem>
-                          <MenuItem value={"81-100"}>81-100</MenuItem>
-                        </Select>
-                      </FormControl>
+                          size="small"
+                          onChange={(event: any) => {
+                            setCurrentRankAmount(event.target.value);
+                          }}
+                        ></TextField>
+                      </Grid>
                     </Grid>
                   )}
                 </Grid>

@@ -29,6 +29,10 @@ function valuetext(value: number) {
 function PlacementsComponent(props: any) {
   const [wins, setWins] = React.useState<any>(5);
   const [currentRank, setCurrentRank] = React.useState<any>("");
+  const [currentRankTier, setCurrentRankTier] = React.useState<any>("");
+
+  const [currentRankTiers, setCurrentRankTiers] = React.useState<any>("");
+
   const [totalAmount, setTotalAmount] = React.useState<any>(100);
   const [server, setServer] = React.useState<any>("EU-WEST");
 
@@ -141,10 +145,11 @@ function PlacementsComponent(props: any) {
                     }
                     onClick={() => {
                       setCurrentRank("Unranked");
+                      setCurrentRankTiers("");
                     }}
                     style={{ marginLeft: ".5rem", marginTop: ".5rem" }}
                   />
-                  {props?.currentRanksList?.map((rank: any) => {
+                  {props?.ranksList?.map((rank: any) => {
                     return (
                       <Chip
                         key={rank.id}
@@ -156,11 +161,38 @@ function PlacementsComponent(props: any) {
                         }
                         onClick={() => {
                           setCurrentRank(rank.name);
+                          setCurrentRankTiers(rank.tiers);
                         }}
                         style={{ marginLeft: ".5rem", marginTop: ".5rem" }}
                       />
                     );
                   })}
+                </Grid>
+                <Grid
+                  xs={12}
+                  item
+                  style={{ marginTop: "1rem", textAlign: "center" }}
+                >
+                  <Grid container spacing={2} justify="center">
+                    {currentRankTiers !== "" &&
+                      currentRankTiers.split(",")?.map((tier: any) => {
+                        return (
+                          <Chip
+                            key={tier}
+                            label={tier}
+                            clickable
+                            color="secondary"
+                            variant={
+                              currentRankTier === tier ? "default" : "outlined"
+                            }
+                            onClick={() => {
+                              setCurrentRankTier(tier);
+                            }}
+                            style={{ marginLeft: ".5rem", marginTop: ".5rem" }}
+                          />
+                        );
+                      })}
+                  </Grid>
                 </Grid>
               </Grid>
 

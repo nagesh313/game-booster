@@ -19,9 +19,11 @@ import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import axios from "axios";
 import { withSnackbar } from "notistack";
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { calculateRate } from "../../../../util/rate";
 import { failureToast, successToast } from "../../../../util/util";
+// import { RankComponent } from "../../../RankComponent";
 function RankBoostingComponent(props: any) {
   const [desiredRank, setDesiredRank] = React.useState<any>("");
   const [currentRank, setCurrentRank] = React.useState<any>("");
@@ -31,8 +33,7 @@ function RankBoostingComponent(props: any) {
 
   const [currentRankTiers, setCurrentRankTiers] = React.useState<any>("");
   const [desiredRankTiers, setDesiredRankTiers] = React.useState<any>("");
-  const [totalAmount, setTotalAmount] = React.useState<any>(100);
-  console.log(setTotalAmount);
+  const [totalAmount, setTotalAmount] = React.useState<any>(8);
   const [server, setServer] = React.useState<any>("EU-WEST");
   const [summonerName, setSummonerName] = React.useState<any>("");
   const [lolAccount, setLolAccount] = React.useState<any>("");
@@ -123,6 +124,40 @@ function RankBoostingComponent(props: any) {
   };
   console.log(paymentFailed, paymentSuccess);
 
+  useEffect(() => {
+    const result = calculateRate({
+      appearOffline,
+      specificAgent,
+      playWithBooster,
+      priorityOrder,
+      withStreaming,
+      currentRankAmount,
+      desiredRankAmount,
+      desiredRank,
+      currentRank,
+      currentRankTier,
+      desiredRankTier,
+    });
+    setTotalAmount(result);
+  }, [
+    appearOffline,
+    specificAgent,
+    playWithBooster,
+    priorityOrder,
+    withStreaming,
+    currentRankAmount,
+    desiredRankAmount,
+    desiredRank,
+    currentRank,
+    currentRankTier,
+    desiredRankTier,
+  ]); // eslint-disable-line react-hooks/exhaustive-deps
+  const currentRanksList: any = props?.ranksList.filter(
+    (rank: any) => rank.name !== "Radiant"
+  );
+  const desiredRanksList: any = props?.ranksList.filter(
+    (rank: any) => rank.name !== "Radiant"
+  );
   return (
     <Grid container style={{ marginTop: "1rem" }} spacing={2}>
       <Grid item xs={12} md={6}>
@@ -132,6 +167,7 @@ function RankBoostingComponent(props: any) {
               <Grid xs={12} item>
                 <Typography component="h4" variant="h4" color="primary">
                   Current Rank
+                  {/* <RankComponent></RankComponent> */}
                 </Typography>
               </Grid>
               <Grid xs={12} item>
@@ -139,7 +175,7 @@ function RankBoostingComponent(props: any) {
               </Grid>
               <Grid xs={12} item style={{ marginTop: "1rem" }}>
                 <Grid container spacing={2} justify="center">
-                  {props?.currentRanksList?.map((rank: any) => {
+                  {currentRanksList?.map((rank: any) => {
                     return (
                       <Chip
                         key={rank.id}
@@ -184,8 +220,7 @@ function RankBoostingComponent(props: any) {
                         />
                       );
                     })}
-                  {(currentRank === "Immortal" ||
-                    currentRank === "Radiant") && (
+                  {currentRank !== "Immortal" && (
                     <Grid xs={12} item style={{ textAlign: "center" }}>
                       <FormControl
                         variant="outlined"
@@ -217,39 +252,24 @@ function RankBoostingComponent(props: any) {
                       </FormControl>
                     </Grid>
                   )}
+                  {currentRank === "Immortal" && (
+                    <Grid xs={12} item style={{ textAlign: "center" }}>
+                      <Grid xs={12} item style={{ textAlign: "center" }}>
+                        <TextField
+                          variant="outlined"
+                          style={{ marginTop: "1rem", textAlign: "center" }}
+                          type="number"
+                          label="Current RR"
+                          value={currentRankAmount}
+                          size="small"
+                          onChange={(event: any) => {
+                            setCurrentRankAmount(event.target.value);
+                          }}
+                        ></TextField>
+                      </Grid>
+                    </Grid>
+                  )}
                 </Grid>
-              </Grid>
-
-              <Grid
-                xs={12}
-                item
-                style={{ marginTop: "1rem", textAlign: "center" }}
-              >
-                <FormControl
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                  style={{ textAlign: "center" }}
-                >
-                  <InputLabel id="server-selection">Server</InputLabel>
-                  <Select
-                    labelId="server-selection-label"
-                    id="server-selection"
-                    onChange={(event: any, value: any) => {
-                      setServer(value?.props?.value);
-                    }}
-                    label="Server"
-                    value={server}
-                  >
-                    {props?.serversList?.map((server: any) => {
-                      return (
-                        <MenuItem value={server.id} key={server.id}>
-                          {server.name}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </FormControl>
               </Grid>
             </Paper>
             <Paper style={{ marginTop: "1rem", padding: "1rem" }}>
@@ -263,7 +283,7 @@ function RankBoostingComponent(props: any) {
               </Grid>
               <Grid xs={12} item style={{ marginTop: "1rem" }}>
                 <Grid container spacing={2} justify="center">
-                  {props?.desiredRanksList?.map((rank: any) => {
+                  {desiredRanksList?.map((rank: any) => {
                     return (
                       <Chip
                         key={rank.id}
@@ -304,8 +324,8 @@ function RankBoostingComponent(props: any) {
                         />
                       );
                     })}
-                  {(desiredRank === "Immortal" ||
-                    desiredRank === "Radiant") && (
+                  {/* {(desiredRank === "Platinum" ||
+                    desiredRank === "Diamond") && (
                     <Grid xs={12} item style={{ textAlign: "center" }}>
                       <FormControl
                         variant="outlined"
@@ -335,8 +355,54 @@ function RankBoostingComponent(props: any) {
                         </Select>
                       </FormControl>
                     </Grid>
+                  )} */}
+                  {desiredRank === "Immortal" && (
+                    <Grid xs={12} item style={{ textAlign: "center" }}>
+                      <TextField
+                        variant="outlined"
+                        style={{ marginTop: "1rem", textAlign: "center" }}
+                        type="number"
+                        label="Desired RR"
+                        value={desiredRankAmount}
+                        size="small"
+                        onChange={(event: any) => {
+                          setDesiredRankAmount(event.target.value);
+                        }}
+                      ></TextField>
+                    </Grid>
                   )}
                 </Grid>
+              </Grid>
+              <Grid
+                xs={12}
+                item
+                style={{ marginTop: "1rem", textAlign: "center" }}
+              >
+                <FormControl
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  style={{ textAlign: "center" }}
+                >
+                  <InputLabel id="server-selection">Server</InputLabel>
+                  <Select
+                    labelId="server-selection-label"
+                    id="server-selection"
+                    onChange={(event: any, value: any) => {
+                      setServer(value?.props?.value);
+                    }}
+                    label="Server"
+                    value={server}
+                  >
+                    {props?.serversList?.map((server: any) => {
+                      return (
+                        <MenuItem value={server.id} key={server.id}>
+                          {server.name}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
               </Grid>
             </Paper>
           </Grid>

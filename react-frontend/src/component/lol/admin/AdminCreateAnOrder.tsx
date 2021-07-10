@@ -56,8 +56,7 @@ export default function AdminCreateAnOrderComponent(props: any) {
   const [usersList, setUsersList] = React.useState<any>([]);
 
   const [serversList, setServersList] = React.useState<any>([]);
-  const [desiredRanksList, setDesiredRanksList] = React.useState<any>([]);
-  const [currentRanksList, setCurrentRanksList] = React.useState<any>([]);
+  const [ranksList, setRanksList] = React.useState<any>([]);
 
   const fetchServerList = () => {
     axios
@@ -73,13 +72,7 @@ export default function AdminCreateAnOrderComponent(props: any) {
     axios
       .get("/api/v1/config/ranks")
       .then((response: any) => {
-        const currentRankList = [...response.data];
-        const desiredRankList = [...response.data];
-
-        currentRankList.splice(currentRankList.length - 1, 1);
-        desiredRankList.splice(0, 1);
-        setCurrentRanksList(currentRankList);
-        setDesiredRanksList(desiredRankList);
+        setRanksList(response.data);
       })
       .catch((reponse: any) => {
         props.enqueueSnackbar(reponse.error, failureToast);
@@ -142,13 +135,12 @@ export default function AdminCreateAnOrderComponent(props: any) {
           <Tab label="Placements" {...a11yProps(1)} />
           <Tab label="Win Boosting" {...a11yProps(2)} />
         </Tabs>
-      </AppBar>{" "}
+      </AppBar>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TabPanel value={value} index={0} dir={theme.direction}>
             <RankBoosting
-              desiredRanksList={desiredRanksList}
-              currentRanksList={currentRanksList}
+              ranksList={ranksList}
               serversList={serversList}
               boosterList={boosterList}
               usersList={usersList}
@@ -156,8 +148,7 @@ export default function AdminCreateAnOrderComponent(props: any) {
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
             <Placements
-              desiredRanksList={desiredRanksList}
-              currentRanksList={currentRanksList}
+              ranksList={ranksList}
               serversList={serversList}
               boosterList={boosterList}
               usersList={usersList}
@@ -165,8 +156,7 @@ export default function AdminCreateAnOrderComponent(props: any) {
           </TabPanel>
           <TabPanel value={value} index={2} dir={theme.direction}>
             <WinBoosting
-              desiredRanksList={desiredRanksList}
-              currentRanksList={currentRanksList}
+              ranksList={ranksList}
               serversList={serversList}
               boosterList={boosterList}
               usersList={usersList}
