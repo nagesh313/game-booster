@@ -96,12 +96,12 @@ export const MainListItems = () => {
             </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItem>
-          <ListItem button component="a" href="/#/dashboard/new-orders">
+          {/* <ListItem button component="a" href="/#/dashboard/new-orders">
             <ListItemIcon>
               <FormatListBulletedIcon />
             </ListItemIcon>
             <ListItemText primary="New Orders" />
-          </ListItem>
+          </ListItem> */}
           {
             <ListItem
               button

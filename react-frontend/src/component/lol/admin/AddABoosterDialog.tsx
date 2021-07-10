@@ -26,6 +26,7 @@ const AddABoosterDialogComponent = (props: any) => {
   const submitBooster = (data: any) => {
     const payload: any = {
       ...data,
+      passwordFromFE: data.password,
     };
     payload.id = props.editBoosterData?.id;
     axios

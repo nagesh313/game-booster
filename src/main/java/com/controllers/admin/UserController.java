@@ -8,6 +8,7 @@ import com.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -36,6 +37,9 @@ public class UserController {
         return userRepository.findAllByAccountType(ERole.ROLE_BOOSTER);
     }
 
+    @Autowired
+    PasswordEncoder encoder;
+
     @PostMapping("/booster/create")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> createBooster(@RequestBody User booster) throws Exception {
@@ -43,6 +47,8 @@ public class UserController {
         if (booster.getId() != null) {
             Optional<User> user = userRepository.findById(booster.getId());
             if (user.isPresent()) {
+                booster.setPassword(encoder.encode(booster.getPasswordFromFE()));
+                booster.setPasswordFromFE(null);
                 userRepository.save(booster);
             } else {
                 throw new Exception("User Not Found");
@@ -52,6 +58,8 @@ public class UserController {
             if (user.isPresent()) {
                 throw new Exception("UserName Already Exists.");
             } else {
+                booster.setPassword(encoder.encode(booster.getPasswordFromFE()));
+                booster.setPasswordFromFE(null);
                 userRepository.save(booster);
             }
         }

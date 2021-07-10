@@ -1,3 +1,4 @@
+import { Button, ButtonGroup } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -6,11 +7,12 @@ import TableRow from "@material-ui/core/TableRow";
 import axios from "axios";
 import { withSnackbar } from "notistack";
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { failureToast } from "../../../util/util";
 import Title from "../../Title";
 function YourCompletedOrdersComponent(props: any) {
   const [orderList, setOrderList] = React.useState<any>([]);
-
+  const history = useHistory();
   const fetchOrderList = () => {
     const user = JSON.parse(sessionStorage.getItem("user") || "{}");
     axios
@@ -21,6 +23,9 @@ function YourCompletedOrdersComponent(props: any) {
       .catch((reponse: any) => {
         props.enqueueSnackbar(reponse.error, failureToast);
       });
+  };
+  const viewOrder = (row: any) => {
+    history.push("/dashboard/order-details/" + row.id);
   };
   useEffect(() => {
     fetchOrderList();
@@ -40,6 +45,7 @@ function YourCompletedOrdersComponent(props: any) {
             <TableCell>Status</TableCell>
             <TableCell>Date</TableCell>
             <TableCell>Price</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -91,6 +97,23 @@ function YourCompletedOrdersComponent(props: any) {
               <TableCell>{row.status}</TableCell>
               <TableCell>{row.createdDate}</TableCell>
               <TableCell>${row.totalAmount}</TableCell>
+              <TableCell align="center">
+                <ButtonGroup
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  aria-label="contained primary button group"
+                >
+                  <Button
+                    color="primary"
+                    onClick={() => {
+                      viewOrder(row);
+                    }}
+                  >
+                    View
+                  </Button>
+                 </ButtonGroup>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

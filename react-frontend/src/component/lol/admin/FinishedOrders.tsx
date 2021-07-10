@@ -70,7 +70,6 @@ export function FinishedOrdersComponent(props: any) {
             <TableCell>Created Date</TableCell>
             <TableCell>Completion Date</TableCell>
             <TableCell>Price</TableCell>
-            <TableCell>Summoner name</TableCell>
             <TableCell>Booster name</TableCell>
             <TableCell>Booster Price</TableCell>
             <TableCell>Booster Paypal</TableCell>
@@ -86,7 +85,6 @@ export function FinishedOrdersComponent(props: any) {
               <TableCell>{row.createdDate}</TableCell>
               <TableCell>{row.completionDate}</TableCell>
               <TableCell>{row.totalAmount}</TableCell>
-              <TableCell>{row.SummonerName}</TableCell>
               <TableCell>{row.assignedTo?.username}</TableCell>
               <TableCell>{row.BoosterPrice}</TableCell>
               <TableCell>{row?.assignedTo?.paypalEmail}</TableCell>

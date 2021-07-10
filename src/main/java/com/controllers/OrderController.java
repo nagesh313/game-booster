@@ -41,18 +41,18 @@ public class OrderController {
     @GetMapping("/running")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Order> runningOrders() {
-        return orderRepository.findAllByStatus(EStatus.ORDER_RUNNING);
+        return orderRepository.findAllByStatus(EStatus.RUNNING);
     }
 
     @GetMapping("/finished")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Order> finishedOrders() {
-        return orderRepository.findAllByStatus(EStatus.ORDER_FINISHED);
+        return orderRepository.findAllByStatus(EStatus.FINISHED);
     }
 
     @GetMapping("/new")
     public List<Order> newOrders() {
-        return orderRepository.findAllByStatus(EStatus.ORDER_NEW);
+        return orderRepository.findAllByStatus(EStatus.WAITING_FOR_BOOSTER);
     }
 
 
@@ -84,7 +84,7 @@ public class OrderController {
         Optional<Order> order = orderRepository.findById(orderId);
         if (user.isPresent() && user.isPresent()) {
             Order orderToResume = order.get();
-            orderToResume.setStatus(EStatus.ORDER_RUNNING);
+            orderToResume.setStatus(EStatus.RUNNING);
             orderRepository.save(orderToResume);
         } else {
             throw new Exception("Order or User not found");
@@ -112,7 +112,7 @@ public class OrderController {
     public void createNewOrderByUserId(@RequestBody Order order, @PathVariable Long userId) throws Exception {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
-            order.setStatus(EStatus.ORDER_NEW);
+            order.setStatus(EStatus.WAITING_FOR_BOOSTER);
             LocalDate currentDate = LocalDate.now();
             String date = currentDate.getMonth().toString() + " " + currentDate.getDayOfMonth() + ", " + currentDate.getYear();
             order.setCreatedDate(date);
@@ -156,7 +156,7 @@ public class OrderController {
     public void createNewOrderAdmin(
             @RequestBody Order order, @PathVariable String summonerName,
             @PathVariable String lolAccount, @PathVariable String lolPassword) {
-        order.setStatus(EStatus.ORDER_NEW);
+        order.setStatus(EStatus.WAITING_FOR_BOOSTER);
         LocalDate currentDate = LocalDate.now();
         String date = currentDate.getMonth().toString() + " " + currentDate.getDayOfMonth() + ", " + currentDate.getYear();
         order.setCreatedDate(date);
@@ -199,7 +199,7 @@ public class OrderController {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
             User booster = user.get();
-            return orderRepository.findAllByAssignedToAndStatus(booster, EStatus.ORDER_RUNNING);
+            return orderRepository.findAllByAssignedToAndStatus(booster, EStatus.RUNNING);
         } else {
             throw new Exception("Invalid User");
         }
@@ -211,7 +211,7 @@ public class OrderController {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
             User booster = user.get();
-            return orderRepository.findAllByAssignedToAndStatus(booster, EStatus.ORDER_FINISHED);
+            return orderRepository.findAllByAssignedToAndStatus(booster, EStatus.FINISHED);
         } else {
             throw new Exception("Invalid User");
         }
@@ -229,7 +229,7 @@ public class OrderController {
                 } else {
                     throw new Exception("Order is already Assigned");
                 }
-                orderToAssign.setStatus(EStatus.ORDER_RUNNING);
+                orderToAssign.setStatus(EStatus.RUNNING);
                 orderToAssign.setAssignedTo(booster.get());
                 orderRepository.save(orderToAssign);
             } else {
@@ -246,7 +246,7 @@ public class OrderController {
         Optional<Order> order = orderRepository.findById(orderId);
         if (order.isPresent()) {
             Order orderToComplete = order.get();
-            orderToComplete.setStatus(EStatus.ORDER_FINISHED);
+            orderToComplete.setStatus(EStatus.FINISHED);
             LocalDate currentDate = LocalDate.now();
             String date = currentDate.getMonth().toString() + " " + currentDate.getDayOfMonth() + ", " + currentDate.getYear();
             orderToComplete.setCompletionDate(date);
@@ -262,7 +262,7 @@ public class OrderController {
         Optional<Order> order = orderRepository.findById(orderId);
         if (order.isPresent()) {
             Order orderToComplete = order.get();
-            orderToComplete.setStatus(EStatus.ORDER_NEW);
+            orderToComplete.setStatus(EStatus.WAITING_FOR_BOOSTER);
             orderToComplete.setAssignedTo(null);
             orderRepository.save(orderToComplete);
         } else {
