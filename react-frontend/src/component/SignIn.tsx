@@ -55,7 +55,19 @@ export function SignInComponent(props: any) {
     sessionActive();
   }, []);
   function navigateToDashboard() {
-    history.push("/dashboard/home");
+    if (sessionStorage.getItem("orderCreatedWithoutLogin") !== null) {
+      sessionStorage.removeItem("orderCreatedWithoutLogin");
+      const user = JSON.parse(sessionStorage.getItem("user") || "{roles:[]}");
+      if (user?.roles?.includes("ROLE_ADMIN")) {
+        history.push("/dashboard/admin-create-order");
+      } else if (user?.roles?.includes("ROLE_BOOSTER")) {
+        history.push("/dashboard/home");
+      } else {
+        history.push("/dashboard/create-order");
+      }
+    } else {
+      history.push("/dashboard/home");
+    }
   }
   const signInSubmit = (values: any) => {
     axios

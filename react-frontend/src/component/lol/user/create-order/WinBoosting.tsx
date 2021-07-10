@@ -51,6 +51,7 @@ function WinBoostingComponent(props: any) {
   const [priorityOrder, setPriorityOrder] = React.useState<boolean>(false);
   const [withStreaming, setWithStreaming] = React.useState<boolean>(false);
   const history = useHistory();
+  const user = sessionStorage.getItem("user");
   console.log(setDesiredRank, setDesiredRankTier, setTotalAmount);
   function navigateTohome() {
     history.push("/dashboard/home");
@@ -87,6 +88,9 @@ function WinBoostingComponent(props: any) {
         console.log(reponse);
         props.enqueueSnackbar(reponse.error, failureToast);
       });
+  };
+  const signIn = () => {
+    history.push("/signin");
   };
   const paymentSuccess = (data: any) => {
     // console.log(data);
@@ -404,11 +408,17 @@ function WinBoostingComponent(props: any) {
               fullWidth
               variant="outlined"
               color="primary"
-              onClick={boostNow}
+              onClick={user === null ? signIn : boostNow}
             >
-              BOOST NOW
+              {user === null ? "Sign In To Boost" : "BOOST NOW"}
             </Button>
           </Grid>
+          {user !== null && (
+            <Grid container justify="center" style={{ marginTop: ".5rem" }}>
+              Make sure your game Credentials are saved on Home before creating
+              an order
+            </Grid>
+          )}
         </Paper>
       </Grid>
     </Grid>

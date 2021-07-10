@@ -152,7 +152,7 @@ export default function Dashboard() {
   const handleMenuClose = (event: any) => {
     console.log(event);
     if (event.target.innerText === "Logout") {
-      history.push("/signIn");
+      history.push("/");
       // history.push("/api/auth/logout");
     } else if (event.target.innerText === "Profile") {
       history.push("/dashboard/profile");
@@ -162,7 +162,8 @@ export default function Dashboard() {
     handleMobileMenuClose();
   };
   const logout = (event: any) => {
-    history.push("/signIn");
+    sessionStorage.removeItem("user");
+    history.push("/");
   };
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);

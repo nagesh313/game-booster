@@ -50,6 +50,9 @@ function PlacementsComponent(props: any) {
   function navigateTohome() {
     history.push("/dashboard/home");
   }
+  function singin() {
+    history.push("/signin");
+  }
   const boostNow = (data: any) => {
     console.log(data);
     const payload = {
@@ -112,6 +115,8 @@ function PlacementsComponent(props: any) {
     //   props.enqueueSnackbar("Payment Failed", failureToast);
     // });
   };
+  const user = sessionStorage.getItem("user");
+
   console.log(paymentFailed, paymentSuccess, navigateTohome);
   return (
     <Grid container style={{ marginTop: "1rem" }} spacing={2}>
@@ -396,11 +401,17 @@ function PlacementsComponent(props: any) {
               fullWidth
               variant="outlined"
               color="primary"
-              onClick={boostNow}
+              onClick={user === null ? singin : boostNow}
             >
-              BOOST NOW
+              {user === null ? "Sign In To Boost" : "BOOST NOW"}
             </Button>
           </Grid>
+          {user !== null && (
+            <Grid container justify="center" style={{ marginTop: ".5rem" }}>
+              Make sure your game Credentials are saved on Home before creating
+              an order
+            </Grid>
+          )}
         </Paper>
       </Grid>
     </Grid>

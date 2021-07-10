@@ -19,6 +19,11 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+    @GetMapping("/sessionActive")
+    public void sessionActive() {
+        return;
+    }
+
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
     public List<User> all() {

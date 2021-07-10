@@ -48,7 +48,7 @@ function a11yProps(index: any) {
   };
 }
 
-export default function CreateAnOrderComponent(props: any) {
+function CreateAnOrderComponent(props: any) {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const [ratesList, setRatesList] = React.useState<any>([]);

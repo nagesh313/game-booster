@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export const LoaderComponent = () => {
   const classes = useStyles();
   const [loadingCount, setLoadingCount] = React.useState(0);
-
   useEffect(() => {
     axios.interceptors.request.use(
       function (config: any) {

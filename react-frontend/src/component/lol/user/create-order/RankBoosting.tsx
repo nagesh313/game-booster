@@ -51,6 +51,9 @@ function RankBoostingComponent(props: any) {
   function navigateTohome() {
     history.push("/dashboard/home");
   }
+  function signIn() {
+    history.push("/signin");
+  }
   const boostNow = (data: any) => {
     console.log(data);
     const payload = {
@@ -114,6 +117,7 @@ function RankBoostingComponent(props: any) {
       });
   };
   console.log(paymentFailed, paymentSuccess);
+  const user = sessionStorage.getItem("user");
 
   useEffect(() => {
     const result = calculateRate({
@@ -544,11 +548,17 @@ function RankBoostingComponent(props: any) {
               fullWidth
               variant="outlined"
               color="primary"
-              onClick={boostNow}
+              onClick={user === null ? signIn : boostNow}
             >
-              BOOST NOW
+              {user === null ? "Sign In To Boost" : "BOOST NOW"}
             </Button>
           </Grid>
+          {user !== null && (
+            <Grid container justify="center" style={{ marginTop: ".5rem" }}>
+              Make sure your game Credentials are saved on Home before creating
+              an order
+            </Grid>
+          )}
         </Paper>
       </Grid>
     </Grid>

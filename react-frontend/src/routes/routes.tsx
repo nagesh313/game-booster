@@ -19,6 +19,7 @@ import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
 import { AccountInformation } from "../component/AccountInformation";
 import { AdminCreateAnOrder } from "../component/lol/admin/AdminCreateAnOrder";
 import { OrderDetails } from "../component/lol/OrderDetails";
+import { CreateOrderHome } from "../CreateOrderHome";
 export const dashboardRoutes = [
   {
     path: "/signin",
@@ -57,9 +58,8 @@ export const dashboardRoutes = [
   },
   {
     path: "/",
-    name: "Sign In",
-    icon: <DashboardIcon></DashboardIcon>,
-    component: <SignIn></SignIn>,
+    name: "/",
+    component: <CreateOrderHome></CreateOrderHome>,
     layout: "/",
   },
 ];

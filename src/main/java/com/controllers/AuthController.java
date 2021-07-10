@@ -50,11 +50,6 @@ public class AuthController {
 //        }
 //    }
 
-    @GetMapping("/sessionActive")
-    public void sessionActive() {
-        return;
-    }
-
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
 
