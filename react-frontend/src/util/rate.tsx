@@ -65,7 +65,7 @@ export const calculateRate = (order: any) => {
   if (order.withStreaming) {
     total = total * 0.15 + total;
   }
-  return total === 0 ? 8 : total;
+  return total === 0 ? 8 : total.toFixed(2);
   // Iron 1 - Iron 3 = $8
   // Bronze 1 - Bronze 3 = $9
   // Silver 1 - Silver 3 = $12

@@ -1,13 +1,34 @@
-.App-header {
-  background-color: #282c34;
-  /* min-height: 100vh; */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 th {
   font-weight: 600 !important;
+}
+.MuiPaper-root {
+  background-color: black !important;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+th,
+td,
+.MuiTypography-subtitle1,
+.MuiSvgIcon-root,
+.MuiTab-wrapper,
+label {
+  color: white !important;
+}
+.MuiOutlinedInput-notchedOutline,
+.MuiButtonBase-root,
+.MuiButtonBase-root {
+  border-color: white !important;
+  color: white !important;
+}
+.gpay-card-info-placeholder-container {
+  border: 1px solid white;
+}
+div {
+  color: white !important;
+}
+.MuiSwitch-track {
+  background-color: #cbcbcb !important;
 }

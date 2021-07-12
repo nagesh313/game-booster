@@ -30,7 +30,6 @@ export default function StickyFooter() {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <footer className={classes.footer}>
         <Container maxWidth="sm">
           <Typography variant="body1">

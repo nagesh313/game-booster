@@ -27,8 +27,12 @@ export function CreateOrderHome() {
       });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
-    <Container style={{ marginTop: "100px" }}>
-      <Grid>
+    <Container style={{ marginTop: "40px", textAlign: "center" }}>
+      <img
+        src="./images/valorant.png"
+        style={{ marginBottom: "20px", height: "80px", width: "80px" }}
+      ></img>
+      <Grid justify="center">
         <CreateAnOrder></CreateAnOrder>
       </Grid>
     </Container>
