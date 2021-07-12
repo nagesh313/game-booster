@@ -29,6 +29,7 @@ export function CreateOrderHome() {
   return (
     <Container style={{ marginTop: "40px", textAlign: "center" }}>
       <img
+        alt="valorant"
         src="./images/valorant.png"
         style={{ marginBottom: "20px", height: "80px", width: "80px" }}
       ></img>

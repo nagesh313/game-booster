@@ -155,7 +155,7 @@ function RankBoostingComponent(props: any) {
   );
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} md={7}>
         <Grid container>
           <Grid item xs={12}>
             <Paper style={{ marginTop: "1rem", padding: "1rem" }}>
@@ -402,7 +402,7 @@ function RankBoostingComponent(props: any) {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} md={5}>
         <Paper style={{ marginTop: "1rem", padding: "1rem" }}>
           <Grid xs={12} item>
             <Typography component="h4" variant="h4" color="primary">
