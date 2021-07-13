@@ -60,7 +60,7 @@ export class ParticlesComponent extends Component {
           }
         },
         color: {
-          value: "#fff",
+          value: "#872525",
           animation: {
             enable: false,
             speed: 5,

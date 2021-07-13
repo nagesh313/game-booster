@@ -1,3 +1,4 @@
+import { Container, Paper } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -29,27 +30,31 @@ export function UserListComponent(props: any) {
 
   return (
     <React.Fragment>
-      <Title>List of registered Users ({userList.length})</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>First Name</TableCell>
-            <TableCell>Last Name</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Username</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {userList.map((row: any) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.firstname}</TableCell>
-              <TableCell>{row.lastname}</TableCell>
-              <TableCell>{row.email}</TableCell>
-              <TableCell>{row.username}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <Container>
+        <Paper style={{ padding: "1rem" }}>
+          <Title>List of registered Users ({userList.length})</Title>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>First Name</TableCell>
+                <TableCell>Last Name</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Username</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {userList.map((row: any) => (
+                <TableRow key={row.id}>
+                  <TableCell>{row.firstname}</TableCell>
+                  <TableCell>{row.lastname}</TableCell>
+                  <TableCell>{row.email}</TableCell>
+                  <TableCell>{row.username}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>{" "}
+      </Container>
     </React.Fragment>
   );
 }

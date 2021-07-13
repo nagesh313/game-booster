@@ -2,8 +2,13 @@ th {
   font-weight: 600 !important;
 }
 .MuiPaper-root {
-  background-color: black !important;
+  background-color: #1b1f39 !important;
 }
+/* .MuiOutlinedInput-notchedOutline {
+  background-color: #1b1f39 !important;
+  color: white;
+} */
+
 h1,
 h2,
 h3,
@@ -14,21 +19,37 @@ td,
 .MuiTypography-subtitle1,
 .MuiSvgIcon-root,
 .MuiTab-wrapper,
+.MuiFormLabel-filled,
+.MuiChip-label,
+.MuiTouchRipple-root,
 label {
-  color: white !important;
+  color: #ffabab !important;
 }
 .MuiOutlinedInput-notchedOutline,
-.MuiButtonBase-root,
 .MuiButtonBase-root {
-  border-color: white !important;
-  color: white !important;
+  border-color: grey !important;
+  color: #ffabab !important;
 }
 .gpay-card-info-placeholder-container {
-  border: 1px solid white;
+  border: 1px solid #ffabab;
 }
 div {
-  color: white !important;
+  color: #ffabab !important;
 }
 .MuiSwitch-track {
-  background-color: #cbcbcb !important;
+  background-color: #ffabab !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid #ffabab !important;;
+  -webkit-text-fill-color: #ffabab !important;
+  background-color: #ffabab !important;
 }

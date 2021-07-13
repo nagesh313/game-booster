@@ -84,6 +84,7 @@ const AddABoosterDialogComponent = (props: any) => {
                 <Grid container>
                   <Grid xs={6} item>
                     <TextField
+                      autoComplete="no"
                       variant="outlined"
                       autoFocus
                       name="username"
@@ -97,6 +98,7 @@ const AddABoosterDialogComponent = (props: any) => {
                   </Grid>
                   <Grid xs={6} item>
                     <TextField
+                      autoComplete="no"
                       variant="outlined"
                       name="email"
                       margin="dense"
@@ -143,6 +145,7 @@ const AddABoosterDialogComponent = (props: any) => {
                 <Grid container spacing={3}>
                   <Grid xs={6} item>
                     <TextField
+                      autoComplete="new-password"
                       variant="outlined"
                       name="paypalEmail"
                       margin="dense"
@@ -155,6 +158,7 @@ const AddABoosterDialogComponent = (props: any) => {
                   </Grid>
                   <Grid xs={3} item>
                     <TextField
+                      autoComplete="new-password"
                       variant="outlined"
                       name="rank"
                       margin="dense"
@@ -167,6 +171,7 @@ const AddABoosterDialogComponent = (props: any) => {
                   </Grid>
                   <Grid xs={3} item>
                     <TextField
+                      autoComplete="new-password"
                       variant="outlined"
                       name="percentage"
                       margin="dense"
@@ -174,6 +179,7 @@ const AddABoosterDialogComponent = (props: any) => {
                       label="Percentage"
                       onChange={handleChange}
                       value={values.percentage}
+                      type="number"
                       helperText={touched.percentage && errors.percentage}
                     />
                   </Grid>
