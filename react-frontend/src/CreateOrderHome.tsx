@@ -33,7 +33,7 @@ export function CreateOrderHome() {
         src="./images/valorant.png"
         style={{ marginBottom: "20px", height: "80px", width: "80px" }}
       ></img>
-      <Grid justify="center">
+      <Grid container justify="center">
         <CreateAnOrder></CreateAnOrder>
       </Grid>
     </Container>

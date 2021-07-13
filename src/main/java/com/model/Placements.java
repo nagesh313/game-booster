@@ -13,22 +13,16 @@ import javax.persistence.Id;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Rates {
+public class Placements {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
-    private String rankFrom;
-    private String rankTo;
-    private String tierFrom;
-    private String tierTo;
+    private String rank;
     private Double amount;
-    private boolean disabled;
+    private Double multiplier;
 
-    public Rates(String rankFrom, String rankTo, String tierFrom, String tierTo, Double amount) {
-        this.rankFrom = rankFrom;
-        this.rankTo = rankTo;
-        this.tierFrom = tierFrom;
-        this.tierTo = tierTo;
+    public Placements(String rank, Double amount) {
+        this.rank = rank;
         this.amount = amount;
     }
 }

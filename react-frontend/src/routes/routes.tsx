@@ -14,12 +14,13 @@ import { Orders } from "../component/Order";
 import Pricing from "../component/pricing";
 import { SignIn } from "../component/SignIn";
 import { SignUp } from "../component/SignUp";
-import { UserList } from "../component/UserList";
+import { UserList } from "../component/lol/admin/UserList";
 import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
 import { AccountInformation } from "../component/AccountInformation";
 import { AdminCreateAnOrder } from "../component/lol/admin/AdminCreateAnOrder";
 import { OrderDetails } from "../component/lol/OrderDetails";
 import { CreateOrderHome } from "../CreateOrderHome";
+import { RatesList } from "../component/lol/admin/RatesList";
 export const dashboardRoutes = [
   {
     path: "/signin",
@@ -106,7 +107,12 @@ export const secondaryRoutes = [
     component: <UserList></UserList>,
     layout: "/dashboard/userlist",
   },
-
+  {
+    path: "/dashboard/ratesList",
+    name: "/dashboard/ratesList",
+    component: <RatesList></RatesList>,
+    layout: "/dashboard/ratesList",
+  },
   {
     path: "/dashboard/create-order",
     name: "/dashboard/create-order",

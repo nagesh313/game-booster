@@ -21,7 +21,7 @@ import axios from "axios";
 import { withSnackbar } from "notistack";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { calculateRate } from "../../../../util/rate";
+import { calculateRateFromBackend } from "../../../../util/rate";
 import { failureToast, successToast } from "../../../../util/util";
 // import { RankComponent } from "../../../RankComponent";
 function RankBoostingComponent(props: any) {
@@ -125,7 +125,7 @@ function RankBoostingComponent(props: any) {
   console.log(paymentFailed, paymentSuccess);
 
   useEffect(() => {
-    const result = calculateRate({
+    const result = calculateRateFromBackend(props.ratesList, {
       appearOffline,
       specificAgent,
       playWithBooster,
@@ -151,6 +151,7 @@ function RankBoostingComponent(props: any) {
     currentRank,
     currentRankTier,
     desiredRankTier,
+    props.ratesList,
   ]); // eslint-disable-line react-hooks/exhaustive-deps
   const currentRanksList: any = props?.ranksList.filter(
     (rank: any) => rank.name !== "Radiant"
@@ -189,6 +190,12 @@ function RankBoostingComponent(props: any) {
                           setCurrentRank(rank.name);
                           setCurrentRankTiers(rank.tiers);
                           setCurrentRankTier("");
+                          if (
+                            currentRank === "Immortal" ||
+                            currentRank === "Radiant"
+                          ) {
+                            setCurrentRankAmount("0-20");
+                          }
                         }}
                         style={{ marginLeft: ".5rem", marginTop: ".5rem" }}
                       />
@@ -297,6 +304,12 @@ function RankBoostingComponent(props: any) {
                           setDesiredRank(rank.name);
                           setDesiredRankTiers(rank.tiers);
                           setDesiredRankTier("");
+                          if (
+                            desiredRank === "Immortal" ||
+                            desiredRank === "Radiant"
+                          ) {
+                            setDesiredRank("0-20");
+                          }
                         }}
                         style={{ marginLeft: ".5rem", marginTop: ".5rem" }}
                       />

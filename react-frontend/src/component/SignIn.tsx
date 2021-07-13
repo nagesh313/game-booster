@@ -91,8 +91,8 @@ export function SignInComponent(props: any) {
         </Typography>
         <Formik
           initialValues={{
-            username: "user",
-            password: "user",
+            username: "",
+            password: "",
           }}
           validationSchema={SignInSchema}
           onSubmit={(values: any) => {

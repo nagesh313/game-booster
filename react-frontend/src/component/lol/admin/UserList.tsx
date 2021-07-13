@@ -7,8 +7,8 @@ import TableRow from "@material-ui/core/TableRow";
 import axios from "axios";
 import { withSnackbar } from "notistack";
 import React, { useEffect } from "react";
-import { failureToast } from "../util/util";
-import Title from "./Title";
+import { failureToast } from "../../../util/util";
+import Title from "../../Title";
 
 export function UserListComponent(props: any) {
   const [userList, setUserList] = React.useState<any>([]);

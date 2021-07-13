@@ -19,9 +19,9 @@ import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import axios from "axios";
 import { withSnackbar } from "notistack";
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { GPayComponent } from "../../../../util/gpay";
+import { calculatePlacementRateFromBackend } from "../../../../util/rate";
 import { failureToast, successToast } from "../../../../util/util";
 function valuetext(value: number) {
   return `${value}°C`;
@@ -47,6 +47,28 @@ function PlacementsComponent(props: any) {
   const [withStreaming, setWithStreaming] = React.useState<boolean>(false);
   const history = useHistory();
   console.log(setTotalAmount);
+  useEffect(() => {
+    const result = calculatePlacementRateFromBackend(props.placementRatesList, {
+      appearOffline,
+      specificAgent,
+      playWithBooster,
+      priorityOrder,
+      withStreaming,
+      currentRank,
+      wins,
+    });
+    setTotalAmount(result);
+  }, [
+    appearOffline,
+    specificAgent,
+    playWithBooster,
+    priorityOrder,
+    withStreaming,
+    currentRank,
+    wins,
+    props.placementRatesList,
+  ]); // eslint-disable-line react-hooks/exhaustive-deps
+
   function navigateTohome() {
     history.push("/dashboard/home");
   }
@@ -378,7 +400,7 @@ function PlacementsComponent(props: any) {
               $ {totalAmount}
             </Typography>
           </Grid>
-          <Grid
+          {/* <Grid
             xs={12}
             item
             style={{ textAlign: "center", marginTop: ".5rem" }}
@@ -388,14 +410,14 @@ function PlacementsComponent(props: any) {
               paymentSuccess={paymentSuccess}
               paymentFailed={paymentFailed}
             ></GPayComponent>
-          </Grid>
-          <Grid
+          </Grid> */}
+          {/* <Grid
             xs={12}
             item
             style={{ textAlign: "center", marginTop: ".5rem" }}
           >
             OR
-          </Grid>
+          </Grid> */}
           <Grid xs={12} item style={{ marginTop: ".5rem" }}>
             <Button
               fullWidth

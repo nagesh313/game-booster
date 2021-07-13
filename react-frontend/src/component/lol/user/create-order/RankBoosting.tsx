@@ -21,8 +21,7 @@ import axios from "axios";
 import { withSnackbar } from "notistack";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { GPayComponent } from "../../../../util/gpay";
-import { calculateRate } from "../../../../util/rate";
+import { calculateRateFromBackend } from "../../../../util/rate";
 import { failureToast, successToast } from "../../../../util/util";
 function RankBoostingComponent(props: any) {
   const [desiredRank, setDesiredRank] = React.useState<any>("");
@@ -120,7 +119,7 @@ function RankBoostingComponent(props: any) {
   const user = sessionStorage.getItem("user");
 
   useEffect(() => {
-    const result = calculateRate({
+    const result = calculateRateFromBackend(props.ratesList, {
       appearOffline,
       specificAgent,
       playWithBooster,
@@ -146,6 +145,7 @@ function RankBoostingComponent(props: any) {
     currentRank,
     currentRankTier,
     desiredRankTier,
+    props.ratesList,
   ]); // eslint-disable-line react-hooks/exhaustive-deps
   const currentRanksList: any = props?.ranksList.filter(
     (rank: any) => rank.name !== "Radiant"
@@ -525,7 +525,7 @@ function RankBoostingComponent(props: any) {
               $ {totalAmount}
             </Typography>
           </Grid>
-          <Grid
+          {/* <Grid
             xs={12}
             item
             style={{ textAlign: "center", marginTop: ".5rem" }}
@@ -535,14 +535,14 @@ function RankBoostingComponent(props: any) {
               paymentSuccess={paymentSuccess}
               paymentFailed={paymentFailed}
             ></GPayComponent>
-          </Grid>
-          <Grid
+          </Grid> */}
+          {/* <Grid
             xs={12}
             item
             style={{ textAlign: "center", marginTop: ".5rem" }}
           >
             OR
-          </Grid>
+          </Grid> */}
           <Grid xs={12} item style={{ marginTop: ".5rem" }}>
             <Button
               fullWidth

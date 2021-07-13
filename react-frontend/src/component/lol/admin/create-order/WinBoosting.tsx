@@ -20,9 +20,10 @@ import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import axios from "axios";
 import { withSnackbar } from "notistack";
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { failureToast, successToast } from "../../../../util/util";
+import { calculateWinBoostingsRateFromBackend } from "../../../../util/rate";
 
 function WinBoostingComponent(props: any) {
   const [desiredRank, setDesiredRank] = React.useState<any>("");
@@ -124,6 +125,33 @@ function WinBoostingComponent(props: any) {
     // });
   };
   console.log(paymentFailed, paymentSuccess);
+  useEffect(() => {
+    const result = calculateWinBoostingsRateFromBackend(
+      props.winBoostingsRates,
+      {
+        appearOffline,
+        specificAgent,
+        playWithBooster,
+        priorityOrder,
+        withStreaming,
+        currentRank,
+        currentRankTier,
+        wins,
+      }
+    );
+    setTotalAmount(result);
+  }, [
+    appearOffline,
+    specificAgent,
+    playWithBooster,
+    priorityOrder,
+    withStreaming,
+    currentRank,
+    currentRankTier,
+    wins,
+    props.winBoostingsRates,
+  ]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const ranksList: any = props?.ranksList.filter(
     (rank: any) => rank.name !== "Radiant"
   );

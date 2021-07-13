@@ -20,9 +20,10 @@ import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import axios from "axios";
 import { withSnackbar } from "notistack";
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { GPayComponent } from "../../../../util/gpay";
+import { calculateWinBoostingsRateFromBackend } from "../../../../util/rate";
+// import { GPayComponent } from "../../../../util/gpay";
 import { failureToast, successToast } from "../../../../util/util";
 
 function WinBoostingComponent(props: any) {
@@ -120,6 +121,33 @@ function WinBoostingComponent(props: any) {
     //   props.enqueueSnackbar("Payment Failed", failureToast);
     // });
   };
+  useEffect(() => {
+    const result = calculateWinBoostingsRateFromBackend(
+      props.winBoostingsRates,
+      {
+        appearOffline,
+        specificAgent,
+        playWithBooster,
+        priorityOrder,
+        withStreaming,
+        currentRank,
+        currentRankTier,
+        wins,
+      }
+    );
+    setTotalAmount(result);
+  }, [
+    appearOffline,
+    specificAgent,
+    playWithBooster,
+    priorityOrder,
+    withStreaming,
+    currentRank,
+    currentRankTier,
+    wins,
+    props.winBoostingsRates,
+  ]); // eslint-disable-line react-hooks/exhaustive-deps
+
   console.log(paymentFailed, paymentSuccess);
   const ranksList: any = props?.ranksList.filter(
     (rank: any) => rank.name !== "Radiant"
@@ -385,7 +413,7 @@ function WinBoostingComponent(props: any) {
               $ {totalAmount}
             </Typography>
           </Grid>
-          <Grid
+          {/* <Grid
             xs={12}
             item
             style={{ textAlign: "center", marginTop: ".5rem" }}
@@ -395,14 +423,14 @@ function WinBoostingComponent(props: any) {
               paymentSuccess={paymentSuccess}
               paymentFailed={paymentFailed}
             ></GPayComponent>
-          </Grid>
-          <Grid
+          </Grid> */}
+          {/* <Grid
             xs={12}
             item
             style={{ textAlign: "center", marginTop: ".5rem" }}
           >
             OR
-          </Grid>
+          </Grid> */}
           <Grid xs={12} item style={{ marginTop: ".5rem" }}>
             <Button
               fullWidth

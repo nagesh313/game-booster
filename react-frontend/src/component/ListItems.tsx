@@ -21,6 +21,7 @@ import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import React from "react";
 import AddIcon from "@material-ui/icons/Add";
 import { SportsEsports } from "@material-ui/icons";
+import LocalAtmIcon from "@material-ui/icons/LocalAtm";
 export const AdminListItems = () => {
   const user = JSON.parse(sessionStorage.getItem("user") || "{roles:[]}");
   return user.roles.includes("ROLE_ADMIN") ? (
@@ -213,6 +214,17 @@ export const SecondaryListItems = () => {
                   <ContactsIcon />
                 </ListItemIcon>
                 <ListItemText primary="User List" />
+              </ListItem>
+              <ListItem
+                button
+                className={classes.nested}
+                component="a"
+                href="/#/dashboard/ratesList"
+              >
+                <ListItemIcon>
+                  <LocalAtmIcon />
+                </ListItemIcon>
+                <ListItemText primary="Rates List" />
               </ListItem>
             </List>
           </Collapse>

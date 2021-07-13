@@ -13,22 +13,17 @@ import javax.persistence.Id;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Rates {
+public class WinBoostings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
-    private String rankFrom;
-    private String rankTo;
-    private String tierFrom;
-    private String tierTo;
+    private String rank;
+    private String tier;
     private Double amount;
-    private boolean disabled;
 
-    public Rates(String rankFrom, String rankTo, String tierFrom, String tierTo, Double amount) {
-        this.rankFrom = rankFrom;
-        this.rankTo = rankTo;
-        this.tierFrom = tierFrom;
-        this.tierTo = tierTo;
+    public WinBoostings(String rank, String tier, Double amount) {
+        this.rank = rank;
+        this.tier = tier;
         this.amount = amount;
     }
 }

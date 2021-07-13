@@ -51,9 +51,12 @@ function a11yProps(index: any) {
 export default function AdminCreateAnOrderComponent(props: any) {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-  const [ratesList, setRatesList] = React.useState<any>([]);
   const [boosterList, setBoosterList] = React.useState<any>([]);
   const [usersList, setUsersList] = React.useState<any>([]);
+
+  const [ratesList, setRatesList] = React.useState<any>([]);
+  const [placementRatesList, setPlacementRatesList] = React.useState<any>([]);
+  const [winBoostingsRates, setWinBoostingsList] = React.useState<any>([]);
 
   const [serversList, setServersList] = React.useState<any>([]);
   const [ranksList, setRanksList] = React.useState<any>([]);
@@ -88,6 +91,26 @@ export default function AdminCreateAnOrderComponent(props: any) {
         props.enqueueSnackbar(reponse.error, failureToast);
       });
   };
+  const fetchPlacementsRatesList = () => {
+    axios
+      .get("/api/v1/config/placements")
+      .then((response: any) => {
+        setPlacementRatesList(response.data);
+      })
+      .catch((reponse: any) => {
+        props.enqueueSnackbar(reponse.error, failureToast);
+      });
+  };
+  const fetchWinBoostingsRatesList = () => {
+    axios
+      .get("/api/v1/config/winboostings")
+      .then((response: any) => {
+        setWinBoostingsList(response.data);
+      })
+      .catch((reponse: any) => {
+        props.enqueueSnackbar(reponse.error, failureToast);
+      });
+  };
   const fetchBoosterList = () => {
     axios
       .get("/api/v1/admin/boosters")
@@ -111,9 +134,11 @@ export default function AdminCreateAnOrderComponent(props: any) {
   useEffect(() => {
     fetchServerList();
     fetchRanksList();
-    fetchRatesList();
     fetchBoosterList();
     fetchUserList();
+    fetchRatesList();
+    fetchPlacementsRatesList();
+    fetchWinBoostingsRatesList();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -144,6 +169,7 @@ export default function AdminCreateAnOrderComponent(props: any) {
               serversList={serversList}
               boosterList={boosterList}
               usersList={usersList}
+              ratesList={ratesList}
             ></RankBoosting>
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
@@ -152,6 +178,7 @@ export default function AdminCreateAnOrderComponent(props: any) {
               serversList={serversList}
               boosterList={boosterList}
               usersList={usersList}
+              placementRatesList={placementRatesList}
             ></Placements>
           </TabPanel>
           <TabPanel value={value} index={2} dir={theme.direction}>
@@ -160,6 +187,7 @@ export default function AdminCreateAnOrderComponent(props: any) {
               serversList={serversList}
               boosterList={boosterList}
               usersList={usersList}
+              winBoostingsRates={winBoostingsRates}
             ></WinBoosting>
           </TabPanel>
         </Grid>

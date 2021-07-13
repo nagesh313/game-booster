@@ -20,8 +20,9 @@ import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import axios from "axios";
 import { withSnackbar } from "notistack";
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { calculatePlacementRateFromBackend } from "../../../../util/rate";
 import { failureToast, successToast } from "../../../../util/util";
 function valuetext(value: number) {
   return `${value}°C`;
@@ -119,6 +120,28 @@ function PlacementsComponent(props: any) {
     //   props.enqueueSnackbar("Payment Failed", failureToast);
     // });
   };
+  useEffect(() => {
+    const result = calculatePlacementRateFromBackend(props.placementRatesList, {
+      appearOffline,
+      specificAgent,
+      playWithBooster,
+      priorityOrder,
+      withStreaming,
+      currentRank,
+      wins,
+    });
+    setTotalAmount(result);
+  }, [
+    appearOffline,
+    specificAgent,
+    playWithBooster,
+    priorityOrder,
+    withStreaming,
+    currentRank,
+    wins,
+    props.placementRatesList,
+  ]); // eslint-disable-line react-hooks/exhaustive-deps
+
   console.log(paymentFailed, paymentSuccess, navigateTohome);
   return (
     <Grid container spacing={2}>

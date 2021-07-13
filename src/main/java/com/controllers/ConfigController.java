@@ -1,13 +1,11 @@
 package com.controllers;
 
-import com.model.Ranks;
-import com.model.Rates;
-import com.model.Server;
+import com.model.*;
 import com.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +19,10 @@ public class ConfigController {
     private RanksRepository ranksRepository;
     @Autowired
     private RatesRepository ratesRepository;
+    @Autowired
+    private PlacementsRepository placementsRepository;
+    @Autowired
+    private WinBoostingsRepository winBoostingsRepository;
 
     @GetMapping("/servers")
     public List<Server> allServers() {
@@ -37,4 +39,31 @@ public class ConfigController {
         return ratesRepository.findAll();
     }
 
+    @GetMapping("/placements")
+    public List<Placements> getAllPlacements() {
+        return placementsRepository.findAll();
+    }
+
+    @GetMapping("/winboostings")
+    public List<WinBoostings> getAllWinBoostings() {
+        return winBoostingsRepository.findAll();
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/rates")
+    public void saveAllRates(@RequestBody List<Rates> rates) {
+        ratesRepository.saveAll(rates);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/placements")
+    public void saveAllPlacements(@RequestBody List<Placements> placements) {
+        placementsRepository.saveAll(placements);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/winboostings")
+    public void saveAllWinBoostings(@RequestBody List<WinBoostings> winBoostings) {
+        winBoostingsRepository.saveAll(winBoostings);
+    }
 }

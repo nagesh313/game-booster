@@ -52,6 +52,8 @@ function CreateAnOrderComponent(props: any) {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const [ratesList, setRatesList] = React.useState<any>([]);
+  const [placementRatesList, setPlacementRatesList] = React.useState<any>([]);
+  const [winBoostingsRates, setWinBoostingsList] = React.useState<any>([]);
 
   const [serversList, setServersList] = React.useState<any>([]);
   const [ranksList, setRanksList] = React.useState<any>([]);
@@ -86,16 +88,39 @@ function CreateAnOrderComponent(props: any) {
         props.enqueueSnackbar(reponse.error, failureToast);
       });
   };
+  const fetchPlacementsRatesList = () => {
+    axios
+      .get("/api/v1/config/placements")
+      .then((response: any) => {
+        setPlacementRatesList(response.data);
+      })
+      .catch((reponse: any) => {
+        props.enqueueSnackbar(reponse.error, failureToast);
+      });
+  };
+  const fetchWinBoostingsRatesList = () => {
+    axios
+      .get("/api/v1/config/winboostings")
+      .then((response: any) => {
+        setWinBoostingsList(response.data);
+      })
+      .catch((reponse: any) => {
+        props.enqueueSnackbar(reponse.error, failureToast);
+      });
+  };
+
   useEffect(() => {
     fetchServerList();
     fetchRanksList();
     fetchRatesList();
+    fetchPlacementsRatesList();
+    fetchWinBoostingsRatesList();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
-  console.log(ratesList);
+  // console.log(ratesList);
   return (
     <React.Fragment>
       <AppBar position="static" color="default">
@@ -118,18 +143,21 @@ function CreateAnOrderComponent(props: any) {
             <RankBoosting
               ranksList={ranksList}
               serversList={serversList}
+              ratesList={ratesList}
             ></RankBoosting>
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
             <Placements
               ranksList={ranksList}
               serversList={serversList}
+              placementRatesList={placementRatesList}
             ></Placements>
           </TabPanel>
           <TabPanel value={value} index={2} dir={theme.direction}>
             <WinBoosting
               ranksList={ranksList}
               serversList={serversList}
+              winBoostingsRates={winBoostingsRates}
             ></WinBoosting>
           </TabPanel>
         </Grid>
