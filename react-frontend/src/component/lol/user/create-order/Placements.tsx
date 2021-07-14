@@ -76,26 +76,23 @@ function PlacementsComponent(props: any) {
   function singin() {
     history.push("/signin");
   }
-  const boostNow = (data: any) => {
-    console.log(data);
+  const paymentSuccess = (orderDetails: any) => {
+    props.enqueueSnackbar("Paymentment Successful", successToast);
     const payload = {
       type: "Placements",
       server: server,
       currentRank: currentRank,
       wins: wins,
-      // currentRankTier: currentRankTier,
-      // desiredRankTier: desiredRankTier,
-
-      // currentRankAmount: currentRankTier ? null : currentRankAmount,
-      // desiredRankAmount: desiredRankAmount ? null : desiredRankAmount,
-
       appearOffline: appearOffline,
       specificAgent: specificAgent,
       playWithBooster: playWithBooster,
       priorityOrder: priorityOrder,
       withStreaming: withStreaming,
-
       totalAmount: totalAmount,
+      orderCreateTime: orderDetails.create_time,
+      paymentId: orderDetails.id,
+      payer: JSON.stringify(orderDetails.payer),
+      paymentStatus: orderDetails.status,
     };
     const user = JSON.parse(sessionStorage.getItem("user") || "{}");
     axios
@@ -110,21 +107,20 @@ function PlacementsComponent(props: any) {
         props.enqueueSnackbar(reponse.error, failureToast);
       });
   };
-  const paymentSuccess = (data: any) => {
-    // console.log(data);
-    // const user = JSON.parse(sessionStorage.getItem("user") || "{}");
-    // axios
-    //   .get("/api/v1/order/create/" + user.id)
-    //   .then((response: any) => {
-    //     // setServersList(response.data);
-    //     // props.enqueueSnackbar("Order Created Successfully", successToast);
-    props.enqueueSnackbar("Payment Success", successToast);
-    // })
-    // .catch((reponse: any) => {
-    //   props.enqueueSnackbar(reponse.error, failureToast);
-    //   props.enqueueSnackbar("Payment Failed", failureToast);
-    // });
-  };
+  // const paymentSuccess = (orderDetails: any) => {
+  //   // const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+  //   // axios
+  //   //   .get("/api/v1/order/create/" + user.id)
+  //   //   .then((response: any) => {
+  //   //     // setServersList(response.data);
+  //   //     // props.enqueueSnackbar("Order Created Successfully", successToast);
+  //   props.enqueueSnackbar("Payment Success", successToast);
+  //   // })
+  //   // .catch((reponse: any) => {
+  //   //   props.enqueueSnackbar(reponse.error, failureToast);
+  //   //   props.enqueueSnackbar("Payment Failed", failureToast);
+  //   // });
+  // };
   const paymentFailed = (data: any) => {
     // console.log(data);
     // const user = JSON.parse(sessionStorage.getItem("user") || "{}");
@@ -132,7 +128,7 @@ function PlacementsComponent(props: any) {
     //   .get("/api/v1/order/create/" + user.id)
     //   .then((response: any) => {
     //     // setServersList(response.data);
-    props.enqueueSnackbar("Payment Success", successToast);
+    props.enqueueSnackbar("Payment Failed", failureToast);
     // })
     // .catch((reponse: any) => {
     //   props.enqueueSnackbar("Payment Failed", failureToast);
@@ -407,28 +403,25 @@ function PlacementsComponent(props: any) {
               item
               style={{ textAlign: "center", marginTop: ".5rem" }}
             >
-              <PayPalComponent amount={totalAmount}></PayPalComponent>
+              <PayPalComponent
+                amount={totalAmount}
+                paymentSuccess={paymentSuccess}
+                paymentFailed={paymentFailed}
+              ></PayPalComponent>
             </Grid>
           )}
-          {user !== null && (
-            <Grid
-              xs={12}
-              item
-              style={{ textAlign: "center", marginTop: ".5rem" }}
-            >
-              OR
+          {user === null && (
+            <Grid xs={12} item style={{ marginTop: ".5rem" }}>
+              <Button
+                fullWidth
+                variant="outlined"
+                color="primary"
+                onClick={singin}
+              >
+                "Sign In To Boost"
+              </Button>
             </Grid>
           )}
-          <Grid xs={12} item style={{ marginTop: ".5rem" }}>
-            <Button
-              fullWidth
-              variant="outlined"
-              color="primary"
-              onClick={user === null ? singin : boostNow}
-            >
-              {user === null ? "Sign In To Boost" : "BOOST NOW"}
-            </Button>
-          </Grid>
           {user !== null && (
             <Grid container justify="center" style={{ marginTop: ".5rem" }}>
               Make sure your game Credentials are saved on Home before creating

@@ -54,8 +54,7 @@ function RankBoostingComponent(props: any) {
   function signIn() {
     history.push("/signin");
   }
-  const boostNow = (data: any) => {
-    console.log(data);
+  const paymentSuccess = (orderDetails: any) => {
     const payload = {
       type: "Rank Boosting",
       server: server,
@@ -73,8 +72,11 @@ function RankBoostingComponent(props: any) {
       playWithBooster: playWithBooster,
       priorityOrder: priorityOrder,
       withStreaming: withStreaming,
-
       totalAmount: totalAmount,
+      orderCreateTime: orderDetails.create_time,
+      paymentId: orderDetails.id,
+      payer: JSON.stringify(orderDetails.payer),
+      paymentStatus: orderDetails.status,
     };
     const user = JSON.parse(sessionStorage.getItem("user") || "{}");
     axios
@@ -89,32 +91,23 @@ function RankBoostingComponent(props: any) {
         props.enqueueSnackbar(reponse.error, failureToast);
       });
   };
-  const paymentSuccess = (data: any) => {
-    // console.log(data);
-    // const user = JSON.parse(sessionStorage.getItem("user") || "{}");
-    // axios
-    //   .get("/api/v1/order/create/" + user.id)
-    //   .then((response: any) => {
-    //     // setServersList(response.data);
-    //     // props.enqueueSnackbar("Order Created Successfully", successToast);
-    props.enqueueSnackbar("Payment Success", successToast);
-    // })
-    // .catch((reponse: any) => {
-    //   props.enqueueSnackbar(reponse.error, failureToast);
-    //   props.enqueueSnackbar("Payment Failed", failureToast);
-    // });
-  };
+  // const paymentSuccess = (data: any) => {
+  //   // console.log(data);
+  //   // const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+  //   // axios
+  //   //   .get("/api/v1/order/create/" + user.id)
+  //   //   .then((response: any) => {
+  //   //     // setServersList(response.data);
+  //   //     // props.enqueueSnackbar("Order Created Successfully", successToast);
+  //   props.enqueueSnackbar("Payment Success", successToast);
+  //   // })
+  //   // .catch((reponse: any) => {
+  //   //   props.enqueueSnackbar(reponse.error, failureToast);
+  //   //   props.enqueueSnackbar("Payment Failed", failureToast);
+  //   // });
+  // };
   const paymentFailed = (data: any) => {
-    const user = JSON.parse(sessionStorage.getItem("user") || "{}");
-    console.log(data);
-    axios
-      .get("/api/v1/order/create/" + user.id)
-      .then((response: any) => {
-        props.enqueueSnackbar("Order Successfully Created", successToast);
-      })
-      .catch((reponse: any) => {
-        props.enqueueSnackbar("Order Creation Failed", failureToast);
-      });
+    props.enqueueSnackbar("Payment Failed", failureToast);
   };
   console.log(paymentFailed, paymentSuccess);
   const user = sessionStorage.getItem("user");
@@ -532,33 +525,25 @@ function RankBoostingComponent(props: any) {
               item
               style={{ textAlign: "center", marginTop: ".5rem" }}
             >
-              <PayPalComponent amount={totalAmount}></PayPalComponent>
-              {/* <GPayComponent
-              amount={totalAmount}
-              paymentSuccess={paymentSuccess}
-              paymentFailed={paymentFailed}
-            ></GPayComponent> */}
+              <PayPalComponent
+                amount={totalAmount}
+                paymentSuccess={paymentSuccess}
+                paymentFailed={paymentFailed}
+              ></PayPalComponent>
             </Grid>
           )}
-          {user !== null && (
-            <Grid
-              xs={12}
-              item
-              style={{ textAlign: "center", marginTop: ".5rem" }}
-            >
-              OR
+          {user === null && (
+            <Grid xs={12} item style={{ marginTop: ".5rem" }}>
+              <Button
+                fullWidth
+                variant="outlined"
+                color="primary"
+                onClick={signIn}
+              >
+                Sign In To Boost
+              </Button>
             </Grid>
           )}
-          <Grid xs={12} item style={{ marginTop: ".5rem" }}>
-            <Button
-              fullWidth
-              variant="outlined"
-              color="primary"
-              onClick={user === null ? signIn : boostNow}
-            >
-              {user === null ? "Sign In To Boost" : "BOOST NOW"}
-            </Button>
-          </Grid>
           {user !== null && (
             <Grid container justify="center" style={{ marginTop: ".5rem" }}>
               Make sure your game Credentials are saved on Home before creating

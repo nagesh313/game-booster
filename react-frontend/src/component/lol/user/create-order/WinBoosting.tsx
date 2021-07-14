@@ -58,18 +58,16 @@ function WinBoostingComponent(props: any) {
   function navigateTohome() {
     history.push("/dashboard/home");
   }
-  const boostNow = (data: any) => {
+  const paymentSuccess = (orderDetails: any) => {
+    props.enqueueSnackbar("Payment Success", successToast);
     const payload = {
       type: "Win Boosting",
       server: server,
-
       currentRank: currentRank,
       desiredRank: desiredRank,
       currentRankTier: currentRankTier,
       desiredRankTier: desiredRankTier,
-
       currentRankAmount: currentRankTier ? null : currentRankAmount,
-
       appearOffline: appearOffline,
       specificAgent: specificAgent,
       playWithBooster: playWithBooster,
@@ -77,6 +75,10 @@ function WinBoostingComponent(props: any) {
       withStreaming: withStreaming,
       wins: wins,
       totalAmount: totalAmount,
+      orderCreateTime: orderDetails.create_time,
+      paymentId: orderDetails.id,
+      payer: JSON.stringify(orderDetails.payer),
+      paymentStatus: orderDetails.status,
     };
     const user = JSON.parse(sessionStorage.getItem("user") || "{}");
     axios
@@ -94,33 +96,9 @@ function WinBoostingComponent(props: any) {
   const signIn = () => {
     history.push("/signin");
   };
-  const paymentSuccess = (data: any) => {
-    // console.log(data);
-    // const user = JSON.parse(sessionStorage.getItem("user") || "{}");
-    // axios
-    //   .get("/api/v1/order/create/" + user.id)
-    //   .then((response: any) => {
-    //     // setServersList(response.data);
-    //     // props.enqueueSnackbar("Order Created Successfully", successToast);
-    props.enqueueSnackbar("Payment Success", successToast);
-    // })
-    // .catch((reponse: any) => {
-    //   props.enqueueSnackbar(reponse.error, failureToast);
-    //   props.enqueueSnackbar("Payment Failed", failureToast);
-    // });
-  };
+
   const paymentFailed = (data: any) => {
-    // console.log(data);
-    // const user = JSON.parse(sessionStorage.getItem("user") || "{}");
-    // axios
-    //   .get("/api/v1/order/create/" + user.id)
-    //   .then((response: any) => {
-    //     // setServersList(response.data);
-    props.enqueueSnackbar("Payment Success", successToast);
-    // })
-    // .catch((reponse: any) => {
-    //   props.enqueueSnackbar("Payment Failed", failureToast);
-    // });
+    props.enqueueSnackbar("Payment Failed", failureToast);
   };
   useEffect(() => {
     const result = calculateWinBoostingsRateFromBackend(
@@ -420,26 +398,25 @@ function WinBoostingComponent(props: any) {
               item
               style={{ textAlign: "center", marginTop: ".5rem" }}
             >
-              <PayPalComponent amount={totalAmount}></PayPalComponent>
+              <PayPalComponent
+                amount={totalAmount}
+                paymentSuccess={paymentSuccess}
+                paymentFailed={paymentFailed}
+              ></PayPalComponent>
             </Grid>
           )}
-          <Grid
-            xs={12}
-            item
-            style={{ textAlign: "center", marginTop: ".5rem" }}
-          >
-            OR
-          </Grid>
-          <Grid xs={12} item style={{ marginTop: ".5rem" }}>
-            <Button
-              fullWidth
-              variant="outlined"
-              color="primary"
-              onClick={user === null ? signIn : boostNow}
-            >
-              {user === null ? "Sign In To Boost" : "BOOST NOW"}
-            </Button>
-          </Grid>
+          {user === null && (
+            <Grid xs={12} item style={{ marginTop: ".5rem" }}>
+              <Button
+                fullWidth
+                variant="outlined"
+                color="primary"
+                onClick={signIn}
+              >
+                Sign In To Boost
+              </Button>
+            </Grid>
+          )}
           {user !== null && (
             <Grid container justify="center" style={{ marginTop: ".5rem" }}>
               Make sure your game Credentials are saved on Home before creating

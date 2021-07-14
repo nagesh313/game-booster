@@ -40,6 +40,13 @@ public class DataLoaderComponent {
         boosterAccountInformation.setPaypalEmail("booster@Paypal");
         booster.setAccountInformations(boosterAccountInformation);
         User user = new User("User", "User", "user", "user@gmail.com ", encoder.encode("user"), ERole.ROLE_USER);
+        AccountInformation userAccountInformation = new AccountInformation();
+        userAccountInformation.setAccountName("user");
+        userAccountInformation.setAccountPassword("user");
+        userAccountInformation.setLolAccount("userLOL");
+        userAccountInformation.setLolPassword("userLOLPWD");
+        userAccountInformation.setPaypalEmail("user@Paypal");
+        user.setAccountInformations(userAccountInformation);
         try {
             userRepository.saveAll(Arrays.asList(admin, booster, user));
         } catch (Exception e) {
