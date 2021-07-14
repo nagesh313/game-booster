@@ -25,6 +25,7 @@ import { useHistory } from "react-router-dom";
 import { calculateWinBoostingsRateFromBackend } from "../../../../util/rate";
 // import { GPayComponent } from "../../../../util/gpay";
 import { failureToast, successToast } from "../../../../util/util";
+import { PayPalComponent } from "../../../Paypal";
 
 function WinBoostingComponent(props: any) {
   const [desiredRank, setDesiredRank] = React.useState<any>("");
@@ -413,24 +414,22 @@ function WinBoostingComponent(props: any) {
               $ {totalAmount}
             </Typography>
           </Grid>
-          {/* <Grid
-            xs={12}
-            item
-            style={{ textAlign: "center", marginTop: ".5rem" }}
-          >
-            <GPayComponent
-              amount={totalAmount}
-              paymentSuccess={paymentSuccess}
-              paymentFailed={paymentFailed}
-            ></GPayComponent>
-          </Grid> */}
-          {/* <Grid
+          {user !== null && (
+            <Grid
+              xs={12}
+              item
+              style={{ textAlign: "center", marginTop: ".5rem" }}
+            >
+              <PayPalComponent amount={totalAmount}></PayPalComponent>
+            </Grid>
+          )}
+          <Grid
             xs={12}
             item
             style={{ textAlign: "center", marginTop: ".5rem" }}
           >
             OR
-          </Grid> */}
+          </Grid>
           <Grid xs={12} item style={{ marginTop: ".5rem" }}>
             <Button
               fullWidth

@@ -118,6 +118,7 @@ public class DataLoaderComponent {
         Rates rates16 = new Rates("Diamond", "Diamond", "I", "II", 53.09);
         Rates rates17 = new Rates("Diamond", "Diamond", "II", "III", 59.00);
         Rates rates18 = new Rates("Diamond", "Immortal", "III", "", 155.95);
+        Rates rates19 = new Rates("Immortal", "Immortal", "", "", 50.72);
         try {
             ratesRepository.saveAll(Arrays.asList(rates0, rates1, rates2, rates3, rates40, rates4, rates5, rates6, rates70, rates7, rates8, rates9, rates100, rates10, rates11, rates12,
                     rates130, rates13, rates14,
@@ -167,6 +168,7 @@ public class DataLoaderComponent {
         WinBoostings rates16 = new WinBoostings("Diamond", "II", 29.44);
         WinBoostings rates17 = new WinBoostings("Diamond", "III", 32.99);
         WinBoostings rates18 = new WinBoostings("Diamond", "III", 76.73);
+        WinBoostings rates19 = new WinBoostings("Immortal", "", 69.64);
 
         try {
             winBoostingsRepository.saveAll(Arrays.asList(
@@ -174,7 +176,7 @@ public class DataLoaderComponent {
                     rates5, rates6, rates70, rates7,
                     rates8, rates100, rates10, rates11,
                     rates130, rates13, rates14,
-                    rates160, rates16, rates17, rates18));
+                    rates160, rates16, rates17, rates18, rates19));
         } catch (Exception e) {
         } finally {
         }

@@ -54,7 +54,6 @@ function CreateAnOrderComponent(props: any) {
   const [ratesList, setRatesList] = React.useState<any>([]);
   const [placementRatesList, setPlacementRatesList] = React.useState<any>([]);
   const [winBoostingsRates, setWinBoostingsList] = React.useState<any>([]);
-
   const [serversList, setServersList] = React.useState<any>([]);
   const [ranksList, setRanksList] = React.useState<any>([]);
 

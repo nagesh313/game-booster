@@ -85,7 +85,7 @@ export const calculateRateFromBackend = (ratesFromBackend: any, order: any) => {
     currentRankCost = currentRankBaseCost * 0.1;
   }
   return typeof total === "number"
-    ? (total + extras + currentRankCost).toFixed(2)
+    ? (total + extras - currentRankCost).toFixed(2)
     : 0;
 };
 export const calculatePlacementRateFromBackend = (

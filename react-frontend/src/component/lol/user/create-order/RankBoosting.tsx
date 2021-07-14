@@ -23,6 +23,7 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { calculateRateFromBackend } from "../../../../util/rate";
 import { failureToast, successToast } from "../../../../util/util";
+import { PayPalComponent } from "../../../Paypal";
 function RankBoostingComponent(props: any) {
   const [desiredRank, setDesiredRank] = React.useState<any>("");
   const [currentRank, setCurrentRank] = React.useState<any>("");
@@ -525,24 +526,29 @@ function RankBoostingComponent(props: any) {
               $ {totalAmount}
             </Typography>
           </Grid>
-          {/* <Grid
-            xs={12}
-            item
-            style={{ textAlign: "center", marginTop: ".5rem" }}
-          >
-            <GPayComponent
+          {user !== null && (
+            <Grid
+              xs={12}
+              item
+              style={{ textAlign: "center", marginTop: ".5rem" }}
+            >
+              <PayPalComponent amount={totalAmount}></PayPalComponent>
+              {/* <GPayComponent
               amount={totalAmount}
               paymentSuccess={paymentSuccess}
               paymentFailed={paymentFailed}
-            ></GPayComponent>
-          </Grid> */}
-          {/* <Grid
-            xs={12}
-            item
-            style={{ textAlign: "center", marginTop: ".5rem" }}
-          >
-            OR
-          </Grid> */}
+            ></GPayComponent> */}
+            </Grid>
+          )}
+          {user !== null && (
+            <Grid
+              xs={12}
+              item
+              style={{ textAlign: "center", marginTop: ".5rem" }}
+            >
+              OR
+            </Grid>
+          )}
           <Grid xs={12} item style={{ marginTop: ".5rem" }}>
             <Button
               fullWidth
