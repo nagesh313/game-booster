@@ -22,7 +22,6 @@ public class Order {
     private String desiredRankTier;
     private String currentRankAmount;
     private String desiredRankAmount;
-
     private Boolean appearOffline;
     private Boolean specificAgent;
     private Boolean playWithBooster;
@@ -36,6 +35,11 @@ public class Order {
     private String paymentId;
     private String payer;
     private String paymentStatus;
+    private String summonerName;
+    private String lolAccount;
+    private String lolPassword;
+    private String userName;
+    private String userEmail;
     private boolean paid = false;
     @Enumerated(EnumType.STRING)
     @Column(length = 20)

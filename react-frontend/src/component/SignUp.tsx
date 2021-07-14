@@ -43,20 +43,20 @@ const useStyles = makeStyles((theme) => ({
 const SignupSchema = Yup.object().shape({
   firstname: Yup.string()
     .min(2, "Too Short!")
-    .max(10, "Too Long!")
+    .max(20, "Too Long!")
     .required("Required"),
   lastname: Yup.string()
     .min(2, "Too Short!")
-    .max(10, "Too Long!")
+    .max(20, "Too Long!")
     .required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
   username: Yup.string()
     .min(2, "Too Short!")
-    .max(10, "Too Long!")
+    .max(20, "Too Long!")
     .required("Required"),
   password: Yup.string()
     .min(2, "Too Short!")
-    .max(10, "Too Long!")
+    .max(20, "Too Long!")
     .required("Required"),
 });
 export function SignUpComponent(props: any) {

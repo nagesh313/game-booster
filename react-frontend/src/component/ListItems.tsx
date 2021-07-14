@@ -9,19 +9,18 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
+import AddIcon from "@material-ui/icons/Add";
+import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import ContactsIcon from "@material-ui/icons/Contacts";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import LayersIcon from "@material-ui/icons/Layers";
+import LocalAtmIcon from "@material-ui/icons/LocalAtm";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
-import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import React from "react";
-import AddIcon from "@material-ui/icons/Add";
-import { SportsEsports } from "@material-ui/icons";
-import LocalAtmIcon from "@material-ui/icons/LocalAtm";
 export const AdminListItems = () => {
   const user = JSON.parse(sessionStorage.getItem("user") || "{roles:[]}");
   return user.roles.includes("ROLE_ADMIN") ? (
@@ -103,8 +102,7 @@ export const MainListItems = () => {
             </ListItemIcon>
             <ListItemText primary="New Orders" />
           </ListItem> */}
-          {
-            <ListItem
+          {/* <ListItem
               button
               component="a"
               href="/#/dashboard/account-information"
@@ -113,8 +111,7 @@ export const MainListItems = () => {
                 <SportsEsports />
               </ListItemIcon>
               <ListItemText primary="Account Info" />
-            </ListItem>
-          }
+            </ListItem> */}
         </div>
       )}
       {user.roles.includes("ROLE_USER") && (

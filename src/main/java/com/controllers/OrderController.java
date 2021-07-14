@@ -91,22 +91,6 @@ public class OrderController {
         }
     }
 
-//    @PostMapping("/create")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public void createNewOrder(@RequestBody AdminOrder order) throws Exception {
-//        Optional<User> user = userRepository.findByUsername(order.getUsername());
-//        if (user.isPresent()) {
-//            Order order = new Order();
-//            order.setUser(user.get());
-//            order.setCreatedDate(new Date().toString());
-//            order.setStatus(EStatus.ORDER_NEW);
-//            order.setUser(user.get());
-//            orderRepository.save(order);
-//        } else {
-//            throw new Exception("Invalid Request");
-//        }
-//    }
-
     @PostMapping("/create/{userId}")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public void createNewOrderByUserId(@RequestBody Order order, @PathVariable Long userId) throws Exception {
@@ -116,40 +100,14 @@ public class OrderController {
             LocalDate currentDate = LocalDate.now();
             String date = currentDate.getMonth().toString() + " " + currentDate.getDayOfMonth() + ", " + currentDate.getYear();
             order.setCreatedDate(date);
+            order.setUserName(user.get().getUsername());
+            order.setUserEmail(user.get().getEmail());
             order.setUser(user.get());
-
-            if (user.get().getAccountInformations() == null) {
-                throw new Exception("Please save you game credentials before Creating an Order");
-            } else {
-                order.setAccountInformation(user.get().getAccountInformations());
-            }
             orderRepository.save(order);
         } else {
             throw new Exception("Invalid Request");
         }
     }
-
-//    @PostMapping("/admin/create/{userId}/{boosterId}")
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    public void createNewOrderByUserId(
-//            @RequestBody Order order, @PathVariable Long userId, @PathVariable Long boosterId) throws Exception {
-//        Optional<User> forBooster = userRepository.findById(boosterId);
-//        Optional<User> forUser = userRepository.findById(userId);
-//        if (!forUser.isPresent()) {
-//            throw new Exception("Please select for which user this order is for!");
-//        } else {
-//            order.setStatus(EStatus.ORDER_RUNNING);
-//            LocalDate currentDate = LocalDate.now();
-//            String date = currentDate.getMonth().toString() + " " + currentDate.getDayOfMonth() + ", " + currentDate.getYear();
-//            order.setCreatedDate(date);
-//            order.setUser(forUser.get());
-//            if (forBooster.isPresent()) {
-//                order.setAssignedTo(forBooster.get());
-//            }
-//            orderRepository.save(order);
-//        }
-//    }
-
 
     @PostMapping("/admin/create/{summonerName}/{lolAccount}/{lolPassword}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -160,11 +118,11 @@ public class OrderController {
         LocalDate currentDate = LocalDate.now();
         String date = currentDate.getMonth().toString() + " " + currentDate.getDayOfMonth() + ", " + currentDate.getYear();
         order.setCreatedDate(date);
-        AccountInformation accountInformation = new AccountInformation();
-        accountInformation.setSummonerName(summonerName);
-        accountInformation.setLolAccount(lolAccount);
-        accountInformation.setLolPassword(lolPassword);
-        order.setAccountInformation(accountInformation);
+        order.setSummonerName(summonerName);
+        order.setLolAccount(lolAccount);
+        order.setLolPassword(lolPassword);
+        order.setUserName("Admin");
+        order.setUserEmail("Admin");
         orderRepository.save(order);
     }
 
@@ -225,9 +183,10 @@ public class OrderController {
         if (booster.isPresent()) {
             if (booster.isPresent()) {
                 Order orderToAssign = order.get();
-                if (orderToAssign.getUser() != null) {
-                } else {
+                if (orderToAssign.getAssignedTo() != null) {
                     throw new Exception("Order is already Assigned");
+                } else {
+
                 }
                 orderToAssign.setStatus(EStatus.RUNNING);
                 orderToAssign.setAssignedTo(booster.get());

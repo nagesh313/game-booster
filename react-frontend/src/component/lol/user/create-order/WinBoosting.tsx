@@ -42,9 +42,9 @@ function WinBoostingComponent(props: any) {
   const [server, setServer] = React.useState<any>("EU-WEST");
   // const [forBooster, setForBooster] = React.useState<any>("");
   // const [forUser, setForUser] = React.useState<any>("");
-  // const [summonerName, setSummonerName] = React.useState<any>("");
-  // const [lolAccount, setLolAccount] = React.useState<any>("");
-  // const [lolPassword, setLolPassword] = React.useState<any>("");
+  const [summonerName, setSummonerName] = React.useState<any>("");
+  const [lolAccount, setLolAccount] = React.useState<any>("");
+  const [lolPassword, setLolPassword] = React.useState<any>("");
 
   const [totalAmount, setTotalAmount] = React.useState<any>(100);
   const [appearOffline, setAppearOffline] = React.useState<boolean>(false);
@@ -75,6 +75,10 @@ function WinBoostingComponent(props: any) {
       withStreaming: withStreaming,
       wins: wins,
       totalAmount: totalAmount,
+      summonerName,
+      lolAccount,
+      lolPassword,
+
       orderCreateTime: orderDetails.create_time,
       paymentId: orderDetails.id,
       payer: JSON.stringify(orderDetails.payer),
@@ -392,6 +396,48 @@ function WinBoostingComponent(props: any) {
               $ {totalAmount}
             </Typography>
           </Grid>
+          {user !== null && (
+            <React.Fragment>
+              {" "}
+              <Grid xs={12} item>
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  autoComplete="unset"
+                  margin="dense"
+                  label="VLRNT Account"
+                  onChange={(event: any) => {
+                    setLolAccount(event.target.value);
+                  }}
+                  value={lolAccount}
+                />
+              </Grid>
+              <Grid xs={12} item>
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  margin="dense"
+                  label="VLRNT Password"
+                  onChange={(event: any) => {
+                    setLolPassword(event.target.value);
+                  }}
+                  value={lolPassword}
+                />
+              </Grid>
+              <Grid xs={12} item>
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  margin="dense"
+                  label="Summoner Name"
+                  onChange={(event: any) => {
+                    setSummonerName(event.target.value);
+                  }}
+                  value={summonerName}
+                />
+              </Grid>
+            </React.Fragment>
+          )}
           {user !== null && (
             <Grid
               xs={12}

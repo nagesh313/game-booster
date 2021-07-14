@@ -22,6 +22,7 @@ td,
 .MuiFormLabel-filled,
 .MuiChip-label,
 .MuiTouchRipple-root,
+.MuiCardHeader-subheader,
 label {
   color: #ffabab !important;
 }
@@ -41,7 +42,7 @@ div {
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
+input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
@@ -49,7 +50,7 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  border: 1px solid #ffabab !important;;
+  border: 1px solid #ffabab !important;
   -webkit-text-fill-color: #ffabab !important;
   background-color: #ffabab !important;
 }

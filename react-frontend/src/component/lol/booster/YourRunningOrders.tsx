@@ -1,19 +1,21 @@
-import { IconButton } from "@material-ui/core";
+import { IconButton, Tooltip } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import { RemoveRedEye } from "@material-ui/icons";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import CancelIcon from "@material-ui/icons/Cancel";
 import axios from "axios";
 import { withSnackbar } from "notistack";
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { failureToast, successToast } from "../../../util/util";
 import Title from "../../Title";
 export function YourRunningOrdersComponent(props: any) {
   const [orderList, setOrderList] = React.useState<any>([]);
-
+  const history = useHistory();
   const fetchOrderList = () => {
     const user = JSON.parse(sessionStorage.getItem("user") || "{}");
     axios
@@ -25,27 +27,34 @@ export function YourRunningOrdersComponent(props: any) {
         props.enqueueSnackbar(reponse.error, failureToast);
       });
   };
+  const viewOrder = (row: any) => {
+    history.push("/dashboard/order-details/" + row.id);
+  };
   const orderComplete = (row: any) => {
-    axios
-      .patch("/api/v1/order/complete/" + row.id)
-      .then((response: any) => {
-        props.refresh();
-        props.enqueueSnackbar("Order Marked as completed", successToast);
-      })
-      .catch((reponse: any) => {
-        props.enqueueSnackbar(reponse.error, failureToast);
-      });
+    if (window.confirm("Are you sure you Want to mark order as completed?")) {
+      axios
+        .patch("/api/v1/order/complete/" + row.id)
+        .then((response: any) => {
+          props.refresh();
+          props.enqueueSnackbar("Order Marked as completed", successToast);
+        })
+        .catch((reponse: any) => {
+          props.enqueueSnackbar(reponse.error, failureToast);
+        });
+    }
   };
   const dropOrder = (row: any) => {
-    axios
-      .patch("/api/v1/order/drop/" + row.id)
-      .then((response: any) => {
-        props.refresh();
-        props.enqueueSnackbar("Order Dropped completed", successToast);
-      })
-      .catch((reponse: any) => {
-        props.enqueueSnackbar(reponse.error, failureToast);
-      });
+    if (window.confirm("Are you sure you Want to drop this order ?")) {
+      axios
+        .patch("/api/v1/order/drop/" + row.id)
+        .then((response: any) => {
+          props.refresh();
+          props.enqueueSnackbar("Order Dropped completed", successToast);
+        })
+        .catch((reponse: any) => {
+          props.enqueueSnackbar(reponse.error, failureToast);
+        });
+    }
   };
   useEffect(() => {
     fetchOrderList();
@@ -120,20 +129,33 @@ export function YourRunningOrdersComponent(props: any) {
               <TableCell>{row.createdDate}</TableCell>
               <TableCell>${row.totalAmount}</TableCell>
               <TableCell align="right">
-                <IconButton
-                  onClick={() => {
-                    orderComplete(row);
-                  }}
-                >
-                  <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
-                </IconButton>
-                <IconButton
-                  onClick={() => {
-                    dropOrder(row);
-                  }}
-                >
-                  <CancelIcon></CancelIcon>
-                </IconButton>
+                <Tooltip title="View Order">
+                  <IconButton
+                    onClick={() => {
+                      viewOrder(row);
+                    }}
+                  >
+                    <RemoveRedEye></RemoveRedEye>
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Finish Order">
+                  <IconButton
+                    onClick={() => {
+                      orderComplete(row);
+                    }}
+                  >
+                    <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Drop Order">
+                  <IconButton
+                    onClick={() => {
+                      dropOrder(row);
+                    }}
+                  >
+                    <CancelIcon></CancelIcon>
+                  </IconButton>
+                </Tooltip>
               </TableCell>
             </TableRow>
           ))}

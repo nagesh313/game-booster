@@ -17,11 +17,11 @@ import { failureToast } from "../util/util";
 const SignInSchema = Yup.object().shape({
   username: Yup.string()
     .min(2, "Too Short!")
-    .max(10, "Too Long!")
+    .max(20, "Too Long!")
     .required("Required"),
   password: Yup.string()
     .min(2, "Too Short!")
-    .max(10, "Too Long!")
+    .max(20, "Too Long!")
     .required("Required"),
 });
 
