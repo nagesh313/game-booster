@@ -409,7 +409,7 @@ function PlacementsComponent(props: any) {
               variant="outlined"
               autoComplete="unset"
               margin="dense"
-              label="LOL Account"
+              label="VLRNT Account"
               onChange={(event: any) => {
                 setLolAccount(event.target.value);
               }}
@@ -421,7 +421,7 @@ function PlacementsComponent(props: any) {
               fullWidth
               variant="outlined"
               margin="dense"
-              label="LOL Password"
+              label="VLRNT Password"
               onChange={(event: any) => {
                 setLolPassword(event.target.value);
               }}

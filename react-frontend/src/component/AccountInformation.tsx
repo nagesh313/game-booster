@@ -89,7 +89,7 @@ export function AccountInformationComponent(props: any) {
                 variant="outlined"
                 name="lolAccount"
                 margin="dense"
-                label="LOL Account"
+                label="VLRNT Account"
                 onChange={handleChange}
                 value={values.lolAccount}
               />
@@ -99,7 +99,7 @@ export function AccountInformationComponent(props: any) {
                 variant="outlined"
                 name="lolPassword"
                 margin="dense"
-                label="LOL Password"
+                label="VLRNT Password"
                 onChange={handleChange}
                 value={values.lolPassword}
               />

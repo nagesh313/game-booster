@@ -29,7 +29,7 @@ function YourCompletedOrdersComponent(props: any) {
   };
   useEffect(() => {
     fetchOrderList();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [props.key]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <React.Fragment>
@@ -112,7 +112,7 @@ function YourCompletedOrdersComponent(props: any) {
                   >
                     View
                   </Button>
-                 </ButtonGroup>
+                </ButtonGroup>
               </TableCell>
             </TableRow>
           ))}

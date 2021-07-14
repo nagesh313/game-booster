@@ -87,18 +87,18 @@ function OrderDetailsComponent(props: any) {
           <CardContent>
             <Grid item xs={12}>
               <Typography>
-                <b>{"LOL SUMMONNER NAME : "}</b>
+                <b>{"VLRNT SUMMONNER NAME : "}</b>
                 {order?.accountInformation?.summonerName}
               </Typography>
             </Grid>
             <Typography>
-              <b>{"LOL ACCOUNT : "}</b>
+              <b>{"VLRNT ACCOUNT : "}</b>
               {order?.accountInformation?.lolAccount}
             </Typography>
 
             <Grid xs={12}>
               <Typography>
-                <b>{"LOL PASSWORD : "}</b>
+                <b>{"VLRNT PASSWORD : "}</b>
                 {order?.accountInformation?.lolPassword}
               </Typography>
             </Grid>

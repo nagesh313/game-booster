@@ -162,7 +162,16 @@ export const secondaryRoutes = [
     path: "/dashboard/account-information",
     name: "/dashboard/account-information",
     icon: <SportsEsportsIcon></SportsEsportsIcon>,
-    component: <AccountInformation></AccountInformation>,
+    component: () => {
+      const user = JSON.parse(sessionStorage.getItem("user") || "{roles:[]}");
+      if (user.roles.includes("ROLE_ADMIN")) {
+        return <React.Fragment></React.Fragment>;
+      } else if (user.roles.includes("ROLE_BOOSTER")) {
+        return <React.Fragment></React.Fragment>;
+      } else {
+        return <AccountInformation></AccountInformation>;
+      }
+    },
     layout: "/dashboard/account-information",
   },
 ];

@@ -9,7 +9,7 @@ import { withSnackbar } from "notistack";
 import React, { useEffect } from "react";
 import { failureToast, successToast } from "../../../util/util";
 import Title from "../../Title";
-export function NewOrdersComponent(props: any) {
+function NewOrdersComponent(props: any) {
   const [newOrderList, setNewOrderList] = React.useState<any>([]);
 
   const fetchOrderList = () => {
@@ -25,13 +25,13 @@ export function NewOrdersComponent(props: any) {
   const takeOrder = (row: any) => {
     const user = JSON.parse(sessionStorage.getItem("user") || "{}");
     axios
-      .patch("/api/v1/order/take/" + user.id + "/" + row.id+"/")
+      .patch("/api/v1/order/take/" + user.id + "/" + row.id + "/")
       .then((response: any) => {
         props.enqueueSnackbar(
           "Order Has been added to your Order",
           successToast
         );
-        fetchOrderList();
+        props.refresh();
       })
       .catch((reponse: any) => {
         props.enqueueSnackbar(reponse.error, failureToast);
@@ -39,7 +39,7 @@ export function NewOrdersComponent(props: any) {
   };
   useEffect(() => {
     fetchOrderList();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [props.key]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <React.Fragment>

@@ -72,7 +72,7 @@ function RankBoostingComponent(props: any) {
     };
     // const user = JSON.parse(sessionStorage.getItem("user") || "{}");
     if (summonerName === "" || lolAccount === "" || lolPassword === "") {
-      alert("Please add Summoner Name/LOL Account/LOL Password");
+      alert("Please add Summoner Name/VLRNT Account/VLRNT Password");
     } else {
       axios
         .post(
@@ -550,7 +550,7 @@ function RankBoostingComponent(props: any) {
               variant="outlined"
               autoComplete="unset"
               margin="dense"
-              label="LOL Account"
+              label="VLRNT Account"
               onChange={(event: any) => {
                 setLolAccount(event.target.value);
               }}
@@ -562,7 +562,7 @@ function RankBoostingComponent(props: any) {
               fullWidth
               variant="outlined"
               margin="dense"
-              label="LOL Password"
+              label="VLRNT Password"
               onChange={(event: any) => {
                 setLolPassword(event.target.value);
               }}

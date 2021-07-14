@@ -29,7 +29,7 @@ export function YourRunningOrdersComponent(props: any) {
     axios
       .patch("/api/v1/order/complete/" + row.id)
       .then((response: any) => {
-        fetchOrderList();
+        props.refresh();
         props.enqueueSnackbar("Order Marked as completed", successToast);
       })
       .catch((reponse: any) => {
@@ -40,7 +40,7 @@ export function YourRunningOrdersComponent(props: any) {
     axios
       .patch("/api/v1/order/drop/" + row.id)
       .then((response: any) => {
-        fetchOrderList();
+        props.refresh();
         props.enqueueSnackbar("Order Dropped completed", successToast);
       })
       .catch((reponse: any) => {
@@ -49,11 +49,13 @@ export function YourRunningOrdersComponent(props: any) {
   };
   useEffect(() => {
     fetchOrderList();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [props.key]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <React.Fragment>
-      <Title>Your Running Orders (Orders Taken/Assigned) ({orderList.length})</Title>
+      <Title>
+        Your Running Orders (Orders Taken/Assigned) ({orderList.length})
+      </Title>
       <Table size="small">
         <TableHead>
           <TableRow>
