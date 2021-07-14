@@ -463,7 +463,7 @@ function PlacementsComponent(props: any) {
                 color="primary"
                 onClick={singin}
               >
-                "Sign In To Boost"
+                Sign In To Boost
               </Button>
             </Grid>
           )}
