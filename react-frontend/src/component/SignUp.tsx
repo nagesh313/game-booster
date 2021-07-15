@@ -1,8 +1,10 @@
 import {
+  AppBar,
   FormControl,
   FormControlLabel,
   Radio,
-  RadioGroup
+  RadioGroup,
+  Toolbar,
 } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -20,8 +22,12 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { failureToast, successToast } from "../util/util";
+import Pricing from "./pricing";
 
 const useStyles = makeStyles((theme) => ({
+  grow: {
+    flexGrow: 1,
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -65,6 +71,9 @@ export function SignUpComponent(props: any) {
   function navigateToLogin() {
     history.push("/signin");
   }
+  function navigateToHome() {
+    history.push("/");
+  }
   const signUpSubmit = (values: any) => {
     axios
       .post("/api/auth/signup", { ...values })
@@ -78,151 +87,176 @@ export function SignUpComponent(props: any) {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <Formik
-          initialValues={{
-            firstname: "test",
-            lastname: "test",
-            email: "test@gmail.com",
-            username: "test",
-            password: "test",
-            acccountType: "ROLE_USER",
-          }}
-          validationSchema={SignupSchema}
-          onSubmit={(values: any) => {
-            signUpSubmit(values);
-          }}
-        >
-          {({ errors, touched, values, handleChange }) => (
-            // obj: any
-            <Form className={classes.form} noValidate>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    autoComplete="firstname"
-                    name="firstname"
-                    variant="outlined"
-                    fullWidth
-                    id="firstname"
-                    label="First Name"
-                    autoFocus
-                    onChange={handleChange}
-                    value={values.firstname}
-                    error={errors.firstname && touched.firstname ? true : false}
-                    helperText={touched.firstname && errors.firstname}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    id="lastname"
-                    label="Last Name"
-                    name="lastname"
-                    autoComplete="lastname"
-                    onChange={handleChange}
-                    value={values.lastname}
-                    error={errors.lastname && touched.lastname ? true : false}
-                    helperText={touched.lastname && errors.lastname}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    onChange={handleChange}
-                    value={values.email}
-                    error={errors.email && touched.email ? true : false}
-                    helperText={touched.email && errors.email}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="username"
-                    label="Username"
-                    name="username"
-                    onChange={handleChange}
-                    value={values.username}
-                    error={errors.username && touched.username ? true : false}
-                    helperText={touched.username && errors.username}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    onChange={handleChange}
-                    value={values.password}
-                    error={errors.password && touched.password ? true : false}
-                    helperText={touched.password && errors.password}
-                  />
-                </Grid>
-                <Grid item xs={12} style={{ textAlign: "center" }}>
-                  <FormControl component="fieldset">
-                    <RadioGroup
-                      row
-                      aria-label="position"
-                      defaultValue="ROLE_USER"
-                      name="acccountType"
-                      id="acccountType"
+    <React.Fragment>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <Typography
+            variant="h6"
+            onClick={navigateToHome}
+            style={{ color: "white", cursor: "pointer" }}
+          >
+            VLRNT BOOSTING
+          </Typography>
+          <div className={classes.grow} />
+          <Button
+            variant="outlined"
+            onClick={() => {
+              navigateToLogin();
+            }}
+          >
+            Login
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Container component="main" maxWidth="xs">
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <Formik
+            initialValues={{
+              firstname: "test",
+              lastname: "test",
+              email: "test@gmail.com",
+              username: "test",
+              password: "test",
+              acccountType: "ROLE_USER",
+            }}
+            validationSchema={SignupSchema}
+            onSubmit={(values: any) => {
+              signUpSubmit(values);
+            }}
+          >
+            {({ errors, touched, values, handleChange }) => (
+              // obj: any
+              <Form className={classes.form} noValidate>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      autoComplete="firstname"
+                      name="firstname"
+                      variant="outlined"
+                      fullWidth
+                      id="firstname"
+                      label="First Name"
+                      autoFocus
                       onChange={handleChange}
-                    >
-                      <FormControlLabel
-                        value="ROLE_USER"
-                        control={<Radio color="primary" />}
-                        label="User"
-                      />
-                      <FormControlLabel
-                        value="ROLE_BOOSTER"
-                        control={<Radio color="primary" />}
-                        label="Booster"
-                      />
-                    </RadioGroup>
-                  </FormControl>
+                      value={values.firstname}
+                      error={
+                        errors.firstname && touched.firstname ? true : false
+                      }
+                      helperText={touched.firstname && errors.firstname}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      id="lastname"
+                      label="Last Name"
+                      name="lastname"
+                      autoComplete="lastname"
+                      onChange={handleChange}
+                      value={values.lastname}
+                      error={errors.lastname && touched.lastname ? true : false}
+                      helperText={touched.lastname && errors.lastname}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                      onChange={handleChange}
+                      value={values.email}
+                      error={errors.email && touched.email ? true : false}
+                      helperText={touched.email && errors.email}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="username"
+                      label="Username"
+                      name="username"
+                      onChange={handleChange}
+                      value={values.username}
+                      error={errors.username && touched.username ? true : false}
+                      helperText={touched.username && errors.username}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password"
+                      onChange={handleChange}
+                      value={values.password}
+                      error={errors.password && touched.password ? true : false}
+                      helperText={touched.password && errors.password}
+                    />
+                  </Grid>
+                  <Grid item xs={12} style={{ textAlign: "center" }}>
+                    <FormControl component="fieldset">
+                      <RadioGroup
+                        row
+                        aria-label="position"
+                        defaultValue="ROLE_USER"
+                        name="acccountType"
+                        id="acccountType"
+                        onChange={handleChange}
+                      >
+                        <FormControlLabel
+                          value="ROLE_USER"
+                          control={<Radio color="primary" />}
+                          label="User"
+                        />
+                        <FormControlLabel
+                          value="ROLE_BOOSTER"
+                          control={<Radio color="primary" />}
+                          label="Booster"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Sign Up
-              </Button>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  <Link href="/#/signIn" variant="body2">
-                    Already have an account? Sign in
-                  </Link>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Sign Up
+                </Button>
+                <Grid container justify="flex-end">
+                  <Grid item>
+                    <Link href="/#/signIn" variant="body2">
+                      Already have an account? Sign in
+                    </Link>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Form>
-          )}
-        </Formik>
-      </div>
-    </Container>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </Container>
+      <Pricing></Pricing>
+    </React.Fragment>
   );
 }
 export const SignUp = withSnackbar(SignUpComponent);

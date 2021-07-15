@@ -1,14 +1,32 @@
-import { Container, Grid } from "@material-ui/core";
+import {
+  AppBar,
+  Button,
+  Container,
+  Grid,
+  makeStyles,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import "./App.css";
 import { CreateAnOrder } from "./component/lol/user/CreateAnOrder";
+const useStyles = makeStyles(() => ({
+  grow: {
+    flexGrow: 1,
+  },
+}));
+
 export function CreateOrderHome() {
+  const classes = useStyles();
   const history = useHistory();
   const userActive = () => {
     history.push("/dashboard/home");
   };
+  function navigateToLogin() {
+    history.push("/signin");
+  }
   const userInactive = () => {
     sessionStorage.removeItem("user");
     sessionStorage.setItem("orderCreatedWithoutLogin", "true");
@@ -27,15 +45,34 @@ export function CreateOrderHome() {
       });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
-    <Container style={{ marginTop: "40px", textAlign: "center" }}>
-      <img
-        alt="valorant"
-        src="./images/valorant.png"
-        style={{ marginBottom: "20px", height: "80px", width: "80px" }}
-      ></img>
-      <Grid container justify="center">
-        <CreateAnOrder></CreateAnOrder>
-      </Grid>
-    </Container>
+    <React.Fragment>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <Typography variant="h6" color="inherit">
+            VLRNT BOOSTING
+          </Typography>
+          <div className={classes.grow} />
+          <Button
+            variant="outlined"
+            onClick={() => {
+              navigateToLogin();
+            }}
+          >
+            Login
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Container style={{ marginTop: "40px", textAlign: "center" }}>
+        <img
+          alt="valorant"
+          src="./images/valorant.png"
+          style={{ marginBottom: "20px", height: "80px", width: "80px" }}
+        ></img>
+
+        <Grid container justify="center">
+          <CreateAnOrder></CreateAnOrder>
+        </Grid>
+      </Container>
+    </React.Fragment>
   );
 }

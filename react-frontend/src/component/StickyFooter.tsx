@@ -1,42 +1,73 @@
 import React from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Link from "@material-ui/core/Link";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    minHeight: "100vh",
-  },
-  main: {
-    marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(2),
-  },
-  footer: {
-    padding: theme.spacing(3, 2),
-    marginTop: "auto",
-    backgroundColor:
-      theme.palette.type === "light"
-        ? theme.palette.grey[200]
-        : theme.palette.grey[800],
-  },
-}));
+import SimpleReactFooter from "simple-react-footer";
 
 export default function StickyFooter() {
-  const classes = useStyles();
-
+  const title = "Cats";
+  const columns = [
+    {
+      title: "Resources",
+      resources: [
+        {
+          name: "About",
+          link: "/about",
+        },
+        {
+          name: "Careers",
+          link: "/careers",
+        },
+        {
+          name: "Contact",
+          link: "/contact",
+        },
+        {
+          name: "Admin",
+          link: "/admin",
+        },
+      ],
+    },
+    {
+      title: "Legal",
+      resources: [
+        {
+          name: "Privacy",
+          link: "/privacy",
+        },
+        {
+          name: "Terms",
+          link: "/terms",
+        },
+      ],
+    },
+    {
+      title: "Visit",
+      resources: [
+        {
+          name: "Locations",
+          link: "/locations",
+        },
+        {
+          name: "Culture",
+          link: "/culture",
+        },
+      ],
+    },
+  ];
   return (
-    <div className={classes.root}>
-      <footer className={classes.footer}>
-        <Container maxWidth="sm">
-          <Typography variant="body1">
-            My sticky footer can be found here.
-          </Typography>
-        </Container>
-      </footer>
-    </div>
+    <SimpleReactFooter
+      description={""}
+      title={title}
+      columns={columns}
+      linkedin="fluffy_cat_on_linkedin"
+      facebook="fluffy_cat_on_fb"
+      twitter="fluffy_cat_on_twitter"
+      instagram="fluffy_cat_live"
+      youtube="UCFt6TSF464J8K82xeA?"
+      pinterest="fluffy_cats_collections"
+      copyright="black"
+      iconColor="black"
+      backgroundColor="bisque"
+      fontColor="black"
+      copyrightColor="darkgrey"
+    />
   );
 }

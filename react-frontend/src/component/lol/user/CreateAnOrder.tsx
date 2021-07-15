@@ -7,6 +7,7 @@ import axios from "axios";
 import { withSnackbar } from "notistack";
 import React, { useEffect } from "react";
 import { failureToast } from "../../../util/util";
+import Pricing from "../../pricing";
 import { Placements } from "./create-order/Placements";
 import { RankBoosting } from "./create-order/RankBoosting";
 import { WinBoosting } from "./create-order/WinBoosting";
@@ -161,6 +162,7 @@ function CreateAnOrderComponent(props: any) {
           </TabPanel>
         </Grid>
       </Grid>
+      <Pricing></Pricing>
     </React.Fragment>
   );
 }

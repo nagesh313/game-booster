@@ -1,3 +1,4 @@
+import { AppBar, Toolbar } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
@@ -14,6 +15,7 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { failureToast } from "../util/util";
+import Pricing from "./pricing";
 const SignInSchema = Yup.object().shape({
   username: Yup.string()
     .min(2, "Too Short!")
@@ -26,6 +28,9 @@ const SignInSchema = Yup.object().shape({
 });
 
 const useStyles = makeStyles((theme) => ({
+  grow: {
+    flexGrow: 1,
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -48,7 +53,9 @@ const useStyles = makeStyles((theme) => ({
 export function SignInComponent(props: any) {
   const classes = useStyles();
   const history = useHistory();
-
+  function navigateToLogin() {
+    history.push("/signUp");
+  }
   const sessionActive = () => {};
   useEffect(() => {
     sessionActive();
@@ -68,6 +75,9 @@ export function SignInComponent(props: any) {
       history.push("/dashboard/home");
     }
   }
+  function navigateToHome() {
+    history.push("/");
+  }
   const signInSubmit = (values: any) => {
     axios
       .post("/api/auth/signin", { ...values })
@@ -81,89 +91,112 @@ export function SignInComponent(props: any) {
       });
   };
   return (
-    <Container component="main" maxWidth="xs">
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <Formik
-          initialValues={{
-            username: "",
-            password: "",
-          }}
-          validationSchema={SignInSchema}
-          onSubmit={(values: any) => {
-            signInSubmit(values);
-          }}
-        >
-          {({ errors, touched, values, handleChange }) => (
-            // obj: any
-            <Form className={classes.form} noValidate>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
-                autoFocus
-                onChange={handleChange}
-                value={values.username}
-                error={errors.username && touched.username ? true : false}
-                helperText={touched.username && errors.username}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={handleChange}
-                value={values.password}
-                error={errors.password && touched.password ? true : false}
-                helperText={touched.password && errors.password}
-              />
-              {/* <FormControlLabel
+    <React.Fragment>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <Typography
+            variant="h6"
+            onClick={navigateToHome}
+            style={{ color: "white", cursor: "pointer" }}
+          >
+            VLRNT BOOSTING
+          </Typography>
+          <div className={classes.grow} />
+          <Button
+            variant="outlined"
+            onClick={() => {
+              navigateToLogin();
+            }}
+          >
+            SignUp
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Container component="main" maxWidth="xs">
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Formik
+            initialValues={{
+              username: "",
+              password: "",
+            }}
+            validationSchema={SignInSchema}
+            onSubmit={(values: any) => {
+              signInSubmit(values);
+            }}
+          >
+            {({ errors, touched, values, handleChange }) => (
+              // obj: any
+              <Form className={classes.form} noValidate>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                  autoFocus
+                  onChange={handleChange}
+                  value={values.username}
+                  error={errors.username && touched.username ? true : false}
+                  helperText={touched.username && errors.username}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={handleChange}
+                  value={values.password}
+                  error={errors.password && touched.password ? true : false}
+                  helperText={touched.password && errors.password}
+                />
+                {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           /> */}
-              {/* //TODO feature */}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  {/* <Link href="#" variant="body2">
+                {/* //TODO feature */}
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Sign In
+                </Button>
+                <Grid container>
+                  <Grid item xs>
+                    {/* <Link href="#" variant="body2">
                 Forgot password?
               </Link> */}
-                  {/* TODO feature */}
+                    {/* TODO feature */}
+                  </Grid>
+                  <Grid item>
+                    <Link href="/#/signUp" variant="body2">
+                      {"Don't have an account? Sign Up"}
+                    </Link>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Link href="/#/signUp" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-            </Form>
-          )}
-        </Formik>
-      </div>
-    </Container>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </Container>
+      <Pricing></Pricing>
+    </React.Fragment>
   );
 }
 // export const ShareRoomDetail = connect(
