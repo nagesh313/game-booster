@@ -56,7 +56,7 @@ function ChatComponent(props: any) {
       .then((response: any) => {
         const result = response.data.map((chat: any) => {
           return {
-            position: chat.chatFrom === user.username ? "left" : "right",
+            position: chat.chatFrom === user.username ? "right" : "left",
             type: "text",
             text: chat.text,
             date: new Date(chat.chatTime),
@@ -89,7 +89,7 @@ function ChatComponent(props: any) {
   return (
     <React.Fragment>
       <Card className={classes.root}>
-        <CardHeader avatar={<ChatIcon></ChatIcon>} />
+        <CardHeader avatar={<ChatIcon></ChatIcon>} title="Chat History"/>
         <hr></hr>
         <CardContent
           style={{ minHeight: "30vh", height: "30vh", overflow: "auto" }}
