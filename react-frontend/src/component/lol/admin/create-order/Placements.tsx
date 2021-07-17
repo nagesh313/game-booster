@@ -398,10 +398,32 @@ function PlacementsComponent(props: any) {
             xs={12}
             item
             style={{ textAlign: "center", marginTop: ".5rem" }}
+            alignContent="center"
           >
-            <Typography component="h5" variant="h5" color="textPrimary">
-              $ {totalAmount}
-            </Typography>
+            <Grid
+              container
+              alignContent="center"
+              justify="center"
+              alignItems="center"
+            >
+              <Grid item xs={1} style={{ textAlign: "right" }}>
+                <Typography component="h5" variant="h5" color="textPrimary">
+                  ${" "}
+                </Typography>
+              </Grid>
+              <Grid item xs={10}>
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  margin="dense"
+                  label="Total Amount"
+                  onChange={(event: any) => {
+                    setTotalAmount(event.target.value);
+                  }}
+                  value={totalAmount}
+                ></TextField>
+              </Grid>
+            </Grid>
           </Grid>
           <Grid xs={12} item>
             <TextField
