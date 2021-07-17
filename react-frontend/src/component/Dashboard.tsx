@@ -227,19 +227,30 @@ export default function Dashboard() {
           >
             <MenuIcon />
           </IconButton>
+          <img
+            alt="Site logo"
+            src="images/logo-icon.png"
+            width="45"
+            height="45"
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              history.push("/dashboard/home");
+              //
+            }}
+          ></img>
           <Typography
             component="h1"
             variant="h6"
             color="inherit"
             noWrap
             className={classes.title}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", marginLeft: "5px" }}
             onClick={() => {
               history.push("/dashboard/home");
               //
             }}
           >
-            Booster App
+            VALORANT BOOSTING
           </Typography>
           <div className={classes.grow} />
           <div>{user?.username}</div>
