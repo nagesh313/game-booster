@@ -3,7 +3,7 @@ import {
   FormControlLabel,
   Grid,
   Paper,
-  Switch,
+  Switch
 } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -14,12 +14,13 @@ import Typography from "@material-ui/core/Typography";
 import {
   Accessibility,
   Adjust,
+  Dns,
   FlashOn,
   PeopleAlt,
   PersonAdd,
   PersonAddDisabled,
   Videocam,
-  VpnKey,
+  VpnKey
 } from "@material-ui/icons";
 import GamepadIcon from "@material-ui/icons/Gamepad";
 import axios from "axios";
@@ -212,7 +213,7 @@ function OrderDetailsComponent(props: any) {
                 alignContent="center"
               >
                 <Grid item xs={3}>
-                  <Adjust style={{ fontSize: 50 }}></Adjust>
+                  <Dns style={{ fontSize: 50 }}></Dns>
                 </Grid>
                 <Grid item xs={8}>
                   <Typography component="h5" variant="h5">
@@ -238,7 +239,7 @@ function OrderDetailsComponent(props: any) {
               />
               <hr></hr>
               <CardContent>
-              <Grid item xs={12}>
+                <Grid item xs={12}>
                   <Typography>
                     <b>{"Price : "}</b>
                     {order.totalAmount} $

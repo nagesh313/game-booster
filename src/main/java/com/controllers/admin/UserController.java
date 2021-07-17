@@ -52,9 +52,13 @@ public class UserController {
         if (booster.getId() != null) {
             Optional<User> user = userRepository.findById(booster.getId());
             if (user.isPresent()) {
-                booster.setPassword(encoder.encode(booster.getPasswordFromFE()));
-                booster.setPasswordFromFE(null);
-                userRepository.save(booster);
+                User userToUpdate = user.get();
+                userToUpdate.setUsername(booster.getUsername());
+                userToUpdate.setEmail(booster.getEmail());
+                userToUpdate.setPaypalEmail(booster.getPaypalEmail());
+                userToUpdate.setRank(booster.getRank());
+                userToUpdate.setPercentage(booster.getPercentage());
+                userRepository.save(userToUpdate);
             } else {
                 throw new Exception("User Not Found");
             }
