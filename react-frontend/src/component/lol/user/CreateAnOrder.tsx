@@ -7,7 +7,9 @@ import axios from "axios";
 import { withSnackbar } from "notistack";
 import React, { useEffect } from "react";
 import { failureToast } from "../../../util/util";
+import { Details } from "../../Details";
 import Pricing from "../../pricing";
+import Footer from "../../StickyFooter";
 import { Placements } from "./create-order/Placements";
 import { RankBoosting } from "./create-order/RankBoosting";
 import { WinBoosting } from "./create-order/WinBoosting";
@@ -163,6 +165,8 @@ function CreateAnOrderComponent(props: any) {
         </Grid>
       </Grid>
       <Pricing></Pricing>
+      <Details></Details>
+      <Footer></Footer>
     </React.Fragment>
   );
 }

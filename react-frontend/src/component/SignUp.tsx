@@ -22,7 +22,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { failureToast, successToast } from "../util/util";
-import Pricing from "./pricing";
+import Footer from "./StickyFooter";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -90,12 +90,20 @@ export function SignUpComponent(props: any) {
     <React.Fragment>
       <AppBar position="static">
         <Toolbar variant="dense">
+          <img
+            alt="Site logo"
+            src="images/logo-icon.png"
+            width="50"
+            height="50"
+            style={{ cursor: "pointer" }}
+            onClick={navigateToHome}
+          ></img>
           <Typography
             variant="h6"
             onClick={navigateToHome}
-            style={{ color: "white", cursor: "pointer" }}
+            style={{ color: "white", cursor: "pointer", marginLeft: "5px" }}
           >
-            VLRNT BOOSTING
+            VALORANT BOOSTING
           </Typography>
           <div className={classes.grow} />
           <Button
@@ -255,7 +263,7 @@ export function SignUpComponent(props: any) {
           </Formik>
         </div>
       </Container>
-      <Pricing></Pricing>
+      <Footer></Footer>
     </React.Fragment>
   );
 }

@@ -48,8 +48,19 @@ export function CreateOrderHome() {
     <React.Fragment>
       <AppBar position="static">
         <Toolbar variant="dense">
-          <Typography variant="h6" color="inherit">
-            VLRNT BOOSTING
+          <img
+            alt="Site logo"
+            src="images/logo-icon.png"
+            width="50"
+            height="50"
+            style={{ cursor: "pointer" }}
+          ></img>
+          <Typography
+            variant="h6"
+            color="inherit"
+            style={{ color: "white", cursor: "pointer", marginLeft: "5px" }}
+          >
+            VALORANT BOOSTING
           </Typography>
           <div className={classes.grow} />
           <Button

@@ -15,7 +15,7 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { failureToast } from "../util/util";
-import Pricing from "./pricing";
+import Footer from "./StickyFooter";
 const SignInSchema = Yup.object().shape({
   username: Yup.string()
     .min(2, "Too Short!")
@@ -94,12 +94,20 @@ export function SignInComponent(props: any) {
     <React.Fragment>
       <AppBar position="static">
         <Toolbar variant="dense">
+          <img
+            alt="Site logo"
+            src="images/logo-icon.png"
+            width="50"
+            height="50"
+            onClick={navigateToHome}
+            style={{ cursor: "pointer" }}
+          ></img>
           <Typography
             variant="h6"
             onClick={navigateToHome}
-            style={{ color: "white", cursor: "pointer" }}
+            style={{ color: "white", cursor: "pointer", marginLeft: "5px" }}
           >
-            VLRNT BOOSTING
+            VALORANT BOOSTING
           </Typography>
           <div className={classes.grow} />
           <Button
@@ -195,7 +203,7 @@ export function SignInComponent(props: any) {
           </Formik>
         </div>
       </Container>
-      <Pricing></Pricing>
+      <Footer></Footer>
     </React.Fragment>
   );
 }
