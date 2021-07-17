@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import Title from "../../Title";
 import { Boosters } from "./Boosters";
 import { FinishedOrders } from "./FinishedOrders";
+import { PaidOrders } from "./PaidOrders";
 import { RunningOrders } from "./RunningOrders";
 import { WaitingForBoostersOrders } from "./WaitingForBoostersOrders";
 function AdminHomeComponent(props: any) {
@@ -14,6 +15,16 @@ function AdminHomeComponent(props: any) {
       <Grid container>
         <Grid item xs={12}>
           <Title>Admin Area</Title>
+        </Grid>
+      </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Paper
+            elevation={3}
+            style={{ padding: "1rem", marginBottom: "1rem" }}
+          >
+            <PaidOrders></PaidOrders>
+          </Paper>
         </Grid>
       </Grid>
       <Grid container spacing={2}>

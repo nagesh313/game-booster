@@ -16,8 +16,9 @@ import Title from "../../Title";
 export function YourRunningOrdersComponent(props: any) {
   const [orderList, setOrderList] = React.useState<any>([]);
   const history = useHistory();
+  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+
   const fetchOrderList = () => {
-    const user = JSON.parse(sessionStorage.getItem("user") || "{}");
     axios
       .get("/api/v1/order/booster/running/" + user.id)
       .then((response: any) => {
@@ -29,6 +30,17 @@ export function YourRunningOrdersComponent(props: any) {
   };
   const viewOrder = (row: any) => {
     history.push("/dashboard/order-details/" + row.id);
+  };
+  const fetchBoosterPercentage = () => {
+    const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+    axios
+      .get("/api/v1/revenue/percentage/" + user.id)
+      .then((response: any) => {
+        setPercentage(response.data);
+      })
+      .catch((reponse: any) => {
+        props.enqueueSnackbar(reponse.error, failureToast);
+      });
   };
   const orderComplete = (row: any) => {
     if (window.confirm("Are you sure you Want to mark order as completed?")) {
@@ -56,8 +68,11 @@ export function YourRunningOrdersComponent(props: any) {
         });
     }
   };
+  let [percentage, setPercentage] = React.useState<any>(0);
+
   useEffect(() => {
     fetchOrderList();
+    fetchBoosterPercentage();
   }, [props.key]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -127,7 +142,12 @@ export function YourRunningOrdersComponent(props: any) {
               <TableCell>{row.server}</TableCell>
               <TableCell>{row.status}</TableCell>
               <TableCell>{row.createdDate}</TableCell>
-              <TableCell>${row.totalAmount}</TableCell>
+              <TableCell>
+                $
+                {user?.roles.includes("ROLE_BOOSTER")
+                  ? ((row.totalAmount * percentage) / 100).toFixed(2)
+                  : row.totalAmount.toFixed(2)}
+              </TableCell>
               <TableCell align="right">
                 <Tooltip title="View Order">
                   <IconButton

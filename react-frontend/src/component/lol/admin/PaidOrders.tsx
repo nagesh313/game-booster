@@ -10,7 +10,7 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { failureToast, successToast } from "../../../util/util";
 import Title from "../../Title";
-export function FinishedOrdersComponent(props: any) {
+export function PaidOrdersComponent(props: any) {
   const [orderList, setOrderList] = React.useState<any>([]);
   const history = useHistory();
   const fetchOrderList = () => {
@@ -18,7 +18,7 @@ export function FinishedOrdersComponent(props: any) {
       .get("/api/v1/order/finished")
       .then((response: any) => {
         const result = response.data.filter((d: any) => {
-          return d.paid === false;
+          return d.paid === true;
         });
         setOrderList(result);
       })
@@ -65,7 +65,7 @@ export function FinishedOrdersComponent(props: any) {
 
   return (
     <React.Fragment>
-      <Title>Finished Orders ({orderList.length})</Title>
+      <Title>Paid Orders ({orderList.length})</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -119,7 +119,7 @@ export function FinishedOrdersComponent(props: any) {
                         markAsPaidToBooster(row);
                       }}
                     >
-                      PAY
+                      PAID
                     </Button>
                   )}
                   <Button
@@ -139,4 +139,4 @@ export function FinishedOrdersComponent(props: any) {
     </React.Fragment>
   );
 }
-export const FinishedOrders = withSnackbar(FinishedOrdersComponent);
+export const PaidOrders = withSnackbar(PaidOrdersComponent);
