@@ -131,7 +131,7 @@ export function SignUpComponent(props: any) {
               email: "test@gmail.com",
               username: "test",
               password: "test",
-              acccountType: "ROLE_USER",
+              accountType: "ROLE_USER",
             }}
             validationSchema={SignupSchema}
             onSubmit={(values: any) => {
@@ -224,8 +224,8 @@ export function SignUpComponent(props: any) {
                         row
                         aria-label="position"
                         defaultValue="ROLE_USER"
-                        name="acccountType"
-                        id="acccountType"
+                        name="accountType"
+                        id="accountType"
                         onChange={handleChange}
                       >
                         <FormControlLabel
