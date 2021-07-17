@@ -39,6 +39,7 @@ public class Order {
     private String lolAccount;
     private String lolPassword;
     private String userName;
+    private Long orderCreatedByUserId;
     private String userEmail;
     private boolean paid = false;
     @Enumerated(EnumType.STRING)

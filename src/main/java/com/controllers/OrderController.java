@@ -4,6 +4,7 @@ import com.model.AccountInformation;
 import com.model.EStatus;
 import com.model.Order;
 import com.model.User;
+import com.payload.request.AccountInfo;
 import com.repository.OrderRepository;
 import com.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,11 +104,28 @@ public class OrderController {
             order.setUserName(user.get().getUsername());
             order.setUserEmail(user.get().getEmail());
             order.setUser(user.get());
+            order.setOrderCreatedByUserId(userId);
             orderRepository.save(order);
         } else {
             throw new Exception("Invalid Request");
         }
     }
+
+    @PostMapping("/account/{orderId}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public void updateAccountDetailsForOrder(@RequestBody AccountInfo accountInfo, @PathVariable Long orderId) throws Exception {
+        Optional<Order> order = orderRepository.findById(orderId);
+        if (order.isPresent()) {
+            Order orderToUpdate = order.get();
+            orderToUpdate.setLolAccount(accountInfo.getLolAccount());
+            orderToUpdate.setLolPassword(accountInfo.getLolPassword());
+            orderToUpdate.setSummonerName(accountInfo.getSummonerName());
+            orderRepository.save(orderToUpdate);
+        } else {
+            throw new Exception("Order not found");
+        }
+    }
+
 
     @PostMapping("/admin/create/{summonerName}/{lolAccount}/{lolPassword}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -121,8 +139,8 @@ public class OrderController {
         order.setSummonerName(summonerName);
         order.setLolAccount(lolAccount);
         order.setLolPassword(lolPassword);
-        order.setUserName("Admin");
-        order.setUserEmail("Admin");
+        order.setUserName("admin");
+        order.setUserEmail("admin");
         orderRepository.save(order);
     }
 

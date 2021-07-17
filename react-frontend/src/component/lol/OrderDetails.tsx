@@ -3,7 +3,8 @@ import {
   FormControlLabel,
   Grid,
   Paper,
-  Switch
+  Switch,
+  TextField,
 } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -20,7 +21,7 @@ import {
   PersonAdd,
   PersonAddDisabled,
   Videocam,
-  VpnKey
+  VpnKey,
 } from "@material-ui/icons";
 import GamepadIcon from "@material-ui/icons/Gamepad";
 import axios from "axios";
@@ -57,6 +58,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function OrderDetailsComponent(props: any) {
   const classes = useStyles();
+  const [summonerName, setSummonerName] = React.useState<any>("");
+  const [lolAccount, setLolAccount] = React.useState<any>("");
+  const [lolPassword, setLolPassword] = React.useState<any>("");
   const [order, setOrder] = React.useState<any>();
   const { params }: any = useRouteMatch();
   const history = useHistory();
@@ -68,6 +72,9 @@ function OrderDetailsComponent(props: any) {
       .get("/api/v1/order/" + params.id)
       .then((response: any) => {
         setOrder(response.data);
+        setLolAccount(response.data.lolAccount);
+        setLolPassword(response.data.lolPassword);
+        setSummonerName(response.data.summonerName);
       })
       .catch((reponse: any) => {
         props.enqueueSnackbar(reponse.error, failureToast);
@@ -89,6 +96,20 @@ function OrderDetailsComponent(props: any) {
       .then((response: any) => {
         navigateToDashboard();
         props.enqueueSnackbar("Order Dropped", successToast);
+      })
+      .catch((reponse: any) => {
+        props.enqueueSnackbar(reponse.error, failureToast);
+      });
+  };
+  const updateOrderAccountDetails = () => {
+    axios
+      .post("/api/v1/order/account/" + order.id, {
+        lolAccount,
+        lolPassword,
+        summonerName,
+      })
+      .then((response: any) => {
+        props.enqueueSnackbar("Account Updated for the order", successToast);
       })
       .catch((reponse: any) => {
         props.enqueueSnackbar(reponse.error, failureToast);
@@ -153,7 +174,21 @@ function OrderDetailsComponent(props: any) {
                     USERNAME
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    {order.lolAccount}
+                    {user.roles.includes("ROLE_ADMIN") ||
+                    order.orderCreatedByUserId === user.id ? (
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        margin="dense"
+                        label="VLRNT Account"
+                        onChange={(event: any) => {
+                          setLolAccount(event.target.value);
+                        }}
+                        value={lolAccount}
+                      ></TextField>
+                    ) : (
+                      order.lolAccount
+                    )}
                   </Typography>
                 </Grid>
               </Grid>
@@ -176,7 +211,21 @@ function OrderDetailsComponent(props: any) {
                     PASSWORD
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    {order.lolPassword}
+                    {user.roles.includes("ROLE_ADMIN") ||
+                    order.orderCreatedByUserId === user.id ? (
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        margin="dense"
+                        label="VLRNT Password"
+                        onChange={(event: any) => {
+                          setLolPassword(event.target.value);
+                        }}
+                        value={lolPassword}
+                      ></TextField>
+                    ) : (
+                      order.lolPassword
+                    )}
                   </Typography>
                 </Grid>
               </Grid>
@@ -198,7 +247,21 @@ function OrderDetailsComponent(props: any) {
                     SUMMONER
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    {order.summonerName}
+                    {user.roles.includes("ROLE_ADMIN") ||
+                    order.orderCreatedByUserId === user.id ? (
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        margin="dense"
+                        label="Summoner Name"
+                        onChange={(event: any) => {
+                          setSummonerName(event.target.value);
+                        }}
+                        value={summonerName}
+                      ></TextField>
+                    ) : (
+                      order.summonerName
+                    )}
                   </Typography>
                 </Grid>
               </Grid>
@@ -221,6 +284,13 @@ function OrderDetailsComponent(props: any) {
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
                     {order.server}
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={updateOrderAccountDetails}
+                    >
+                      Update Account
+                    </Button>
                   </Typography>
                 </Grid>
               </Grid>
