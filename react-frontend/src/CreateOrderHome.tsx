@@ -51,8 +51,8 @@ export function CreateOrderHome() {
           <img
             alt="Site logo"
             src="images/logo-icon.png"
-            width="50"
-            height="50"
+            width="45"
+            height="45"
             style={{ cursor: "pointer" }}
           ></img>
           <Typography
