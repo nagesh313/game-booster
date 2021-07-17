@@ -10,8 +10,20 @@ import React, { useEffect } from "react";
 import { failureToast, successToast } from "../../../util/util";
 import Title from "../../Title";
 function NewOrdersComponent(props: any) {
-  const [newOrderList, setNewOrderList] = React.useState<any>([]);
+  let [percentage, setPercentage] = React.useState<any>(0);
 
+  const [newOrderList, setNewOrderList] = React.useState<any>([]);
+  const fetchBoosterPercentage = () => {
+    const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+    axios
+      .get("/api/v1/revenue/percentage/" + user.id)
+      .then((response: any) => {
+        setPercentage(response.data);
+      })
+      .catch((reponse: any) => {
+        props.enqueueSnackbar(reponse.error, failureToast);
+      });
+  };
   const fetchOrderList = () => {
     axios
       .get("/api/v1/order/new")
@@ -39,7 +51,9 @@ function NewOrdersComponent(props: any) {
   };
   useEffect(() => {
     fetchOrderList();
+    fetchBoosterPercentage();
   }, [props.key]); // eslint-disable-line react-hooks/exhaustive-deps
+  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
 
   return (
     <React.Fragment>
@@ -106,7 +120,12 @@ function NewOrdersComponent(props: any) {
               <TableCell>{row.server}</TableCell>
               <TableCell>{row.status}</TableCell>
               <TableCell>{row.createdDate}</TableCell>
-              <TableCell>${row.totalAmount}</TableCell>
+              <TableCell>
+                $
+                {user?.roles.includes("ROLE_BOOSTER")
+                  ? ((row.totalAmount * percentage) / 100).toFixed(2)
+                  : row.totalAmount}
+              </TableCell>
               <TableCell align="right">
                 <Button
                   variant="contained"

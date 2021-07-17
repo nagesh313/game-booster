@@ -208,6 +208,7 @@ public class OrderController {
                 }
                 orderToAssign.setStatus(EStatus.RUNNING);
                 orderToAssign.setAssignedTo(booster.get());
+                orderToAssign.setBoosterAmount(orderToAssign.getTotalAmount() * booster.get().getPercentage() / 100);
                 orderRepository.save(orderToAssign);
             } else {
                 throw new Exception("Invalid Order");
@@ -238,10 +239,11 @@ public class OrderController {
     public void dropOrder(@PathVariable Long orderId) throws Exception {
         Optional<Order> order = orderRepository.findById(orderId);
         if (order.isPresent()) {
-            Order orderToComplete = order.get();
-            orderToComplete.setStatus(EStatus.WAITING_FOR_BOOSTER);
-            orderToComplete.setAssignedTo(null);
-            orderRepository.save(orderToComplete);
+            Order orderToDrop = order.get();
+            orderToDrop.setStatus(EStatus.WAITING_FOR_BOOSTER);
+            orderToDrop.setAssignedTo(null);
+            orderToDrop.setBoosterAmount(0.00);
+            orderRepository.save(orderToDrop);
         } else {
             throw new Exception("Invalid Order");
         }

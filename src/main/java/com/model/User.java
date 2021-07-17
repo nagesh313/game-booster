@@ -28,7 +28,7 @@ public class User {
     private String email;
     private String rank="";
     private String paypalEmail="";
-    private String percentage="";
+    private Double percentage;
     private String passwordFromFE;
     @JsonIgnore
     private String password;

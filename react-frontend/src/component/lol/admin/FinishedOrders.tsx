@@ -58,6 +58,8 @@ export function FinishedOrdersComponent(props: any) {
   useEffect(() => {
     fetchOrderList();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+
   return (
     <React.Fragment>
       <Title>Finished Orders ({orderList.length})</Title>
@@ -84,7 +86,11 @@ export function FinishedOrdersComponent(props: any) {
               <TableCell>{row.Boost}</TableCell>
               <TableCell>{row.createdDate}</TableCell>
               <TableCell>{row.completionDate}</TableCell>
-              <TableCell>{row.totalAmount}</TableCell>
+              <TableCell>
+                {user?.roles.includes("ROLE_BOOSTER")
+                  ? row.boosterAmount
+                  : row.totalAmount}
+              </TableCell>
               <TableCell>{row.assignedTo?.username}</TableCell>
               <TableCell>{row.BoosterPrice}</TableCell>
               <TableCell>{row?.assignedTo?.paypalEmail}</TableCell>

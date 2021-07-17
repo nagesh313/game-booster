@@ -28,6 +28,7 @@ public class Order {
     private Boolean priorityOrder;
     private Boolean withStreaming;
     private Double totalAmount;
+    private Double boosterAmount;
     private String createdDate;
     private String completionDate;
     private String wins;

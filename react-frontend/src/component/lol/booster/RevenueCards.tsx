@@ -4,7 +4,7 @@ import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
 import WatchLaterIcon from "@material-ui/icons/WatchLater";
 import React from "react";
 
-export default function RevenueCards() {
+export default function RevenueCards(props: any) {
   return (
     <Grid container spacing={2} style={{ marginBottom: "1rem" }}>
       <Grid item xs={12} md={6}>
@@ -25,7 +25,7 @@ export default function RevenueCards() {
                 Revenues
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                WIP
+                {props.totalRevenue.toFixed(2)}
               </Typography>
             </Grid>
           </Grid>
@@ -47,7 +47,7 @@ export default function RevenueCards() {
                 Pending Payment
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                WIP
+                {props.pendingRevenue.toFixed(2)}
               </Typography>
             </Grid>
           </Grid>

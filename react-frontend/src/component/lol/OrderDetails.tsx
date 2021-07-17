@@ -312,7 +312,10 @@ function OrderDetailsComponent(props: any) {
                 <Grid item xs={12}>
                   <Typography>
                     <b>{"Price : "}</b>
-                    {order.totalAmount} $
+                    {user.roles.includes("ROLE_BOOSTER")
+                      ? order.boosterAmount.toFixed(2)
+                      : order.totalAmount.toFixed(2)}
+                    $
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>

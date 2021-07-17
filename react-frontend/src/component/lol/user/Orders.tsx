@@ -13,9 +13,9 @@ import Title from "../../Title";
 export function OrdersComponent(props: any) {
   const history = useHistory();
   const [orderList, setOrderList] = React.useState<any>([]);
+  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
 
   const fetchOrderList = () => {
-    const user = JSON.parse(sessionStorage.getItem("user") || "{}");
     axios
       .get("/api/v1/order/user/" + user.id)
       .then((response: any) => {
@@ -122,7 +122,12 @@ export function OrdersComponent(props: any) {
               <TableCell>{row.server}</TableCell>
               <TableCell>{row.status}</TableCell>
               <TableCell>{row.createdDate}</TableCell>
-              <TableCell>${row.totalAmount}</TableCell>
+              <TableCell>
+                ${" "}
+                {user?.roles.includes("ROLE_BOOSTER")
+                  ? row.boosterAmount
+                  : row.totalAmount}
+              </TableCell>
               <TableCell align="center">
                 <ButtonGroup
                   size="small"

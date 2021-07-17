@@ -30,6 +30,7 @@ function YourCompletedOrdersComponent(props: any) {
   useEffect(() => {
     fetchOrderList();
   }, [props.key]); // eslint-disable-line react-hooks/exhaustive-deps
+  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
 
   return (
     <React.Fragment>
@@ -96,7 +97,12 @@ function YourCompletedOrdersComponent(props: any) {
               <TableCell>{row.server}</TableCell>
               <TableCell>{row.status}</TableCell>
               <TableCell>{row.createdDate}</TableCell>
-              <TableCell>${row.totalAmount}</TableCell>
+              <TableCell>
+                $
+                {user?.roles.includes("ROLE_BOOSTER")
+                  ? row.boosterAmount.toFixed(2)
+                  : row.totalAmount.toFixed(2)}
+              </TableCell>
               <TableCell align="center">
                 <ButtonGroup
                   size="small"

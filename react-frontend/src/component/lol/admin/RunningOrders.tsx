@@ -41,6 +41,7 @@ export function RunningOrdersComponent(props: any) {
   useEffect(() => {
     fetchRunningOrderList();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
 
   return (
     <React.Fragment>
@@ -59,7 +60,11 @@ export function RunningOrdersComponent(props: any) {
           {runningOrderList.map((row: any) => (
             <TableRow key={row.id}>
               <TableCell>{row.id}</TableCell>
-              <TableCell>{row.totalAmount}</TableCell>
+              <TableCell>
+                {user?.roles.includes("ROLE_BOOSTER")
+                  ? row.boosterAmount
+                  : row.totalAmount}
+              </TableCell>
               <TableCell>{row?.assignedTo?.username}</TableCell>
               <TableCell>{row.status}</TableCell>
               <TableCell>
