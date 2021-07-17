@@ -22,7 +22,10 @@ export const LoaderComponent = () => {
     axios.interceptors.request.use(
       function (config: any) {
         const user = JSON.parse(sessionStorage.getItem("user") || "{}");
-        setLoadingCount(loadingCount + 1);
+        if (config?.url?.includes("/api/v1/chat")) {
+        } else {
+          setLoadingCount(loadingCount + 1);
+        }
         config.headers["Authorization"] = "Bearer " + user.accessToken;
         return config;
       },
@@ -34,7 +37,11 @@ export const LoaderComponent = () => {
     axios.interceptors.response.use(
       function (response: any) {
         // spinning hide
-        setLoadingCount(loadingCount - 1);
+        if (response?.config?.url?.includes("/api/v1/chat")) {
+        } else {
+          setLoadingCount(loadingCount - 1);
+        }
+
         return response;
       },
       function (error: any) {

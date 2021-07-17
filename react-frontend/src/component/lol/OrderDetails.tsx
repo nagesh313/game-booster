@@ -28,6 +28,7 @@ import React, { useEffect } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { failureToast, successToast } from "../../util/util";
 import Title from "../Title";
+import { ChatUser } from "./ChatUser";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -227,201 +228,213 @@ function OrderDetailsComponent(props: any) {
         </Grid>
       )}
       {order && (
-        <Card className={classes.root}>
-          <CardHeader
-            avatar={<GamepadIcon></GamepadIcon>}
-            title={order.type}
-            subheader={order.createdDate}
-          />
-          <hr></hr>
-          <CardContent>
-            <Grid item xs={12}>
-              <Typography>
-                <b>{"Order Created By : "}</b>
-                {order.userName}
-              </Typography>
-            </Grid>
-            <Typography>
-              <b>{"Orders' User Email : "}</b>
-              {order.userEmail}
-            </Typography>
-
-            {order.currentRank !== null && order.currentRank !== "" && (
-              <Grid xs={12}>
-                <Typography>
-                  <b>{"Current Rank : "}</b> {order.currentRank}
-                </Typography>
-              </Grid>
-            )}
-            {order.currentRankAmount !== null &&
-              order.currentRankAmount !== "" && (
-                <Grid xs={12}>
+        <Grid container>
+          <Grid item xs={12} sm={6}>
+            <Card className={classes.root}>
+              <CardHeader
+                avatar={<GamepadIcon></GamepadIcon>}
+                title={order.type}
+                subheader={order.createdDate}
+              />
+              <hr></hr>
+              <CardContent>
+              <Grid item xs={12}>
                   <Typography>
-                    <b>{"Current Rank Amount: "}</b> {order.currentRankAmount}
+                    <b>{"Price : "}</b>
+                    {order.totalAmount} $
                   </Typography>
                 </Grid>
-              )}
-            {order.currentRankTier !== null && order.currentRankTier !== "" && (
-              <Grid xs={12}>
-                <Typography>
-                  <b>{"Current Rank Tier: "}</b> {order.currentRankTier}
-                </Typography>
-              </Grid>
-            )}
-            {order.desiredRank !== null && order.desiredRank !== "" && (
-              <Grid xs={12}>
-                <Typography>
-                  <b>{"Desired Rank : "}</b> {order.desiredRank}
-                </Typography>
-              </Grid>
-            )}
-            {order.desiredRankAmount !== null &&
-              order.desiredRankAmount !== "" && (
-                <Grid xs={12}>
+                <Grid item xs={12}>
                   <Typography>
-                    <b>{"Current Rank Amount : "}</b> {order.desiredRankAmount}
+                    <b>{"Order Created By : "}</b>
+                    {order.userName}
                   </Typography>
                 </Grid>
-              )}
-            {order.desiredRankTier !== null && order.desiredRankTier !== "" && (
-              <Grid xs={12}>
                 <Typography>
-                  <b>{"Desired Rank Tier : "}</b> {order.desiredRankTier}
+                  <b>{"Orders' User Email : "}</b>
+                  {order.userEmail}
                 </Typography>
-              </Grid>
-            )}
-            {order.wins !== null && order.wins !== "" && (
-              <Grid xs={12}>
-                <Typography>
-                  <b>{"Wins : "}</b> {order.wins}
-                </Typography>
-              </Grid>
-            )}
-            <Grid xs={12}>
-              <Typography>
-                <b>{"ORDER STATUS : "}</b> {order.status}
-              </Typography>
-            </Grid>
 
-            <Grid xs={12}>
-              <Typography>
-                <b>{"ORDER ID : "}</b>
-                {order.id}
-              </Typography>
-            </Grid>
-          </CardContent>
-          <hr></hr>
-          <CardContent>
-            <Grid
-              xs={12}
-              item
-              container
-              alignContent="center"
-              alignItems="center"
-            >
-              <FormControlLabel
-                control={
-                  <Switch size="small" checked={order.appearOffline} disabled />
-                }
-                label=""
-              />
-              <PersonAddDisabled
-                style={{ marginRight: "15px" }}
-              ></PersonAddDisabled>
-              APPEAR OFFLINE ON CHAT (FREE)
-            </Grid>
-            <Grid
-              xs={12}
-              item
-              container
-              alignContent="center"
-              alignItems="center"
-            >
-              <FormControlLabel
-                control={
-                  <Switch size="small" checked={order.specificAgent} disabled />
-                }
-                label=""
-              />
-              <PeopleAlt style={{ marginRight: "15px" }}></PeopleAlt>
-              SPECIFIC AGENTS (FREE)
-            </Grid>
-            <Grid
-              xs={12}
-              item
-              container
-              alignContent="center"
-              alignItems="center"
-            >
-              <FormControlLabel
-                control={
-                  <Switch
-                    size="small"
-                    checked={order.playWithBooster}
-                    disabled
+                {order.currentRank !== null && order.currentRank !== "" && (
+                  <Grid xs={12}>
+                    <Typography>
+                      <b>{"Current Rank : "}</b> {order.currentRank}
+                    </Typography>
+                  </Grid>
+                )}
+                {order.currentRankAmount !== null &&
+                  order.currentRankAmount !== "" && (
+                    <Grid xs={12}>
+                      <Typography>
+                        <b>{"Current Rank Amount: "}</b>
+                        {order.currentRankAmount}
+                      </Typography>
+                    </Grid>
+                  )}
+                {order.currentRankTier !== null &&
+                  order.currentRankTier !== "" && (
+                    <Grid xs={12}>
+                      <Typography>
+                        <b>{"Current Rank Tier: "}</b> {order.currentRankTier}
+                      </Typography>
+                    </Grid>
+                  )}
+                {order.desiredRank !== null && order.desiredRank !== "" && (
+                  <Grid xs={12}>
+                    <Typography>
+                      <b>{"Desired Rank : "}</b> {order.desiredRank}
+                    </Typography>
+                  </Grid>
+                )}
+                {order.desiredRankAmount !== null &&
+                  order.desiredRankAmount !== "" && (
+                    <Grid xs={12}>
+                      <Typography>
+                        <b>{"Current Rank Amount : "}</b>
+                        {order.desiredRankAmount}
+                      </Typography>
+                    </Grid>
+                  )}
+                {order.desiredRankTier !== null &&
+                  order.desiredRankTier !== "" && (
+                    <Grid xs={12}>
+                      <Typography>
+                        <b>{"Desired Rank Tier : "}</b> {order.desiredRankTier}
+                      </Typography>
+                    </Grid>
+                  )}
+                {order.wins !== null && order.wins !== "" && (
+                  <Grid xs={12}>
+                    <Typography>
+                      <b>{"Wins : "}</b> {order.wins}
+                    </Typography>
+                  </Grid>
+                )}
+                <Grid xs={12}>
+                  <Typography>
+                    <b>{"ORDER STATUS : "}</b> {order.status}
+                  </Typography>
+                </Grid>
+
+                <Grid xs={12}>
+                  <Typography>
+                    <b>{"ORDER ID : "}</b>
+                    {order.id}
+                  </Typography>
+                </Grid>
+              </CardContent>
+              <hr></hr>
+              <CardContent>
+                <Grid
+                  xs={12}
+                  item
+                  container
+                  alignContent="center"
+                  alignItems="center"
+                >
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        size="small"
+                        checked={order.appearOffline}
+                        disabled
+                      />
+                    }
+                    label=""
                   />
-                }
-                label=""
-              />
-              <PersonAdd style={{ marginRight: "15px" }}></PersonAdd>
-              PLAY WITH BOOSTER AT (+40%)
-            </Grid>
-            <Grid
-              xs={12}
-              item
-              container
-              alignContent="center"
-              alignItems="center"
-            >
-              <FormControlLabel
-                control={
-                  <Switch size="small" checked={order.priorityOrder} disabled />
-                }
-                label=""
-              />
-              <FlashOn style={{ marginRight: "15px" }}></FlashOn>
-              PRIORITY ORDER AT (+20%)
-            </Grid>
-            <Grid
-              xs={12}
-              item
-              container
-              alignContent="center"
-              alignItems="center"
-            >
-              <FormControlLabel
-                control={
-                  <Switch size="small" checked={order.withStreaming} disabled />
-                }
-                label=""
-              />
-              <Videocam style={{ marginRight: "15px" }}></Videocam>
-              WITH STREAMING AT (+15%)
-            </Grid>
-          </CardContent>
-        </Card>
+                  <PersonAddDisabled
+                    style={{ marginRight: "15px" }}
+                  ></PersonAddDisabled>
+                  APPEAR OFFLINE ON CHAT (FREE)
+                </Grid>
+                <Grid
+                  xs={12}
+                  item
+                  container
+                  alignContent="center"
+                  alignItems="center"
+                >
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        size="small"
+                        checked={order.specificAgent}
+                        disabled
+                      />
+                    }
+                    label=""
+                  />
+                  <PeopleAlt style={{ marginRight: "15px" }}></PeopleAlt>
+                  SPECIFIC AGENTS (FREE)
+                </Grid>
+                <Grid
+                  xs={12}
+                  item
+                  container
+                  alignContent="center"
+                  alignItems="center"
+                >
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        size="small"
+                        checked={order.playWithBooster}
+                        disabled
+                      />
+                    }
+                    label=""
+                  />
+                  <PersonAdd style={{ marginRight: "15px" }}></PersonAdd>
+                  PLAY WITH BOOSTER AT (+40%)
+                </Grid>
+                <Grid
+                  xs={12}
+                  item
+                  container
+                  alignContent="center"
+                  alignItems="center"
+                >
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        size="small"
+                        checked={order.priorityOrder}
+                        disabled
+                      />
+                    }
+                    label=""
+                  />
+                  <FlashOn style={{ marginRight: "15px" }}></FlashOn>
+                  PRIORITY ORDER AT (+20%)
+                </Grid>
+                <Grid
+                  xs={12}
+                  item
+                  container
+                  alignContent="center"
+                  alignItems="center"
+                >
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        size="small"
+                        checked={order.withStreaming}
+                        disabled
+                      />
+                    }
+                    label=""
+                  />
+                  <Videocam style={{ marginRight: "15px" }}></Videocam>
+                  WITH STREAMING AT (+15%)
+                </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <ChatUser></ChatUser>
+          </Grid>
+        </Grid>
       )}
-      {/* {order && (
-          <Card
-            className={classes.root}
-            style={{ marginLeft: "3rem", minWidth: "500px" }}
-          >
-            <CardHeader
-              avatar={<Chat></Chat>}
-              // action={
-              //   <IconButton aria-label="settings">
-              //     <MoreVertIcon />
-              //   </IconButton>
-              // }
-              // title={order.type}
-              // subheader={order.createdDate}
-            />
-            <hr></hr>
-            <CardContent>
-              <Typography>CHAT WIP</Typography>
-            </CardContent>
-          </Card>
-        )} */}
     </React.Fragment>
   );
 }
